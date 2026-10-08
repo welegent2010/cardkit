@@ -7,7 +7,9 @@ Every tool processes content locally in the browser.
 
 Brand: **CardKit** · Subtitle: *Small tools for website editing and template work.*
 Support email: **support@xdstudiolab.com** (used on every page, do not reintroduce `info@`)
-Production domain: `https://xdstudiolab.com`
+Production domain: `https://cardcss.top`
+Source: `https://github.com/welegent2010/cardkit`
+Hosting: Cloudflare Pages, project `cardkit` (`cardkit.pages.dev`)
 
 ---
 
@@ -156,6 +158,38 @@ working tools, four substantial guides, and the core pages. Replace the placehol
 `ads.txt` only with the real publisher ID from Google.
 
 ---
+
+## Deploy
+
+Built output is the repository root minus the development-only paths. Tests, fixtures and
+runtime exports never go up:
+
+```bash
+rsync -a --exclude '.git' --exclude '.gitignore' --exclude '.DS_Store' \
+      --exclude 'tests' --exclude 'README.md' --exclude 'output' \
+      ./ /tmp/cfdeploy/
+
+CI=1 wrangler pages deploy /tmp/cfdeploy \
+  --project-name cardkit --branch main --commit-dirty=true
+```
+
+24 files, about 572 KB. Cloudflare Pages serves the root `404.html` automatically, and the
+directory-style URLs need no rewrite rules.
+
+### Domain
+
+`cardcss.top` and `www.cardcss.top` are both attached to the Pages project. They stay
+`pending` until the domain itself is on Cloudflare:
+
+1. dash.cloudflare.com, Add a site, `cardcss.top`, Free plan.
+2. Cloudflare hands back two nameservers.
+3. At the registrar (this domain is on Spaceship), replace the nameservers with those two.
+4. DNS propagation, then the Pages custom domain flips to active on its own.
+
+The OAuth token behind `wrangler login` cannot create zones, so step 1 has to be done by
+hand in the dashboard. If Cloudflare's jump-start copies the registrar's parking A records
+over (`34.x` / `54.x`), delete those A records before adding the root CNAME, otherwise the
+CNAME is rejected for already existing on that host.
 
 ## Roadmap
 
