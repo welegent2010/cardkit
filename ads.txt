@@ -1,0 +1,10 @@
+# ads.txt for cardcss.top
+#
+# 1. Open Google AdSense > Account > Account information.
+# 2. Copy the Publisher ID, it looks like pub-1234567890123456.
+# 3. Replace the placeholder below with it, keeping the rest of the line unchanged.
+#
+# Until your application is approved, an ads.txt with a placeholder ID does no harm
+# and can be left in place. AdSense will tell you if the ID does not match.
+
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

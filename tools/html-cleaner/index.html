@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML Cleaner &amp; Formatter - Clean HTML Snippets Online | CardKit</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<meta name="description" content="Clean, format and inspect HTML snippets before pasting them back into a website or template. Runs in your browser.">
+<link rel="canonical" href="https://cardcss.top/tools/html-cleaner/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cardcss.top/tools/html-cleaner/">
+<meta property="og:title" content="HTML Cleaner &amp; Formatter - Clean HTML Snippets Online | CardKit">
+<meta property="og:description" content="Clean, format and inspect HTML snippets before pasting them back into a website or template.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HTML Cleaner &amp; Formatter - Clean HTML Snippets Online | CardKit">
+<meta name="twitter:description" content="Clean and format an HTML snippet before you paste it back.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HTML Cleaner",
+  "url": "https://cardcss.top/tools/html-cleaner/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires a modern web browser",
+  "description": "Clean, format and inspect HTML snippets before pasting them back into a website or template.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isPartOf": { "@id": "https://cardcss.top/#website" }
+}
+</script>
+<style>
+:root{
+  --bg:#121110; --panel:#181614; --panel2:#141312; --line:#2C2926; --line2:#3A3633;
+  --gold:#F5BD63; --gold-dim:#6A5A32; --muted:#9A9186; --text:#F3EEE6;
+  --field:#111110; --chip:#2A2724; --bad:#C4553F;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:12px/1.6 Verdana,Geneva,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;margin:0}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+.top{border-bottom:1px solid var(--line);background:var(--panel2);position:relative;z-index:50}
+.top-in{display:flex;align-items:center;gap:16px;padding:14px 24px;max-width:1160px;margin:0 auto}
+.mark{font:600 15px/1 Verdana,sans-serif;letter-spacing:.16em;color:var(--gold);white-space:nowrap}
+.spacer{flex:1}
+.ver{font-size:10px;letter-spacing:.18em;color:var(--gold);border:1px solid var(--gold-dim);padding:3px 7px}
+.status{font-size:10px;letter-spacing:.16em;color:var(--muted)}
+.status.is-warn{color:var(--gold)}
+.nav{display:flex;align-items:center;gap:18px}
+.nav-link{color:var(--muted);font-size:11px;letter-spacing:.08em;white-space:nowrap}
+.nav-link:hover{color:var(--gold);text-decoration:none}
+.nav-link.on{color:var(--gold)}
+.drop{position:relative}
+.drop-menu{display:none;position:absolute;top:100%;left:-14px;margin-top:12px;min-width:250px;
+  background:var(--panel);border:1px solid var(--line2);padding:6px;z-index:60}
+.drop-menu::before{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.drop:hover .drop-menu,.drop:focus-within .drop-menu{display:block}
+.drop-menu a{display:block;padding:9px 11px;color:var(--text);font-size:11.5px;border-bottom:1px solid var(--line)}
+.drop-menu a:last-child{border-bottom:0}
+.drop-menu a:hover{background:#221E19;color:var(--gold);text-decoration:none}
+.drop-menu a small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+
+.head{padding:34px 0 4px}
+.head h1{font-size:27px;line-height:1.2}
+.head p{color:var(--muted);max-width:70ch;margin:12px 0 0;font-size:12.5px}
+.safe{border:1px solid var(--gold-dim);background:#1B1712;color:var(--gold);padding:9px 13px;font-size:11px;margin:18px 0 0}
+
+.panel{border:1px solid var(--line);background:var(--panel);padding:18px;margin-top:18px}
+.panel .tag{font:10px/1 Verdana,sans-serif;letter-spacing:.2em;color:var(--gold);margin:0 0 10px}
+textarea{
+  width:100%;min-height:230px;background:var(--field);border:1px solid var(--line2);color:var(--text);
+  padding:12px;font:11.5px/1.6 "Courier New",monospace;resize:vertical}
+textarea:focus{outline:1px solid var(--gold-dim);outline-offset:0}
+textarea[readonly]{color:var(--muted)}
+.opts{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px}
+.check{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11.5px;cursor:pointer}
+.check input{width:auto;margin:0}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{display:inline-block;border:1px solid var(--gold-dim);background:#1E1913;color:var(--gold);
+  padding:11px 15px;font:11px/1 Verdana,sans-serif;letter-spacing:.14em;cursor:pointer}
+.btn:hover{background:#2A2216;text-decoration:none}
+.btn.is-primary{background:var(--gold);border-color:var(--gold);color:#1A1611;font-weight:600}
+.btn.is-quiet{border-color:var(--line2);background:transparent;color:var(--muted)}
+.btn.is-quiet:hover{color:var(--gold)}
+.stats{color:var(--muted);font-size:11px;margin-top:12px}
+.stats b{color:var(--text);font-weight:400}
+
+.warn-box{border-left:2px solid var(--bad);background:#1A1412;padding:14px 16px;margin:18px 0 0}
+.warn-box p{margin:0;color:var(--muted);font-size:11.5px}
+.note-box{border-left:2px solid var(--gold-dim);background:#1B1712;padding:14px 16px;margin:18px 0 0}
+.note-box p{margin:0;color:var(--muted);font-size:11.5px}
+
+.ad{margin:34px 0 0;border:1px dashed var(--line2);background:#151312;color:#6E665C;
+  min-height:90px;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.2em}
+
+footer{border-top:1px solid var(--line);margin-top:44px;padding:28px 0 44px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:26px}
+.foot-col h4{font:10px/1 Verdana,sans-serif;letter-spacing:.2em;color:var(--muted);font-weight:400;margin:0 0 12px}
+.foot-col a,.foot-col span{display:block;color:var(--muted);font-size:11.5px;padding:3px 0}
+.foot-col a:hover{color:var(--gold)}
+.foot-brand{font:600 14px/1 Verdana,sans-serif;letter-spacing:.16em;color:var(--gold)}
+.foot-brand-p{color:var(--muted);font-size:11.5px;margin:10px 0 0;max-width:30ch}
+.foot-bottom{border-top:1px solid var(--line);margin-top:26px;padding-top:18px;
+  color:var(--muted);font-size:11px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.foot-legal{color:#7C7469;font-size:10.5px;line-height:1.6;margin:14px 0 0;max-width:88ch}
+
+@media (max-width:820px){
+  .top-in{flex-wrap:wrap;gap:10px 14px}
+  .nav{gap:14px;flex-wrap:wrap}
+  .drop-menu{display:none !important}
+}
+@media (max-width:1000px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.foot-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link on" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+    <span class="status" id="status">READY</span>
+    <span class="ver">v1.0</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="head">
+    <h1>Clean up an HTML snippet before you paste it back</h1>
+    <p>
+      Paste a block of HTML, improve its formatting and remove common unnecessary clutter without turning
+      the workflow into a full development environment.
+    </p>
+  </section>
+
+  <div class="safe">
+    <b>All processing happens locally in your browser. Nothing is uploaded. Refresh will lose your work.</b>
+  </div>
+
+  <section class="panel">
+    <p class="tag">INPUT</p>
+    <textarea id="in" spellcheck="false" placeholder="Paste one HTML section here..."></textarea>
+    <div class="opts">
+      <label class="check"><input type="checkbox" id="oTrim" checked> Trim whitespace</label>
+      <label class="check"><input type="checkbox" id="oEmpty" checked> Remove empty lines</label>
+      <label class="check"><input type="checkbox" id="oComments"> Remove comments</label>
+    </div>
+    <div class="acts">
+      <button class="btn is-primary" id="doFormat">FORMAT</button>
+      <button class="btn" id="doMinify">MINIFY</button>
+      <button class="btn is-quiet" id="doClear">CLEAR</button>
+    </div>
+    <p class="stats" id="stats">Ready.</p>
+  </section>
+
+  <section class="panel">
+    <p class="tag">OUTPUT</p>
+    <textarea id="out" readonly spellcheck="false" placeholder="The cleaned snippet appears here..."></textarea>
+    <div class="acts">
+      <button class="btn is-primary" id="doCopy">COPY</button>
+      <button class="btn" id="doTxt">EXPORT .TXT</button>
+      <button class="btn" id="doHtml">EXPORT .HTML</button>
+    </div>
+  </section>
+
+  <div class="warn-box">
+    <p>
+      <strong style="color:#C4553F">Always compare the cleaned result with the original</strong>
+      when working with complex templates or application code.
+    </p>
+  </div>
+
+  <div class="note-box">
+    <p>
+      <strong style="color:var(--gold)">This tool prioritises preservation over optimisation.</strong>
+      It never rewrites CSS classes, IDs, data attributes, inline JavaScript, accessibility attributes
+      or URLs. Only formatting changes.
+    </p>
+  </div>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+var $ = function (id) { return document.getElementById(id); };
+
+var VOID = { area:1, base:1, br:1, col:1, embed:1, hr:1, img:1, input:1, link:1,
+  meta:1, param:1, source:1, track:1, wbr:1 };
+var RAW = { script:1, style:1, pre:1, textarea:1 };
+var BLOCK = { html:1, head:1, body:1, div:1, section:1, article:1, aside:1, header:1,
+  footer:1, nav:1, main:1, ul:1, ol:1, li:1, p:1, h1:1, h2:1, h3:1, h4:1, h5:1, h6:1,
+  table:1, thead:1, tbody:1, tfoot:1, tr:1, td:1, th:1, form:1, figure:1, figcaption:1,
+  blockquote:1, dl:1, dt:1, dd:1, details:1, summary:1, fieldset:1, address:1,
+  script:1, style:1, pre:1, textarea:1 };
+
+function setStatus(t, warn) {
+  var s = $("status");
+  s.textContent = t;
+  s.className = "status" + (warn ? " is-warn" : "");
+}
+
+/* Finds the ">" that ends a tag, ignoring ">" inside quoted attribute values. */
+function tagEnd(s, i) {
+  var q = null;
+  for (var j = i + 1; j < s.length; j++) {
+    var c = s.charAt(j);
+    if (q) { if (c === q) q = null; continue; }
+    if (c === '"' || c === "'") { q = c; continue; }
+    if (c === ">") return j + 1;
+  }
+  return s.length;
+}
+
+function tokenize(src) {
+  var out = [], i = 0, n = src.length;
+  function text(t) { if (t.length) out.push({ t: "text", s: t }); }
+  while (i < n) {
+    var lt = src.indexOf("<", i);
+    if (lt < 0) { text(src.slice(i)); break; }
+    if (lt > i) { text(src.slice(i, lt)); i = lt; }
+    if (src.substr(i, 4) === "<!--") {
+      var e = src.indexOf("-->", i);
+      e = e < 0 ? n : e + 3;
+      out.push({ t: "comment", s: src.slice(i, e) });
+      i = e; continue;
+    }
+    if (src.substr(i, 2) === "<!") {
+      var g = src.indexOf(">", i);
+      g = g < 0 ? n : g + 1;
+      out.push({ t: "doctype", s: src.slice(i, g) });
+      i = g; continue;
+    }
+    var gt = tagEnd(src, i);
+    var tag = src.slice(i, gt);
+    i = gt;
+    var m = /^<\/?([a-zA-Z0-9:-]+)/.exec(tag);
+    if (!m) { text(tag); continue; }
+    var name = m[1].toLowerCase();
+    if (tag.charAt(1) === "/") { out.push({ t: "close", name: name, s: tag }); continue; }
+    var selfClose = /\/>\s*$/.test(tag);
+    if (RAW[name] && !selfClose) {
+      var re = new RegExp("</" + name + "\\s*>", "i");
+      var rest = src.slice(i);
+      var mm = re.exec(rest);
+      var content = mm ? rest.slice(0, mm.index) : rest;
+      var closeTag = mm ? mm[0] : "";
+      out.push({ t: "open", name: name, s: tag, isVoid: false });
+      out.push({ t: "raw", s: content });
+      if (closeTag) out.push({ t: "close", name: name, s: closeTag });
+      i += (mm ? mm.index + closeTag.length : rest.length);
+      continue;
+    }
+    out.push({ t: "open", name: name, s: tag, isVoid: !!(VOID[name] || selfClose) });
+  }
+  return out;
+}
+
+function cleanText(s, trim, dropEmpty) {
+  if (trim) s = s.replace(/\s+/g, " ");
+  else s = s.replace(/[ \t]+/g, " ");
+  return s;
+}
+
+function render(src, minify) {
+  var trim = $("oTrim").checked;
+  var dropEmpty = $("oEmpty").checked;
+  var dropComments = $("oComments").checked;
+
+  var working = src;
+  if (dropComments) working = working.replace(/<!--[\s\S]*?-->/g, "");
+  if (dropEmpty) {
+    working = working.replace(/^[ \t]*\n/gm, "");
+    working = working.replace(/\n{3,}/g, "\n\n");
+  }
+
+  var toks = tokenize(working);
+  var IND = "  ";
+  var buf = "", depth = 0, stack = [], atLineStart = true;
+
+  function ind() { var s = ""; for (var k = 0; k < depth; k++) s += IND; return s; }
+  function write(s) {
+    if (atLineStart) { buf += ind(); atLineStart = false; }
+    buf += s;
+  }
+  function brk() {
+    if (!atLineStart) { buf += "\n"; atLineStart = true; }
+    if (stack.length) stack[stack.length - 1].broken = true;
+  }
+
+  for (var i = 0; i < toks.length; i++) {
+    var t = toks[i];
+    if (t.t === "comment") {
+      if (dropComments) continue;
+      if (minify) { buf += t.s; }
+      else { brk(); write(t.s); }
+      continue;
+    }
+    if (t.t === "doctype") {
+      if (minify) buf += t.s; else { brk(); write(t.s); }
+      continue;
+    }
+    if (t.t === "raw") {
+      if (minify) buf += t.s;
+      else { brk(); atLineStart = false; buf += t.s; brk(); }
+      continue;
+    }
+    if (t.t === "text") {
+      var s = cleanText(t.s, trim, dropEmpty);
+      if (!s) continue;
+      if (s === " " && !minify) {
+        if (!atLineStart) buf += " ";
+        continue;
+      }
+      if (minify) { buf += (s === " " ? " " : s); continue; }
+      write(s);
+      continue;
+    }
+    if (t.t === "open") {
+      if (minify) {
+        buf += t.s;
+        if (!t.isVoid) { depth++; stack.push({ broken: true }); }
+        continue;
+      }
+      if (BLOCK[t.name]) brk();
+      stack.push({ broken: false, name: t.name });
+      write(t.s);
+      if (!t.isVoid) depth++;
+      continue;
+    }
+    if (t.t === "close") {
+      var top = stack.pop();
+      if (minify) { buf += t.s; if (depth > 0) depth--; continue; }
+      if (depth > 0) depth--;
+      if (top && !top.broken && BLOCK[t.name]) write(t.s);
+      else { brk(); write(t.s); }
+      continue;
+    }
+  }
+  if (!minify) buf = buf.replace(/\n{3,}/g, "\n\n").replace(/\s+$/, "") + "\n";
+  return buf;
+}
+
+function run(minify) {
+  var src = $("in").value;
+  if (!src.trim()) { setStatus("NOTHING TO CLEAN", true); $("stats").textContent = "Paste some HTML first."; return; }
+  var out;
+  try { out = render(src, minify); }
+  catch (e) { setStatus("FAILED", true); $("stats").textContent = "Could not parse that snippet."; return; }
+  $("out").value = out;
+  var a = src.length, b = out.length, d = b - a;
+  $("stats").innerHTML = "Input <b>" + a + "</b> chars &middot; output <b>" + b + "</b> chars " +
+    "(<b>" + (d >= 0 ? "+" : "") + d + "</b>) &middot; " + (minify ? "minified" : "formatted");
+  setStatus(minify ? "MINIFIED" : "FORMATTED");
+}
+
+function download(name, text, type) {
+  var blob = new Blob([text], { type: type });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  setStatus("SAVED " + new Date().toTimeString().slice(0, 8));
+}
+
+$("doFormat").addEventListener("click", function () { run(false); });
+$("doMinify").addEventListener("click", function () { run(true); });
+$("doClear").addEventListener("click", function () {
+  $("in").value = ""; $("out").value = "";
+  $("stats").textContent = "Cleared.";
+  setStatus("READY");
+});
+$("doCopy").addEventListener("click", function () {
+  if (!$("out").value) { setStatus("NOTHING TO COPY", true); return; }
+  var ta = $("out");
+  ta.select();
+  var ok = false;
+  try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+  if (!ok && navigator.clipboard) {
+    navigator.clipboard.writeText(ta.value).then(function () {
+      setStatus("COPIED " + new Date().toTimeString().slice(0, 8));
+    });
+    return;
+  }
+  setStatus(ok ? "COPIED " + new Date().toTimeString().slice(0, 8) : "COPY BLOCKED", !ok);
+});
+$("doTxt").addEventListener("click", function () {
+  if (!$("out").value) { setStatus("NOTHING TO EXPORT", true); return; }
+  download("cardkit-clean.txt", $("out").value, "text/plain");
+});
+$("doHtml").addEventListener("click", function () {
+  if (!$("out").value) { setStatus("NOTHING TO EXPORT", true); return; }
+  download("cardkit-clean.html", $("out").value, "text/html");
+});
+$("in").addEventListener("input", function () {
+  $("stats").textContent = "Input " + $("in").value.length + " chars.";
+});
+</script>
+
+</body>
+</html>

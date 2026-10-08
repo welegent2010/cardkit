@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block nothing. Every public page is meant to be crawled, including the tools.
+Disallow: /tests/
+Disallow: /output/
+
+Sitemap: https://cardcss.top/sitemap.xml

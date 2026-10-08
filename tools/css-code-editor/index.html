@@ -1,0 +1,2348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Squarespace CSS Code Editor - Edit Custom CSS and HTML | CardKit</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<meta name="description" content="Edit Squarespace custom code and CSS in your browser. Paste a custom code block or a plain CSS snippet, see it rendered, change the values visually, then copy it straight back.">
+<link rel="canonical" href="https://cardcss.top/tools/css-code-editor/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cardcss.top/tools/css-code-editor/">
+<meta property="og:title" content="Squarespace CSS Code Editor - Edit Custom CSS and HTML | CardKit">
+<meta property="og:description" content="Paste a Squarespace custom code block or a plain CSS snippet, see it rendered, change the values visually, then copy it back.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Squarespace CSS Code Editor - Edit Custom CSS and HTML | CardKit">
+<meta name="twitter:description" content="Paste Squarespace custom code or CSS, edit it visually, copy it back.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CSS Code Editor",
+  "url": "https://cardcss.top/tools/css-code-editor/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires a modern web browser",
+  "description": "Edit Squarespace custom code and CSS in the browser. Paste one custom code block or a plain CSS snippet, see it rendered, change the values visually, then copy it straight back.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isPartOf": { "@id": "https://cardcss.top/#website" }
+}
+</script>
+<style>
+:root{
+  --bg:#121110; --panel:#181614; --panel2:#141312; --line:#2C2926; --line2:#3A3633;
+  --gold:#F5BD63; --gold-dim:#6A5A32; --muted:#9A9186; --text:#F3EEE6;
+  --field:#111110; --chip:#2A2724; --ok:#7FA86B; --warn:#D08A4E; --bad:#C4553F;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:12px/1.6 Verdana,Geneva,sans-serif}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1400px;margin:0 auto;padding:0 24px}
+/* The preview is the point of this page. On a wide screen it gets the room
+   to show a 1200 px desktop section at full size instead of at 80%. */
+body.wide .wrap,body.wide .top-in{max-width:1680px}
+
+.top{border-bottom:1px solid var(--line);background:var(--panel2)}
+.top-in{display:flex;align-items:center;gap:14px;padding:12px 24px;max-width:1400px;margin:0 auto;flex-wrap:wrap}
+.mark{font:600 14px/1 Verdana,sans-serif;letter-spacing:.16em;color:var(--gold)}
+.mark span{color:var(--text);opacity:.55}
+.navlink{color:var(--muted);font-size:11px;letter-spacing:.08em}
+.navlink.on{color:var(--gold)}
+.spacer{flex:1}
+.status{font:10px/1 Verdana,sans-serif;letter-spacing:.14em;color:var(--muted)}
+.ver{font-size:10px;letter-spacing:.18em;color:var(--gold);border:1px solid var(--gold-dim);padding:3px 7px}
+
+.safe{border:1px solid var(--gold-dim);background:#1B1712;color:var(--gold);padding:9px 13px;font-size:11px;margin:16px 0 0}
+.safe b{font-weight:600}
+
+.box{border:1px solid var(--line);background:var(--panel);margin-top:16px}
+/* the output bar stays reachable: without it you have to scroll two screens
+   down after every edit to find COPY */
+.box.is-output{position:sticky;bottom:0;z-index:40;box-shadow:0 -12px 26px rgba(0,0,0,.45)}
+.out-hint{margin:10px 0 0;color:var(--muted);font-size:10.5px;line-height:1.6}
+.out-hint b{color:var(--text);font-weight:600}
+@media (max-width:820px){
+  .box.is-output .box-b{padding:10px}
+  .out-hint{font-size:9.5px;line-height:1.5;margin-top:8px}
+}
+.box-h{padding:9px 13px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.box-h h2{margin:0;font-family:Verdana,sans-serif;font-size:10px;letter-spacing:.2em;color:var(--muted);font-weight:400}
+.box-b{padding:13px}
+
+textarea{width:100%;background:var(--field);border:1px solid var(--line2);color:var(--text);
+  font:11px/1.6 "Courier New",monospace;padding:11px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--gold-dim)}
+.btn{border:1px solid var(--line2);background:#1B1817;color:var(--text);font:11px/1 Verdana,sans-serif;
+  letter-spacing:.08em;padding:9px 11px;cursor:pointer}
+.btn:hover{border-color:var(--gold-dim);color:var(--gold)}
+.btn.gold{background:#1E1913;border-color:var(--gold-dim);color:var(--gold)}
+.btn.gold:hover{background:#2A2216}
+.btn.on{background:#241D11;border-color:var(--gold);color:var(--gold)}
+.btn[disabled]{opacity:.4;cursor:default}
+.row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;margin-top:16px;align-items:start}
+
+.vpbar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:9px}
+/* The preview grows to the height of the section and the page does the
+   scrolling. A box with its own scrollbar was the one thing that made
+   reading a long section painful, so there is no max-height and no
+   overflow here. A device wider than the column is scaled down to fit
+   instead of being cut off. */
+.framewrap{background:#FFF;border:1px solid var(--line2);padding:16px;
+  display:flex;justify-content:center;align-items:flex-start}
+.framewrap.dark{background:#0E0D0C}
+.fitbox{flex:0 0 auto;overflow:hidden}
+iframe{border:0;display:block;background:#FFF;height:600px;box-shadow:0 0 0 1px rgba(0,0,0,.07)}
+.framewrap.dark iframe{background:#0E0D0C}
+.ph{padding:40px 20px;text-align:center;color:var(--muted);font-size:11.5px;line-height:2}
+.ph b{color:var(--gold)}
+
+label.lb{display:block;font-size:10px;letter-spacing:.14em;color:var(--muted);margin:0 0 6px;text-transform:uppercase}
+input[type=color]{width:44px;height:30px;border:1px solid var(--line2);background:#111;padding:2px}
+input[type=range]{width:100%;accent-color:var(--gold)}
+input[type=text]{background:var(--field);border:1px solid var(--line2);color:var(--text);font:11px Verdana,sans-serif;padding:7px 8px;width:100%}
+input[type=text]:focus{outline:none;border-color:var(--gold-dim)}
+.swatches{display:flex;gap:7px}
+.sw{width:32px;height:26px;border:1px solid var(--line2);cursor:pointer;padding:0}
+.sw.on{border-color:var(--gold)}
+.tgt{font:11px/1.5 "Courier New",monospace;color:var(--gold);background:#141210;border:1px solid var(--line2);
+  padding:7px 9px;word-break:break-all;margin-bottom:11px}
+.sw-line{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0}
+.sw-line span{font-size:11px}
+.cbx{position:relative;width:38px;height:20px;border:1px solid var(--line2);background:#141312;cursor:pointer;flex:none}
+.cbx::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;background:var(--muted)}
+.cbx.on{border-color:var(--gold-dim)}
+.cbx.on::after{left:20px;background:var(--gold)}
+.val{float:right;color:var(--text);font-family:"Courier New",monospace;text-transform:none}
+.file-note{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.6}
+
+/* chips */
+.field{border:1px solid var(--line);background:#161514;margin-bottom:7px}
+.field.on{border-color:var(--gold-dim)}
+.chip{display:grid;grid-template-columns:52px 1fr 14px;align-items:center;gap:8px;width:100%;
+  min-height:32px;padding:6px 9px;text-align:left;background:transparent;border:0;cursor:pointer;
+  font:inherit;color:var(--text)}
+.chip:hover{background:#1B1917}
+.kind{display:inline-block;width:46px;text-align:center;font:9px/1.6 Verdana,sans-serif;letter-spacing:.1em;padding:2px 0}
+.k-text{background:#2A2314;color:var(--gold)}
+.k-image{background:#152327;color:#79B4C4}
+.k-action{background:#1B2618;color:#8FBF7A}
+.ftxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#CFC7BC}
+.ar{color:var(--muted);font-size:10px;text-align:center}
+.edit{padding:10px 10px 12px;border-top:1px solid var(--line);background:#131211}
+.ro{background:#0E0D0C;border:1px solid var(--line);padding:7px 8px;color:#8C8478;font:10.5px/1.5 "Courier New",monospace;
+  max-height:74px;overflow:auto;white-space:pre-wrap;word-break:break-word;margin-bottom:8px}
+.ro img{display:block;max-width:100%;max-height:70px;margin-top:5px}
+.fl{margin-top:8px}
+.empty{color:var(--muted);font-size:11px;padding:6px 0}
+
+/* input mode chips */
+.modechips{display:flex;gap:4px}
+.modechips .btn{padding:5px 8px;font-size:10px}
+.scafnote{margin:0 0 9px;border:1px dashed var(--line2);background:#151312;color:var(--muted);
+  font-size:11px;line-height:1.6;padding:9px 11px}
+
+/* css mode: one row per rule, one row per declaration */
+.rule{border:1px solid var(--line);background:#161514;margin-bottom:7px}
+.rule.on{border-color:var(--gold-dim)}
+.rule-h{display:flex;align-items:center;gap:8px;width:100%;min-height:32px;padding:7px 9px;
+  background:transparent;border:0;cursor:pointer;font:inherit;color:var(--text);text-align:left}
+.rule-h:hover{background:#1B1917}
+.rsel{font:11px/1.4 "Courier New",monospace;color:var(--gold);word-break:break-all;flex:1;min-width:0}
+.rule.on .rsel{color:var(--text)}
+.rnum{font:9px/1.6 Verdana,sans-serif;letter-spacing:.1em;color:var(--muted);white-space:nowrap;flex:none}
+.rbody{padding:9px 9px 11px;border-top:1px solid var(--line);background:#131211}
+.dl{display:flex;align-items:flex-start;gap:7px;padding:3px 0}
+.dl-p{font:10px/1.9 "Courier New",monospace;color:var(--muted);flex:0 0 96px;word-break:break-word;
+  padding-top:5px}
+.dl-i{flex:1;min-width:0;background:var(--field);border:1px solid var(--line2);color:var(--text);
+  font:11px/1.45 "Courier New",monospace;padding:6px 7px}
+.dl-i:focus{outline:none;border-color:var(--gold-dim)}
+.dl-i.is-color{flex:1}
+.dl-c{width:34px;height:28px;border:1px solid var(--line2);background:#111;padding:2px;flex:none;cursor:pointer}
+.bang{font:9px/1 Verdana,sans-serif;color:var(--warn);border:1px solid var(--line2);padding:3px 5px;
+  white-space:nowrap;flex:none;margin-top:5px;cursor:pointer;opacity:.32}
+.bang:hover{border-color:var(--gold-dim);opacity:.75}
+.bang.on{opacity:1;border-color:#4A3A26}
+.rule-note{margin:2px 0 10px;color:var(--muted);font-size:10.5px;line-height:1.6}
+
+.ad{margin:34px 0 0;border:1px dashed var(--line2);background:#151312;color:#6E665C;
+  height:90px;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.2em}
+.intro{margin-top:16px;border:1px solid var(--line);background:var(--panel);padding:17px 19px}
+.eyebrow{display:inline-block;margin:0 0 11px;font:10px/1 Verdana,sans-serif;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);background:#1B1712;padding:6px 9px}
+.intro h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:22px;line-height:1.25;margin:0 0 9px}
+.intro .sub{color:var(--muted);font-size:12px;margin:0 0 13px}
+.intro ol{margin:0;padding-left:20px;color:var(--muted);font-size:12px}
+.intro ol li{margin:5px 0}
+.intro b{color:var(--text);font-weight:600}
+.intro .useful{margin:12px 0 0;padding-top:11px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px}
+
+footer{border-top:1px solid var(--line);margin-top:34px;padding:18px 0 40px;color:var(--muted);font-size:11px}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+/* global nav + footer, inlined so this tool file stays self-contained */
+.nav{display:flex;align-items:center;gap:18px}
+.nav-link{color:var(--muted);font-size:11px;letter-spacing:.08em;white-space:nowrap}
+.nav-link:hover{color:var(--gold);text-decoration:none}
+.nav-link.on{color:var(--gold)}
+.drop{position:relative}
+.drop-menu{display:none;position:absolute;top:100%;left:-14px;margin-top:12px;min-width:250px;
+  background:var(--panel);border:1px solid var(--line2);padding:6px;z-index:60}
+.drop-menu::before{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.drop:hover .drop-menu,.drop:focus-within .drop-menu{display:block}
+.drop-menu a{display:block;padding:9px 11px;color:var(--text);font-size:11.5px;border-bottom:1px solid var(--line)}
+.drop-menu a:last-child{border-bottom:0}
+.drop-menu a:hover{background:#221E19;color:var(--gold);text-decoration:none}
+.drop-menu a small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+footer .wrap.is-foot{display:block}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:26px}
+.foot-col h4{font:10px/1 Verdana,sans-serif;letter-spacing:.2em;color:var(--muted);font-weight:400;margin:0 0 12px}
+.foot-col a,.foot-col span{display:block;color:var(--muted);font-size:11.5px;padding:3px 0}
+.foot-col a:hover{color:var(--gold)}
+.foot-brand{font:600 14px/1 Verdana,sans-serif;letter-spacing:.16em;color:var(--gold)}
+.foot-brand-p{color:var(--muted);font-size:11.5px;margin:10px 0 0;max-width:30ch}
+.foot-bottom{border-top:1px solid var(--line);margin-top:28px;padding-top:18px;
+  color:var(--muted);font-size:11px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.foot-legal{color:#7C7469;font-size:10.5px;line-height:1.6;margin:14px 0 0;max-width:88ch}
+@media (max-width:820px){.drop-menu{display:none !important}.top-in{flex-wrap:wrap;gap:10px 14px}.nav{gap:14px;flex-wrap:wrap}}
+@media (max-width:1000px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.foot-grid{grid-template-columns:1fr}}
+.footnav{display:flex;gap:14px;flex-wrap:wrap}
+@media (max-width:1080px){ .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body class="wide">
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link on" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+    <span class="status" id="status">READY</span>
+    <span class="ver">v1.0</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="safe">
+    <b>All processing happens locally in your browser. Files will NOT be uploaded to any server. Refresh will lose your work.</b>
+  </div>
+
+  <section class="intro">
+    <p class="eyebrow">Built for Squarespace custom code</p>
+    <h1>Edit Squarespace custom code and CSS without touching the rest of the page</h1>
+    <p class="sub">
+      Paste a <b>Squarespace custom code block</b> or a plain <b>CSS snippet</b> &mdash; the editor
+      works out which one it is, then shows you the result rendered instead of making you guess.
+      For HTML you change text, image URLs, button labels and links. For CSS you change colour,
+      spacing, radius and every other declaration. Then copy the finished code straight back into
+      the same block. <b>CardKit is an independent tool and is not affiliated with Squarespace.</b>
+    </p>
+    <ol>
+      <li><b>Paste your code and press RENDER.</b> A custom code block, one HTML section, or bare CSS rules. The editor tells you which format it detected.</li>
+      <li><b>If it is CSS</b> &mdash; the preview is built from your own class names, and the panel on the right lists every rule and every declaration, ready to change.</li>
+      <li><b>If it is HTML</b> &mdash; click anything in the preview and the panel fills with that element's own fields.</li>
+      <li><b>Take it back</b> &mdash; COPY TO CLIPBOARD puts the finished code on your clipboard, EXPORT saves it as a .css or .html file, then paste it over the original block.</li>
+    </ol>
+    <p class="useful">
+      <b>Use it when</b> you need to restyle one card on a Squarespace page, tweak the colours in
+      Design &rarr; Custom CSS, reword a hero without rebuilding it, or point a button at a new link.
+      Check the result on DESKTOP, TABLET and MOBILE before you copy it back. Everything stays in
+      this tab: no account, no upload, no server. Refreshing clears the editor, so export before you
+      close the page. Details on data and advertising are in the
+      <a href="../../privacy/">Privacy Policy</a>.
+    </p>
+  </section>
+
+  <div class="box" style="margin-top:16px">
+    <div class="box-h">
+      <h2>1 · PASTE YOUR CODE</h2>
+      <div class="spacer"></div>
+      <span class="status" id="detNote">HTML or CSS - detected on render</span>
+      <span class="modechips" id="modeChips">
+        <button class="btn on" data-mode="auto">AUTO</button>
+        <button class="btn" data-mode="html">HTML</button>
+        <button class="btn" data-mode="css">CSS</button>
+      </span>
+      <span class="status" id="lenNote">0 chars</span>
+    </div>
+    <div class="box-b">
+      <textarea id="src" rows="7" spellcheck="false"
+        placeholder="Paste a Squarespace custom code block, one HTML section, or plain CSS rules. Both work, for example:&#10;&#10;  .expect-card { background: #fff; border-radius: 16px; padding: 24px; }&#10;&#10;or&#10;&#10;  <section class=&quot;hero&quot;> ... </section>"></textarea>
+      <div class="row" style="margin-top:9px">
+        <button class="btn gold" id="btnRender">RENDER</button>
+        <button class="btn" id="btnFormat" title="Re-indent the code and tidy every CSS declaration">FORMAT + TIDY</button>
+        <button class="btn" id="btnSample">SAMPLE: HTML</button>
+        <button class="btn" id="btnSampleCss">SAMPLE: CSS</button>
+        <button class="btn" id="btnClearAll">CLEAR</button>
+        <div class="spacer"></div>
+        <span class="status" id="fmtNote">One custom code block or one CSS snippet at a time - not a whole page.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- LEFT: preview -->
+    <div>
+      <div class="vpbar">
+        <button class="btn on" data-vp="1200">DESKTOP</button>
+        <button class="btn" data-vp="768">TABLET</button>
+        <button class="btn" data-vp="390">MOBILE</button>
+        <div class="spacer"></div>
+        <button class="btn" id="btnCanvas">CANVAS: LIGHT</button>
+        <span class="status" id="vpNote">1200 px</span>
+      </div>
+      <div class="scafnote" id="scafNote" hidden>
+        Preview built from the class names in your CSS. It is a stand-in so you can see the styles,
+        it is never part of your copied code.
+      </div>
+      <div class="framewrap" id="framewrap">
+        <div class="ph" id="ph" style="width:100%">
+          <b>Nothing rendered yet.</b><br>
+          Paste code above and press RENDER &mdash; a Squarespace custom code block, one HTML section,
+          or plain CSS rules. Both formats work.<br>
+          Need a starting point? Press SAMPLE: HTML or SAMPLE: CSS.
+        </div>
+        <div class="fitbox" id="fitbox">
+          <iframe id="frame" title="Code preview" hidden></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: panel -->
+    <aside>
+
+      <div class="box" style="margin-top:0" id="quickBox">
+        <div class="box-h"><h2>QUICK CSS</h2><div class="spacer"></div><button class="btn" id="btnResetStyle">RESET</button></div>
+        <div class="box-b">
+          <label class="lb">Target</label>
+          <div class="tgt" id="tgtName">no section</div>
+          <div class="row" style="margin-bottom:10px">
+            <button class="btn" id="btnTgtSection">WHOLE SECTION</button>
+            <button class="btn" id="btnTgtSel">SELECTED</button>
+          </div>
+
+          <label class="lb">Background</label>
+          <div class="row">
+            <input type="color" id="bgCol" value="#ffffff">
+            <div class="swatches" id="bgSw">
+              <button class="sw" data-c="#FFFFFF" style="background:#FFFFFF"></button>
+              <button class="sw" data-c="#F4F1EA" style="background:#F4F1EA"></button>
+              <button class="sw" data-c="#16233A" style="background:#16233A"></button>
+              <button class="sw" data-c="#000000" style="background:#000000"></button>
+              <button class="sw" data-c="clear" style="background:linear-gradient(135deg,#333 45%,#C4553F 45%,#C4553F 55%,#333 55%)"></button>
+            </div>
+          </div>
+
+          <label class="lb" style="margin-top:12px">Background opacity <span class="val" id="bgOpVal">100%</span></label>
+          <input type="range" id="bgOp" min="0" max="100" value="100">
+          <div class="file-note">Fades the background colour only. Text and images on top stay solid.</div>
+
+          <label class="lb" style="margin-top:12px">Frosted glass</label>
+          <div class="row">
+            <button class="btn" data-glass="light">FROST LIGHT</button>
+            <button class="btn" data-glass="dark">FROST DARK</button>
+            <button class="btn" data-glass="smoke">SMOKE</button>
+            <button class="btn" data-glass="clear">CLEAR</button>
+          </div>
+
+          <label class="lb" style="margin-top:10px">Blur <span class="val" id="blurVal">0px</span></label>
+          <input type="range" id="blur" min="0" max="24" value="0">
+          <div class="file-note">Blur needs a see-through background, so lower the opacity first.</div>
+
+          <label class="lb" style="margin-top:12px">Corner radius <span class="val" id="radVal">0px</span></label>
+          <input type="range" id="rad" min="0" max="40" value="0">
+
+          <label class="lb" style="margin-top:10px">Text size <span class="val" id="fsVal">16px</span></label>
+          <input type="range" id="fs" min="8" max="72" value="16">
+
+          <label class="lb" style="margin-top:10px">Buttons inside target</label>
+          <div class="row">
+            <input type="color" id="btnCol" value="#16233A">
+            <input type="range" id="btnRad" min="0" max="40" value="0" style="flex:1;min-width:80px">
+          </div>
+        </div>
+      </div>
+
+      <div class="box" id="contentBox">
+        <div class="box-h"><h2 id="panelTitle">CONTENT</h2><div class="spacer"></div><span class="status" id="cntNote">0</span></div>
+        <div class="box-b" id="panel"><div class="empty">Render something first.</div></div>
+      </div>
+
+    </aside>
+  </div>
+
+  <div class="box is-output">
+    <div class="box-b">
+      <div class="row">
+        <button class="btn gold" id="btnCopy" title="Copy the finished code to your clipboard, ready to paste back over the original block">COPY TO CLIPBOARD</button>
+        <button class="btn" id="btnExport" title="Save the finished code as a real file so nothing is flattened on the way">EXPORT .HTML</button>
+        <button class="btn" id="btnMinify" title="Switch between indented output and one-line output. The code is identical, only the line breaks change">OUTPUT: INDENTED</button>
+        <div class="spacer"></div>
+        <span class="status" id="outNote">no changes yet</span>
+      </div>
+      <p class="out-hint">
+        <b>COPY TO CLIPBOARD</b> puts the finished code on your clipboard.
+        <b>EXPORT</b> saves a real file &mdash; .html for HTML, .css for CSS &mdash; so the markup is not
+        flattened into plain text.
+        <b>OUTPUT</b> chooses indented or one line. Same code either way, nothing is dropped.
+      </p>
+    </div>
+  </div>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap is-foot">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/* ------------------------------------------------------------------
+   CardKit - CSS Code Editor
+   The promise of this tool: your structure is never touched.
+   Text is written into text nodes, images get a new URL, links get a
+   new href/target, and the CSS panel only ever adds inline styles.
+------------------------------------------------------------------- */
+
+var $ = function (id) { return document.getElementById(id); };
+var frame = $("frame"), framewrap = $("framewrap"), panel = $("panel"), ph = $("ph");
+var fitbox = $("fitbox");
+var VPW = 1200;        /* the device width being previewed */
+var SCALE = 1;         /* how much it has to shrink to fit the column */
+var LAST_H = -1;       /* last height we handed to the frame */
+
+var SEL_CSS =
+  "html,body{margin:0;padding:0}" +
+  ".__pp-hover{outline:1px dashed rgba(245,189,99,.6)!important;outline-offset:1px!important}" +
+  ".__pp-on{outline:2px solid #F5BD63!important;outline-offset:2px!important}" +
+  ".__pp-mark{outline:2px solid #F5BD63!important;outline-offset:2px!important}" +
+  "[data-ppx]{cursor:pointer}";
+
+var SKIP = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, TEMPLATE: 1, LINK: 1, META: 1, TITLE: 1, HEAD: 1, BR: 1, HR: 1 };
+var BLOCKISH = ("DIV P UL OL LI SECTION ARTICLE ASIDE HEADER FOOTER NAV MAIN H1 H2 H3 H4 H5 H6 " +
+  "TABLE THEAD TBODY TR TD TH FORM FIGURE FIGCAPTION BLOCKQUOTE PRE IMG PICTURE SVG VIDEO IFRAME " +
+  "A BUTTON FIELDSET DL DT DD").split(" ");
+var BLOCK_SET = {};
+BLOCKISH.forEach(function (t) { BLOCK_SET[t] = 1; });
+
+var MAX_ITEMS = 140;
+var ITEMS = [];        /* {i,kind,el,noText,all,bg} */
+var DOC = null;        /* iframe document */
+var SEL = null;        /* selected element */
+var TARGET = null;     /* element the CSS panel writes to */
+var STYLED = [];       /* {el,prop} - everything we added inline */
+var loadToken = 0;
+var booted = new WeakSet();
+
+/* ---- input mode ------------------------------------------------------
+   One textarea takes two very different things: a Squarespace custom
+   code block (HTML, maybe with a <style> inside) and a plain CSS snippet.
+   Which one it is decides what the preview shows, what the right hand
+   panel edits, and what the output bar hands back. */
+var MODE = "auto";      /* the user's choice: auto | html | css */
+var RMODE = "html";     /* what auto actually resolved to for this render */
+var WRAP_STYLE = false; /* css mode: put the <style> wrapper back on write-back */
+var CSS_TEXT = "";      /* css mode: the user's css, the single source of truth */
+var RULES = [];         /* css mode: parsed rules with live text offsets */
+var ROPEN = -1;         /* css mode: index of the rule open in the panel */
+var SCAF_DOC = "";      /* css mode: the stand-in markup the css is shown against */
+var SCAF_COUNT = 0;
+var LAST_OUT = "";      /* exactly what COPY and EXPORT hand back */
+var COMPACT = false;    /* OUTPUT: indented or one line */
+
+var HTML_TAG = /<\s*(?:div|section|article|aside|header|footer|main|nav|p|h[1-6]|ul|ol|li|span|a|button|img|svg|table|thead|tbody|tr|td|th|form|input|select|textarea|label|blockquote|figure|figcaption|video|iframe|picture|pre|code|strong|em|b|i|small|time|hr|br|dl|dt|dd|canvas)\b/i;
+
+function detectMode(src) {
+  if (MODE === "html") return "html";
+  if (MODE === "css") return "css";
+  if (HTML_TAG.test(src)) return "html";
+  if (/\{[^{}]*\}/.test(src)) return "css";
+  return "html";
+}
+/* a <style> block is the one bit of css that arrives inside html. In css
+   mode it gets unwrapped so the panel edits the rules, not the tag. */
+function cssFromInput(src) {
+  var out = [], re = /<style[^>]*>([\s\S]*?)<\/style>/gi, m, any = false;
+  while ((m = re.exec(src))) { any = true; out.push(m[1]); }
+  return any ? out.join("\n") : String(src || "");
+}
+
+/* ---------------- css scanner ----------------
+   Offsets are the whole point: editing a declaration splices the original
+   text instead of re-serialising it, so comments, at-rules, odd spacing and
+   url(data:...) all survive exactly as written. */
+function skipStr(s, i) {
+  var q = s.charAt(i); i++;
+  while (i < s.length) {
+    var c = s.charAt(i);
+    if (c === "\\") { i += 2; continue; }
+    if (c === q) return i + 1;
+    i++;
+  }
+  return i;
+}
+function skipBlock(s, i) {
+  var depth = 0;
+  while (i < s.length) {
+    var c = s.charAt(i);
+    if (c === '"' || c === "'") { i = skipStr(s, i); continue; }
+    if (c === "/" && s.charAt(i + 1) === "*") { var e = s.indexOf("*/", i + 2); i = e < 0 ? s.length : e + 2; continue; }
+    if (c === "{") depth++;
+    else if (c === "}") { depth--; if (depth === 0) return i + 1; }
+    i++;
+  }
+  return s.length;
+}
+function skipParen(s, i) {
+  var depth = 0;
+  while (i < s.length) {
+    var c = s.charAt(i);
+    if (c === '"' || c === "'") { i = skipStr(s, i); continue; }
+    if (c === "(") depth++;
+    else if (c === ")") { depth--; if (depth === 0) return i + 1; }
+    i++;
+  }
+  return s.length;
+}
+function scanDecls(s, r) {
+  var list = [], i = r.bodyStart, end = r.bodyEnd;
+  while (i < end) {
+    var c = s.charAt(i);
+    if (c === "/" && s.charAt(i + 1) === "*") { var e = s.indexOf("*/", i + 2); i = e < 0 ? end : e + 2; continue; }
+    if (c === '"' || c === "'") { i = skipStr(s, i); continue; }
+    if (c === "{") { i = skipBlock(s, i); continue; }
+    if (c === ";") { i++; continue; }
+    if (/\s/.test(c)) { i++; continue; }
+
+    var start = i;
+    while (i < end) {
+      var c2 = s.charAt(i);
+      if (c2 === ":" || c2 === ";" || c2 === "{" || c2 === "}") break;
+      if (c2 === "/" && s.charAt(i + 1) === "*") break;
+      if (c2 === '"' || c2 === "'") { i = skipStr(s, i); continue; }
+      if (c2 === "(") { i = skipParen(s, i); continue; }
+      i++;
+    }
+    if (s.charAt(i) !== ":") { var j = s.indexOf(";", i); i = j < 0 ? end : j + 1; continue; }
+
+    var prop = s.slice(start, i).trim();
+    i++;
+    var vStart = i;
+    while (i < end) {
+      var c3 = s.charAt(i);
+      if (c3 === ";" || c3 === "}") break;
+      if (c3 === "(") { i = skipParen(s, i); continue; }
+      if (c3 === '"' || c3 === "'") { i = skipStr(s, i); continue; }
+      if (c3 === "/" && s.charAt(i + 1) === "*") { var e3 = s.indexOf("*/", i + 2); i = e3 < 0 ? end : e3 + 2; continue; }
+      i++;
+    }
+    var raw = s.slice(vStart, i);
+    var lead = raw.length - raw.replace(/^\s+/, "").length;
+    var val = raw.trim();
+    if (prop && val) {
+      var mm = /^([\s\S]*?)\s*!\s*important\s*$/i.exec(val);
+      list.push({
+        prop: prop,
+        val: val,
+        core: mm ? mm[1] : val,
+        bang: !!mm,
+        vStart: vStart + lead,
+        vEnd: vStart + lead + val.length
+      });
+    }
+    if (s.charAt(i) === ";") i++;
+  }
+  return list;
+}
+function parseCss(text) {
+  var s = String(text || ""), n = s.length, i = 0, prelude = "", out = [], stack = [];
+  while (i < n) {
+    var c = s.charAt(i);
+    /* a comment is skipped without joining the prelude, so a header comment
+       above a rule never ends up glued to that rule's selector */
+    if (c === "/" && s.charAt(i + 1) === "*") { var e = s.indexOf("*/", i + 2); i = e < 0 ? n : e + 2; continue; }
+    if (c === '"' || c === "'") { var q = skipStr(s, i); prelude += s.slice(i, q); i = q; continue; }
+    if (c === "{") {
+      var r = {
+        sel: prelude.trim(), bodyStart: i + 1, bodyEnd: i + 1,
+        decls: [], kids: false, parent: stack.length ? stack[stack.length - 1] : null
+      };
+      if (stack.length) stack[stack.length - 1].kids = true;
+      stack.push(r); out.push(r);
+      prelude = ""; i++; continue;
+    }
+    if (c === "}") {
+      var top = stack.pop();
+      if (top) { top.bodyEnd = i; top.decls = scanDecls(s, top); }
+      prelude = ""; i++; continue;
+    }
+    if (c === ";") { prelude = ""; i++; continue; }
+    prelude += c; i++;
+  }
+  return out;
+}
+/* rules that are worth a row in the panel: real selectors with declarations */
+function editableRules() {
+  var out = [];
+  for (var i = 0; i < RULES.length; i++) {
+    var r = RULES[i];
+    if (r.kids) continue;
+    if (/^\s*@/.test(r.sel)) continue;
+    if (!r.decls.length) continue;
+    out.push(i);
+  }
+  return out;
+}
+
+/* ---------------- small helpers ---------------- */
+function say(m) { $("status").textContent = m; }
+function esc(s) {
+  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function trimTxt(s) { return String(s == null ? "" : s).replace(/\s+/g, " ").trim(); }
+function tagLabel(el) {
+  if (!el) return "no section";
+  var c = (el.getAttribute("class") || "").trim().split(/\s+/).filter(Boolean).slice(0, 3);
+  return el.tagName.toLowerCase() + (c.length ? "." + c.join(".") : "");
+}
+
+/* ---------------- document build ---------------- */
+function needsTailwind(src) {
+  if (/cdn\.tailwindcss\.com/.test(src)) return false;
+  return /class\s*=\s*["'][^"']*\b(flex|grid|inline-flex|items-|justify-|gap-|space-[xy]-|rounded|max-w-|mx-auto|my-auto|px-|py-|pt-|pb-|text-(xs|sm|base|lg|xl|2xl|3xl)|bg-[a-z]|w-full|h-full|overflow-hidden)\b/.test(src);
+}
+function needsIconify(src) {
+  return /<iconify-icon/.test(src) && !/iconify/.test(src.replace(/<iconify-icon/g, ""));
+}
+function buildDoc(src) {
+  var head = '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+  head += '<style id="__pp">' + SEL_CSS + "</style>";
+  if (needsTailwind(src)) head += '<script src="https://cdn.tailwindcss.com"><\/script>';
+  if (needsIconify(src)) head += '<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"><\/script>';
+  return "<!DOCTYPE html><html><head>" + head + '</head><body><div id="__ppw">' + src + "</div></body></html>";
+}
+function normalize(src) {
+  if (!/<!doctype|<html[\s>]/i.test(src)) return src;
+  say("FULL DOCUMENT - BODY ONLY");
+  var m = /<body[^>]*>([\s\S]*)<\/body>/i.exec(src);
+  return m ? m[1] : src;
+}
+
+/* ==================================================================
+   css mode
+   Bare css has nothing to render. The preview is therefore built FROM
+   the css: every class name in the sheet becomes a stand-in element, and
+   the properties in that rule decide what kind of element it should be.
+   A rule with `list-style` becomes a <ul>, one with `width` + `height` +
+   `color` becomes an icon, `border-top` with no background becomes an
+   <hr>. That is what makes `.expect-card { ... }` show up as a card.
+   The stand-in never leaves the preview: the output stays pure css.
+   ================================================================== */
+var KNOWN_TAG = ("div section article aside header footer main nav p h1 h2 h3 h4 h5 h6 ul ol li " +
+  "span a button img svg table form input label blockquote figure figcaption hr").split(" ");
+var ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+  'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11l3 3L22 4"></path></svg>';
+var MEDIA_SRC = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360">' +
+  '<rect width="640" height="360" fill="#d9d6d0"/>' +
+  '<path d="M0 300 L180 170 L330 265 L470 175 L640 300 L640 360 L0 360 Z" fill="#bcb8b0"/>' +
+  '<circle cx="130" cy="95" r="34" fill="#cfcbc4"/></svg>');
+
+function humanize(c) {
+  return String(c || "")
+    .replace(/[-_]+/g, " ")
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/\s+/g, " ").trim()
+    .replace(/^./, function (x) { return x.toUpperCase(); });
+}
+function selectorKey(sel) {
+  var first = String(sel || "").split(",")[0];
+  if (/^\s*@/.test(first)) return null;
+  var clean = first.replace(/::?[a-zA-Z-]+(\([^)]*\))?/g, "");
+  var parts = clean.split(/[\s>+~]+/).filter(Boolean);
+  var last = parts.length ? parts[parts.length - 1] : clean;
+  if (!last) return null;
+  var classes = (last.match(/\.[A-Za-z_][A-Za-z0-9_-]*/g) || []).map(function (x) { return x.slice(1); });
+  var tm = /^([a-zA-Z][a-zA-Z0-9]*)/.exec(last);
+  var tag = tm && KNOWN_TAG.indexOf(tm[1].toLowerCase()) >= 0 ? tm[1].toLowerCase() : "";
+  if (classes.length) return { cls: classes[0], all: classes, tag: tag, id: "." + classes.join(".") };
+  if (tag) return { cls: "", all: [], tag: tag, id: tag };
+  return null;
+}
+function declMap(rule) {
+  var m = {};
+  for (var i = 0; i < rule.decls.length; i++) {
+    var p = rule.decls[i].prop.toLowerCase().replace(/^-(?:webkit|moz|ms|o)-/, "");
+    if (!(p in m)) m[p] = rule.decls[i].val;
+  }
+  return m;
+}
+function px(v) { var m = /^(-?[\d.]+)px\b/.exec(String(v || "").trim()); return m ? parseFloat(m[1]) : null; }
+function num(v) { var m = /^(-?[\d.]+)/.exec(String(v || "").trim()); return m ? parseFloat(m[1]) : null; }
+function roleOf(d, cls, tag) {
+  var has = function (p) { return d[p] !== undefined; };
+  var name = String(cls || "").toLowerCase();
+  var disp = String(d["display"] || "").toLowerCase();
+
+  if (tag === "hr") return "rule";
+  if (has("list-style") || has("list-style-type") || tag === "ul" || tag === "ol") return "list";
+  if (tag === "img" || tag === "picture" || tag === "video") return "media";
+  if ((has("border-top") || has("border-bottom") || has("border-top-width")) &&
+      !has("background") && !has("background-color")) return "rule";
+  if (has("width") && has("height") && (has("color") || has("fill") || has("stroke"))) return "icon";
+  if (/\b(logo|avatar|thumb|photo|image|img|picture|screenshot|banner|cover|hero-img)\b/.test(name)) return "media";
+
+  var heavy = has("background") || has("background-color") || has("box-shadow") || has("border") || has("border-radius");
+  if ((disp.indexOf("flex") >= 0 || disp.indexOf("grid") >= 0) && (has("gap") || has("align-items")) && !heavy) return "row";
+
+  var fwRaw = String(d["font-weight"] || "");
+  var fw = num(fwRaw);
+  var bold = (fw !== null && fw >= 600) || /\bbold\b/i.test(fwRaw) || /\b(7|8|9)00\b/.test(fwRaw);
+  var fs = px(d["font-size"]);
+  if (tag === "h1" || tag === "h2" || tag === "h3") return "heading";
+  if (tag === "h4" || tag === "h5" || tag === "h6") return "subheading";
+  if (fs !== null && fs >= 18) return "heading";
+  if (bold && fs !== null) return "subheading";
+  if (fs !== null && has("line-height")) return "text";
+  if (fs !== null && has("color") && (has("margin") || has("margin-bottom"))) return "text";
+  if (has("font-size")) return "text";
+
+  if (/\b(btn|button|cta)\b/.test(name) || tag === "a" || tag === "button") return "button";
+  if (/\b(title|heading|headline)\b/.test(name)) return "heading";
+  if (/\b(text|desc|description|para|copy|sub|body|note|label|caption)\b/.test(name)) return "text";
+  if (/\b(list|items|menu|nav|steps)\b/.test(name)) return "list";
+  if (has("border") || has("border-radius") || has("padding")) return "card";
+  if (has("background") || has("background-color")) return "card";
+  if (has("margin-bottom") || has("margin-top") || has("margin")) return "block";
+  return "box";
+}
+var ROLE_TAG = { list: "ul", rule: "hr", icon: "svg", media: "img", heading: "h3",
+  subheading: "h4", text: "p", button: "a", row: "div", card: "div", box: "div", block: "div" };
+
+function scaffoldNodes(cssText) {
+  var parsed = parseCss(cssText);
+  var order = [], byId = {};
+  parsed.forEach(function (r) {
+    if (r.kids) return;               /* @media itself: its inner rules are walked instead */
+    var key = selectorKey(r.sel);
+    if (!key) return;
+    var node = byId[key.id];
+    if (!node) {
+      node = byId[key.id] = { key: key, d: {}, order: order.length };
+      order.push(node);
+    }
+    var m = declMap(r);
+    for (var p in m) if (!(p in node.d)) node.d[p] = m[p];
+  });
+  order.forEach(function (n) {
+    n.role = roleOf(n.d, n.key.cls, n.key.tag);
+    n.tag = n.key.tag || ROLE_TAG[n.role] || "div";
+  });
+  return order;
+}
+/* group by the bit before the first dash: .expect-card and .expect-title
+   clearly belong to the same block, .policy-block to its own */
+function groupKey(n) {
+  var c = n.key.cls;
+  if (!c) return "tag:" + n.key.tag;
+  var i = c.indexOf("-");
+  return i > 0 ? c.slice(0, i) : c;
+}
+var CONTAINER_ROLE = { card: 1, box: 1, media: 1 };
+
+function buildScaffold(cssText) {
+  var nodes = scaffoldNodes(cssText);
+  var groups = [], seen = {};
+  nodes.forEach(function (n) {
+    var gk = groupKey(n);
+    if (!seen[gk]) { seen[gk] = { key: gk, items: [] }; groups.push(seen[gk]); }
+    seen[gk].items.push(n);
+  });
+
+  var roots = [];
+  groups.forEach(function (g) {
+    var root = null, i;
+    for (i = 0; i < g.items.length; i++) { if (CONTAINER_ROLE[g.items[i].role]) { root = g.items[i]; break; } }
+    if (!root) for (i = 0; i < g.items.length; i++) { if (g.items[i].role === "block" || g.items[i].role === "list") { root = g.items[i]; break; } }
+    if (!root) root = g.items[0];
+
+    var stack = { container: null, list: null, row: null };
+    g.items.forEach(function (it) {
+      if (it === root) { it.children = it.children || []; return; }
+      var el = { n: it, children: [] };
+      var parent;
+      if (it.role === "list") { parent = stack.container || root; stack.list = el; stack.row = null; }
+      else if (it.role === "row") { parent = stack.list || stack.container || root; stack.row = el; }
+      else if (it.role === "icon" || it.role === "text" || it.role === "subheading") {
+        parent = stack.row || stack.list || stack.container || root;
+      } else { parent = stack.container || root; stack.row = null; }
+      parent.children.push(el);
+      if (CONTAINER_ROLE[it.role]) { stack.container = el; stack.list = null; stack.row = null; }
+    });
+    roots.push(root);
+  });
+
+  SCAF_COUNT = nodes.length;
+  return renderScaffold(roots);
+}
+function escAttr(s) { return esc(s).replace(/'/g, "&#39;"); }
+function renderScaffold(roots) {
+  var out = "";
+  roots.forEach(function (r) { out += renderNode(r, "", 1); });
+  return out;
+}
+function renderNode(node, parentTag, copy) {
+  /* group roots carry their fields directly, nested nodes carry them in .n */
+  var n = node.n || node;
+  var tag = n.tag;
+  /* a row whose parent is a list is a list item, whatever the css called it */
+  if (parentTag === "ul" || parentTag === "ol") tag = "li";
+  var cls = n.key.all.length ? n.key.all.join(" ") : "";
+  var attrs = cls ? ' class="' + escAttr(cls) + '"' : "";
+  var label = humanize(n.key.cls || n.key.tag);
+  if (copy > 1) label = label + " " + copy;
+
+  var void_ = (tag === "img" || tag === "hr");
+  if (tag === "img") return "<img" + attrs + ' src="' + MEDIA_SRC + '" alt="">';
+  if (tag === "hr") return "<hr" + attrs + ">";
+
+  var inner = "";
+  if (tag === "svg") {
+    inner = ICON_SVG.replace("<svg", '<svg' + attrs);
+    return inner;
+  }
+  if (tag === "a" || tag === "button") {
+    inner = esc(label);
+    if (tag === "a") attrs += ' href="#"';
+  }
+
+  var kids = "";
+  var isList = (tag === "ul" || tag === "ol");
+  var children = node.children || [];
+  /* lists read better with a few entries, and each entry keeps its own copy */
+  var repeat = isList ? Math.max(1, Math.min(3, 4 - children.length)) : 1;
+  if (children.length) {
+    for (var c = 0; c < repeat; c++) {
+      children.forEach(function (ch) { kids += renderNode(ch, tag, isList ? c + 1 : copy); });
+    }
+  }
+  if (!kids && !inner && tag !== "svg") {
+    if (tag === "li" || tag === "p" || tag === "div" || tag === "span" ||
+        /^h[1-6]$/.test(tag) || tag === "blockquote" || tag === "figcaption") {
+      inner = esc(label);
+    }
+  }
+  if (!kids && !inner) kids = " ";
+  return "<" + tag + attrs + ">" + (kids || inner) + "</" + tag + ">";
+}
+function genericScaffold() {
+  SCAF_COUNT = 0;
+  return '<div class="card"><h3 class="title">Sample heading</h3>' +
+    '<p class="text">Sample paragraph, so the css has something to land on.</p>' +
+    '<ul class="list"><li class="item">First item</li><li class="item">Second item</li></ul>' +
+    '<a class="button" href="#">Sample button</a></div>';
+}
+
+var BASE_CSS =
+  "html,body{margin:0;padding:0}" +
+  "body{background:#fff;color:#111;font:16px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}" +
+  "#__ppw{padding:26px}" +
+  "img,svg{max-width:100%}" +
+  "svg{display:block}";
+
+function buildCssDoc(css) {
+  var head = '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+  head += '<style id="__ppb">' + BASE_CSS + "</style>";
+  head += '<style id="__ppu">' + String(css || "").replace(/<\/style/gi, "<\\/style") + "</style>";
+  head += '<style id="__pp">' + SEL_CSS + "</style>";
+  return "<!DOCTYPE html><html><head>" + head + "</head><body><div id=\"__ppw\">" + SCAF_DOC + "</div></body></html>";
+}
+function applyCss() {
+  if (!DOC) return;
+  var el = DOC.getElementById("__ppu");
+  if (el) el.textContent = CSS_TEXT;
+}
+
+/* ---------------- render ---------------- */
+function render() {
+  var raw = $("src").value;
+  var src = raw.trim();
+  if (!src) { say("NOTHING TO RENDER"); return; }
+
+  RMODE = detectMode(src);
+  $("quickBox").hidden = (RMODE === "css");
+  $("scafNote").hidden = (RMODE !== "css");
+  $("panelTitle").textContent = RMODE === "css" ? "CSS RULES" : "CONTENT";
+  $("detNote").textContent = (MODE === "auto" ? "detected: " : "forced: ") +
+    (RMODE === "css" ? "CSS" : "HTML");
+  $("fmtNote").textContent = RMODE === "css"
+    ? "Your edits go back into the code you copy."
+    : "One custom code block at a time - not a whole page.";
+  $("btnExport").textContent = RMODE === "css" ? "EXPORT .CSS" : "EXPORT .HTML";
+  $("btnExport").title = RMODE === "css"
+    ? "Save the finished CSS as a real .css file, ready for Design - Custom CSS"
+    : "Save the finished code as a real .html file so the markup is not flattened";
+
+  ITEMS = []; SEL = null; TARGET = null; STYLED = []; ROPEN = -1; ACTIVE = -1;
+
+  if (RMODE === "css") {
+    WRAP_STYLE = /<style[\s>]/i.test(raw);
+    CSS_TEXT = cssFromInput(raw);
+    RULES = parseCss(CSS_TEXT);
+    SCAF_DOC = buildScaffold(CSS_TEXT);
+    if (!SCAF_COUNT) SCAF_DOC = genericScaffold();
+    $("scafNote").innerHTML = SCAF_COUNT
+      ? "Preview built from the <b>" + SCAF_COUNT + "</b> class " +
+        (SCAF_COUNT === 1 ? "name" : "names") + " in your CSS, so you can see what the values do. " +
+        "It is a stand-in and never reaches the code you copy."
+      : "No class names in this CSS, so the preview shows a generic sample. Your code is copied back untouched.";
+  }
+
+  panel.innerHTML = '<div class="empty">Rendering...</div>';
+  frame.hidden = false; ph.hidden = true; fitbox.hidden = false;
+
+  var prevDoc = frame.contentDocument;
+  var token = ++loadToken;
+  frame.srcdoc = RMODE === "css" ? buildCssDoc(CSS_TEXT) : buildDoc(normalize(src));
+
+  function tryBoot() {
+    if (token !== loadToken) return true;
+    var d = frame.contentDocument;
+    if (!d || d === prevDoc || !d.body) return false;
+    if (booted.has(d)) return true;
+    var ready = false;
+    try {
+      ready = !!(d.documentElement && d.location && d.location.href !== "about:blank" &&
+        d.readyState !== "loading" && d.body.childElementCount > 0);
+    } catch (e) { ready = false; }
+    if (!ready) return false;
+    booted.add(d);
+    try { boot(d); } catch (e) { say("RENDER ERROR: " + e.message); }
+    return true;
+  }
+  frame.onload = function () { if (token === loadToken) tryBoot(); };
+
+  var started = Date.now();
+  (function tick() {
+    if (token !== loadToken) return;
+    if (tryBoot()) return;
+    if (Date.now() - started > 6000) {
+      var d2 = frame.contentDocument;
+      if (d2 && d2.body && !booted.has(d2)) { booted.add(d2); try { boot(d2); } catch (e) {} }
+      return;
+    }
+    setTimeout(tick, 40);
+  })();
+}
+
+function boot(d) {
+  DOC = d;
+  /* clicks inside the preview must never navigate */
+  d.addEventListener("click", function (e) {
+    e.preventDefault(); e.stopPropagation();
+    try { if (RMODE === "css") pickRuleNode(e.target); else pickFrom(e.target, false); } catch (err) {}
+  }, true);
+  d.addEventListener("auxclick", function (e) { e.preventDefault(); e.stopPropagation(); }, true);
+  d.addEventListener("submit", function (e) { e.preventDefault(); e.stopPropagation(); }, true);
+  d.addEventListener("mousedown", function (e) { if (e.button === 1) { e.preventDefault(); e.stopPropagation(); } }, true);
+  d.addEventListener("dblclick", function (e) {
+    e.preventDefault(); e.stopPropagation();
+    try { if (RMODE === "css") pickRuleNode(e.target); else pickFrom(e.target, true); } catch (err) {}
+  }, true);
+  d.addEventListener("mousemove", function (e) {
+    try {
+      if (RMODE === "css") return;
+      var it = itemOf(e.target);
+      clearMarkers(d, "__pp-hover");
+      if (it && it.el !== SEL) it.el.classList.add("__pp-hover");
+    } catch (err) {}
+  }, true);
+  try { d.defaultView.open = function () { return null; }; } catch (e) {}
+
+  if (RMODE === "css") {
+    watchHeight(d);
+    renderPanel();
+    sync();
+    say("READY · " + editableRules().length + " CSS RULES");
+    return;
+  }
+
+  scan();
+  sectionTarget();
+  renderPanel();
+  watchHeight(d);
+  sync();
+  say("READY · " + ITEMS.length + " EDITABLE");
+}
+
+function applySize(h) {
+  /* Two boxes: the frame keeps its true device width and height so the
+     section inside lays out exactly as it will on the site, and the box
+     around it holds the scaled-down space so nothing is cut off. */
+  LAST_H = h;
+  window.__ppH = h;
+  frame.style.height = h + "px";
+  fitbox.style.height = Math.round(h * SCALE) + "px";
+  fitbox.hidden = frame.hidden;
+}
+function fitFrame() {
+  /* Measure the wrapper element, never the document element.
+     documentElement.scrollHeight is floored at the viewport height, so
+     feeding it back into the iframe made the frame grow by a few pixels on
+     every pass until it was clipped - a tall empty white sheet under the
+     section. #__ppw is content sized, so the loop is gone. */
+  var d = DOC || frame.contentDocument;
+  if (frame.hidden || !d || !d.body) return;
+  try {
+    var h = 0, root = d.getElementById("__ppw");
+    if (root && root.getBoundingClientRect) {
+      var r = root.getBoundingClientRect();
+      h = r.height + Math.max(0, r.top);
+    }
+    if (!h && d.body.getBoundingClientRect) h = d.body.getBoundingClientRect().height;
+    h = Math.min(Math.max(Math.ceil(h) + 2, 200), 4000);
+    if (Math.abs(h - LAST_H) < 2) return;
+    applySize(h);
+  } catch (e) {}
+}
+function layoutFrame() {
+  /* A 1200 px desktop preview never fits a side column of a 1400 px page,
+     so it used to sit behind a horizontal scrollbar. It is scaled to fit
+     instead, and the label says so, because a shrunken preview that does
+     not admit it is worse than no preview. */
+  var avail = framewrap.clientWidth - 32;
+  if (avail < 240) avail = 240;
+  SCALE = Math.min(1, avail / VPW);
+  window.__ppScale = SCALE;
+  fitbox.style.width = Math.round(VPW * SCALE) + "px";
+  frame.style.width = VPW + "px";
+  frame.style.maxWidth = "none";
+  frame.style.transform = SCALE < 1 ? "scale(" + SCALE + ")" : "none";
+  frame.style.transformOrigin = "top left";
+  LAST_H = -1;   /* force a re-apply so the new scale reaches the box */
+  $("vpNote").textContent = VPW + " px" + (SCALE < 1 ? " · shown at " + Math.round(SCALE * 100) + "%" : "");
+  fitFrame();
+}
+function watchHeight(d) {
+  fitFrame();
+  try {
+    var mo = new MutationObserver(fitFrame);
+    mo.observe(d.body, { childList: true, subtree: true, attributes: true, characterData: true });
+  } catch (e) {}
+  try {
+    var root2 = d.getElementById("__ppw");
+    if (root2) new ResizeObserver(fitFrame).observe(root2);
+  } catch (e) {}
+  /* images and webfonts land after the first paint and change the height */
+  setTimeout(fitFrame, 300); setTimeout(fitFrame, 1000); setTimeout(fitFrame, 2400);
+}
+
+/* ---------------- scan ---------------- */
+function win(el) { return el.ownerDocument.defaultView; }
+
+function bgInfo(el) {
+  if (!el.getAttribute("class") && !el.getAttribute("style")) return null;
+  var cs = win(el).getComputedStyle(el);
+  if (cs.backgroundImage === "none") return null;
+  var m = /url\(\s*(['"]?)([^'")]+)\1\s*\)/i.exec(cs.backgroundImage);
+  if (!m) return null;
+  var r = el.getBoundingClientRect();
+  if (r.width < 16 || r.height < 16) return null;
+  return m[2];
+}
+function textCarrying(el) {
+  var out = [];
+  for (var i = 0; i < el.children.length; i++) {
+    var c = el.children[i];
+    if (SKIP[c.tagName]) continue;
+    if (c.textContent && c.textContent.trim()) out.push(c);
+  }
+  return out;
+}
+function stackedLines(el) {
+  var w = win(el), n = 0;
+  var kids = textCarrying(el);
+  for (var i = 0; i < kids.length; i++) {
+    var cs = w.getComputedStyle(kids[i]);
+    if (cs.display === "none" || cs.visibility === "hidden" || Number(cs.opacity) === 0) continue;
+    var d = cs.display;
+    if (d === "block" || d === "flex" || d === "grid" || d === "list-item" || d === "table" || d === "table-row" || d === "flow-root") n++;
+    if (n >= 2) return n;
+  }
+  return n;
+}
+function overlap(a, b) {
+  var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+  var ox = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left);
+  var oy = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
+  return ox > 4 && oy > 4;
+}
+function allOverlap(kids) {
+  for (var i = 1; i < kids.length; i++) if (!overlap(kids[0], kids[i])) return false;
+  return true;
+}
+function hasDirectText(el) {
+  for (var i = 0; i < el.childNodes.length; i++) {
+    var n = el.childNodes[i];
+    if (n.nodeType === 3 && n.nodeValue && n.nodeValue.trim()) return true;
+  }
+  return false;
+}
+function isTextLeaf(el) {
+  if (!el.textContent || !el.textContent.trim()) return false;
+  for (var i = 0; i < el.children.length; i++) {
+    if (BLOCK_SET[el.children[i].tagName]) return false;
+    if (el.children[i].tagName.indexOf("ICONIFY") === 0) continue;
+  }
+  if (stackedLines(el) >= 2) return false;
+  var kids = textCarrying(el);
+  if (kids.length >= 2 && !allOverlap(kids)) return false;
+  return true;
+}
+
+function scan() {
+  ITEMS = [];
+  var root = DOC.getElementById("__ppw");
+  if (!root) return;
+  var kids = [];
+  for (var i = 0; i < root.children.length; i++) kids.push(root.children[i]);
+  kids.forEach(function (el) { walk(el); });
+  ITEMS.forEach(function (it, n) { it.i = n; it.el.setAttribute("data-ppx", String(n)); });
+}
+
+function walk(el) {
+  if (ITEMS.length >= MAX_ITEMS) return;
+  if (!el || el.nodeType !== 1) return;
+  if (SKIP[el.tagName]) return;
+  if (el.id === "__pp" || (el.getAttribute && (el.getAttribute("id") || "").indexOf("__pp") === 0)) return;
+
+  var tag = el.tagName;
+
+  if (tag === "IMG") { push({ kind: "image", el: el }); return; }
+
+  if (tag === "A" || tag === "BUTTON") {
+    /* one row per button: text, link and new tab live together */
+    var kids = textCarrying(el);
+    var swap = kids.length >= 2 && allOverlap(kids);
+    if (swap) { push({ kind: "text", el: el, all: true }); push({ kind: "action", el: el, noText: true }); }
+    else {
+      var direct = hasDirectText(el);
+      /* plenty of templates wrap the label: <a class="btn"><span>Buy</span></a>.
+         In that case the label still has to be editable from this one row. */
+      var host = direct ? el : (kids.length === 1 ? kids[0] : el);
+      push({ kind: "action", el: el, noText: !(direct || kids.length === 1), textEl: host });
+    }
+    /* images and nested links inside still deserve their own row */
+    for (var i = 0; i < el.children.length; i++) {
+      var c = el.children[i];
+      if (c.tagName === "IMG" || c.tagName === "A" || c.tagName === "BUTTON") walk(c);
+      else if (!BLOCK_SET[c.tagName] && !textCarrying(c).length && bgInfo(c) && !c.textContent.trim()) walk(c);
+    }
+    return;
+  }
+
+  if (!el.children.length) {
+    var bg = bgInfo(el);
+    if (bg) { push({ kind: "image", el: el, bg: true }); return; }
+    if (el.textContent && el.textContent.trim()) { push({ kind: "text", el: el }); }
+    return;
+  }
+
+  if (isTextLeaf(el)) {
+    var b2 = bgInfo(el);
+    if (b2 && !hasDirectText(el)) { push({ kind: "image", el: el, bg: true }); }
+    if (el.textContent && el.textContent.trim()) push({ kind: "text", el: el });
+    return;
+  }
+
+  var bg3 = bgInfo(el);
+  if (bg3 && !textCarrying(el).length) { push({ kind: "image", el: el, bg: true }); return; }
+
+  for (var j = 0; j < el.children.length; j++) walk(el.children[j]);
+}
+
+function push(it) { if (ITEMS.length < MAX_ITEMS) ITEMS.push(it); }
+
+function itemOf(node) {
+  if (!node || !DOC) return null;
+  var el = node.nodeType === 1 ? node : (node.parentElement || null);
+  while (el && el !== DOC.body) {
+    if (el.getAttribute && el.getAttribute("data-ppx") !== null) {
+      return ITEMS[+el.getAttribute("data-ppx")] || null;
+    }
+    el = el.parentElement;
+  }
+  return null;
+}
+
+function pickFrom(node, focus) {
+  var it = itemOf(node);
+  if (!it) { sectionTarget(); renderPanel(); return; }
+  select(it, focus);
+}
+
+/* ---------------- markers ---------------- */
+function unmask(el, cls) {
+  if (!el) return;
+  el.classList.remove(cls);
+  if (!el.getAttribute("class")) el.removeAttribute("class");
+}
+function clearMarkers(d, cls) {
+  var list = d.querySelectorAll("." + cls);
+  for (var i = 0; i < list.length; i++) unmask(list[i], cls);
+}
+function paintSel() {
+  if (!DOC) return;
+  clearMarkers(DOC, "__pp-on");
+  clearMarkers(DOC, "__pp-mark");
+  if (SEL) { SEL.classList.add("__pp-on"); SEL.classList.add("__pp-mark"); }
+}
+function select(it, focus) {
+  SEL = it.el;
+  ACTIVE = it.i;
+  TARGET = it.el;
+  paintSel();
+  renderPanel();
+  $("tgtName").textContent = tagLabel(TARGET);
+  readStyle();
+  if (focus) {
+    var f = panel.querySelector(".field.on input, .field.on textarea");
+    if (f) { f.focus(); f.select ? f.select() : 0; }
+  }
+}
+
+/* ---------------- current values ---------------- */
+function imgSrcOf(it) {
+  if (it.bg) {
+    var cs = win(it.el).getComputedStyle(it.el);
+    var m = /url\(\s*(['"]?)([^'")]+)\1\s*\)/i.exec(cs.backgroundImage || "");
+    return m ? m[2] : "";
+  }
+  return it.el.getAttribute("src") || "";
+}
+function currentOf(it) {
+  if (it.kind === "image") return imgSrcOf(it);
+  if (it.kind === "action") {
+    if (it.noText) return linkOf(it.el) || trimTxt(it.el.textContent);
+    return trimTxt((it.textEl || it.el).textContent);
+  }
+  return trimTxt(it.el.textContent);
+}
+function isButton(el) {
+  if (el.tagName === "BUTTON") return true;
+  return /\b(btn|button|btn-)\b/i.test(el.getAttribute("class") || "");
+}
+
+/* A <button> has no href, so a destination has to travel as a click
+   handler. Whatever the template already had on the element is kept in a
+   WeakMap and put back the moment you clear the field - nothing about the
+   original markup is thrown away. */
+var ORIG = new WeakMap();
+function origOf(el, key, attr) {
+  if (!ORIG.has(el)) ORIG.set(el, {});
+  var o = ORIG.get(el);
+  if (!(key in o)) o[key] = el.getAttribute(attr);
+  return o;
+}
+function linkOf(el) {
+  if (el.tagName === "A") return el.getAttribute("href") || "";
+  var oc = el.getAttribute("onclick") || "";
+  var m = /window\.open\(\s*(['"])([^'"]*)\1/.exec(oc) || /location(?:\.href)?\s*=\s*(['"])([^'"]*)\1/.exec(oc);
+  return m ? m[2] : "";
+}
+function blankOf(el) {
+  if (el.tagName === "A") return el.getAttribute("target") === "_blank";
+  return /window\.open\(/.test(el.getAttribute("onclick") || "");
+}
+function handlerFor(url, blank) {
+  var u = String(url).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+  return blank ? "window.open('" + u + "', '_blank', 'noopener')" : "location.href='" + u + "'";
+}
+function setLink(el, url) {
+  url = String(url == null ? "" : url).trim();
+  if (el.tagName === "A") {
+    if (url) el.setAttribute("href", url); else el.removeAttribute("href");
+    return;
+  }
+  var o = origOf(el, "onclick", "onclick");
+  if (!url) {
+    el.removeAttribute("onclick");
+    if (o.onclick) el.setAttribute("onclick", o.onclick);
+    return;
+  }
+  el.setAttribute("onclick", handlerFor(url, blankOf(el)));
+}
+function setBlank(el, on) {
+  var o = origOf(el, "target", "target");
+  origOf(el, "rel", "rel");
+  var oo = ORIG.get(el);
+  if (el.tagName !== "A") {
+    var url = linkOf(el);
+    if (url) el.setAttribute("onclick", handlerFor(url, on));
+    return;
+  }
+  if (on) {
+    el.setAttribute("target", "_blank");
+    var rel = (el.getAttribute("rel") || "").split(/\s+/).filter(Boolean);
+    if (rel.indexOf("noopener") < 0) rel.push("noopener");
+    el.setAttribute("rel", rel.join(" "));
+  } else {
+    if (o.target) el.setAttribute("target", o.target); else el.removeAttribute("target");
+    if (oo.rel) el.setAttribute("rel", oo.rel); else el.removeAttribute("rel");
+  }
+}
+function kindLabel(it) {
+  if (it.kind === "image") return it.bg ? "BG IMAGE" : "IMAGE";
+  if (it.kind === "action") return isButton(it.el) ? "BUTTON" : "LINK";
+  return "TEXT";
+}
+
+/* ---------------- panel ---------------- */
+var ACTIVE = -1;
+
+function renderPanel() {
+  if (RMODE === "css") return renderCssPanel();
+  if (!DOC || !ITEMS.length) {
+    panel.innerHTML = '<div class="empty">No editable items found in this snippet.</div>';
+    $("cntNote").textContent = "0";
+    return;
+  }
+  var html = "";
+  for (var i = 0; i < ITEMS.length; i++) {
+    var it = ITEMS[i];
+    var on = i === ACTIVE;
+    var cur = currentOf(it);
+    html += '<div class="field' + (on ? " on" : "") + '" data-i="' + i + '" data-kind="' + it.kind + '">';
+    html += '<button class="chip" data-i="' + i + '">' +
+      '<span class="kind k-' + it.kind + '">' + esc(kindLabel(it)) + "</span>" +
+      '<span class="ftxt">' + esc(cur.slice(0, 60)) + "</span>" +
+      '<span class="ar">' + (on ? "\u25B4" : "\u25BE") + "</span></button>";
+    if (on) html += '<div class="edit">' + editBody(it) + "</div>";
+    html += "</div>";
+  }
+  panel.innerHTML = html;
+  $("cntNote").textContent = ITEMS.length + " items";
+}
+
+/* ---------------- css panel (css mode) ----------------
+   One row per rule, one row per declaration. Every value is a plain text
+   field, so anything the css can hold is editable, plus a colour swatch
+   when the value really is a colour and a switch for !important. */
+function renderCssPanel() {
+  var list = editableRules();
+  if (!list.length) {
+    panel.innerHTML = '<div class="empty">No CSS rules found in this code.<br><br>' +
+      '<span style="color:var(--gold)">.card { padding: 24px; }</span><br><br>' +
+      'Paste real rules and press RENDER again.</div>';
+    $("cntNote").textContent = "0";
+    return;
+  }
+  var html = '<p class="rule-note">Every rule in your CSS. Change a value and the preview follows; ' +
+    'the code you copy is your own CSS with that edit inside it.</p>';
+  list.forEach(function (i) {
+    var r = RULES[i], on = (i === ROPEN);
+    html += '<div class="rule' + (on ? " on" : "") + '" data-r="' + i + '">' +
+      '<button class="rule-h" data-r="' + i + '">' +
+      '<span class="rsel">' + esc(r.sel) + "</span>" +
+      '<span class="rnum">' + r.decls.length + "</span>" +
+      '<span class="ar">' + (on ? "\u25B4" : "\u25BE") + "</span></button>";
+    if (on) html += '<div class="rbody">' + ruleBody(r, i) + "</div>";
+    html += "</div>";
+  });
+  panel.innerHTML = html;
+  $("cntNote").textContent = list.length + " rules";
+}
+function hexOf(v) {
+  var s = String(v == null ? "" : v).trim();
+  var m = /^#([0-9a-f]{3})$/i.exec(s);
+  if (m) return ("#" + m[1][0] + m[1][0] + m[1][1] + m[1][1] + m[1][2] + m[1][2]).toLowerCase();
+  if (/^#[0-9a-f]{6}$/i.test(s)) return s.toLowerCase();
+  var r = /^rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)/i.exec(s);
+  if (r) {
+    return "#" + [r[1], r[2], r[3]].map(function (x) {
+      return ("0" + Math.min(255, +x).toString(16)).slice(-2);
+    }).join("");
+  }
+  return "";
+}
+function ruleBody(r, ri) {
+  var h = "";
+  if (r.parent && r.parent.sel) h += '<p class="rule-note">Inside <b>' + esc(r.parent.sel) + "</b></p>";
+  r.decls.forEach(function (d, di) {
+    var hex = hexOf(d.core);
+    h += '<div class="dl"' + (d.bang ? ' data-imp="1"' : "") + ">" +
+      '<span class="dl-p">' + esc(d.prop) + "</span>" +
+      '<input class="dl-i" type="text" value="' + escAttr(d.core) + '" spellcheck="false"' +
+        ' data-r="' + ri + '" data-d="' + di + '">' +
+      (hex ? '<input class="dl-c" type="color" value="' + escAttr(hex) + '"' +
+        ' data-r="' + ri + '" data-d="' + di + '" title="Pick a colour">' : "") +
+      '<span class="bang' + (d.bang ? " on" : "") + '" data-r="' + ri + '" data-d="' + di + '"' +
+        ' title="Toggle !important">!</span>' +
+      "</div>";
+  });
+  return h;
+}
+/* Splice, never re-serialise: everything around the edited value - comments,
+   at-rules, the odd blank line the user put there - is left byte for byte. */
+function setRuleDecl(ri, di, core, bang, write) {
+  var r = RULES[ri];
+  if (!r || !r.decls[di]) return;
+  var d = r.decls[di];
+  var keep = (bang === undefined || bang === null) ? d.bang : !!bang;
+  var text = String(core == null ? "" : core) + (keep ? " !important" : "");
+  CSS_TEXT = CSS_TEXT.slice(0, d.vStart) + text + CSS_TEXT.slice(d.vEnd);
+  applyCss();
+  reparseCss();
+  if (write) writeBack();
+  sync();
+}
+function reparseCss() {
+  var before = RULES.map(function (r) { return r.decls.length; }).join(",");
+  RULES = parseCss(CSS_TEXT);
+  var after = RULES.map(function (r) { return r.decls.length; }).join(",");
+  if (before !== after) renderPanel();
+}
+function writeBack() {
+  if (RMODE !== "css" || !DOC) return;
+  var body = CSS_TEXT.replace(/\s+$/, "") + "\n";
+  var v = WRAP_STYLE ? "<style>\n" + body + "</style>" : body;
+  $("src").value = v;
+  $("lenNote").textContent = v.length + " chars";
+}
+function pickRuleNode(node) {
+  if (!DOC) return;
+  var el = node && node.nodeType === 1 ? node : (node && node.parentElement);
+  var root = DOC.getElementById("__ppw");
+  var found = -1, hit = null;
+  while (el && el !== DOC.body) {
+    var cls = (el.getAttribute && el.getAttribute("class")) || "";
+    var list = cls.split(/\s+/).filter(Boolean);
+    for (var i = 0; i < list.length && found < 0; i++) found = ruleIndexFor(list[i]);
+    if (found >= 0) { hit = el; break; }
+    if (el === root) break;
+    el = el.parentElement;
+  }
+  if (found >= 0) {
+    ROPEN = found;
+    clearMarkers(DOC, "__pp-on");
+    clearMarkers(DOC, "__pp-mark");
+    if (hit && hit.classList) { hit.classList.add("__pp-on"); hit.classList.add("__pp-mark"); }
+  }
+  renderPanel();
+  say(found >= 0 ? "RULE SELECTED" : "THAT ELEMENT HAS NO RULE");
+  return found;
+}
+function ruleIndexFor(cls) {
+  var list = editableRules();
+  for (var i = 0; i < list.length; i++) {
+    var k = selectorKey(RULES[list[i]].sel);
+    if (k && k.all.indexOf(cls) >= 0) return list[i];
+  }
+  return -1;
+}
+
+function editBody(it) {
+  var cur = currentOf(it);
+  var h = '<div class="ro">' + esc(cur) +
+    (it.kind === "image" ? '<img src="' + esc(cur) + '" alt="" onerror="this.style.display=\'none\'">' : "") + "</div>";
+
+  if (it.kind === "text") {
+    var long = cur.length > 60;
+    h += '<div class="fl"><label class="lb">Text</label>' +
+      (long ? '<textarea rows="3" data-f="text">' + esc(cur) + "</textarea>"
+            : '<input type="text" data-f="text" value="' + esc(cur) + '">') + "</div>";
+    return h;
+  }
+
+  if (it.kind === "image") {
+    h += '<div class="fl"><label class="lb">Image URL</label>' +
+      '<input type="text" data-f="url" value="' + esc(cur) + '"></div>';
+    if (!it.bg) {
+      h += '<div class="fl"><label class="lb">Alt text</label>' +
+        '<input type="text" data-f="alt" value="' + esc(it.el.getAttribute("alt") || "") + '"></div>';
+    } else {
+      h += '<div class="fl"><span class="status">' +
+        "This picture is a CSS background. Size and crop stay exactly as your CSS sets them.</span></div>";
+    }
+    return h;
+  }
+
+  /* action: text, link and new tab all live in this one row */
+  var el = it.el, anchor = el.tagName === "A";
+  if (!it.noText) {
+    h += '<div class="fl"><label class="lb">' + (anchor ? "Link text" : "Button text") + "</label>" +
+      '<input type="text" data-f="text" value="' + esc(cur) + '"></div>';
+  }
+  h += '<div class="fl"><label class="lb">' + (anchor ? "Link URL" : "Link URL - opens on click") + "</label>" +
+    '<input type="text" data-f="href" value="' + esc(linkOf(el)) + '" placeholder="https://example.com/page"></div>';
+  h += '<div class="fl"><div class="sw-line"><span>' +
+    (anchor ? "Open in a new tab" : "Open the link in a new tab") + "</span>" +
+    '<div class="cbx' + (blankOf(el) ? " on" : "") + '" data-f="blank"></div></div></div>';
+  h += '<div class="fl"><span class="status">' +
+    (anchor
+      ? "Writes href, and target plus rel when the switch is on."
+      : "This is a &lt;button&gt;, which has no href, so the destination is written as a click handler. " +
+        "Everything else on the button stays exactly as your template wrote it.") +
+    "</span></div>";
+  return h;
+}
+
+panel.addEventListener("click", function (e) {
+  var chip = e.target.closest ? e.target.closest(".chip") : null;
+  if (chip) {
+    var i = +chip.dataset.i;
+    ACTIVE = (ACTIVE === i) ? -1 : i;
+    var it = ITEMS[i];
+    if (it) {
+      SEL = it.el; TARGET = it.el;
+      paintSel();
+      $("tgtName").textContent = tagLabel(TARGET);
+      readStyle();
+    }
+    renderPanel();
+    return;
+  }
+  var cbx = e.target.closest ? e.target.closest('.cbx[data-f]') : null;
+  if (cbx) {
+    var on = !cbx.classList.contains("on");
+    cbx.classList.toggle("on", on);
+    var fld = cbx.closest(".field");
+    var it2 = ITEMS[+fld.dataset.i];
+    if (it2 && it2.kind === "action" && cbx.dataset.f === "blank") {
+      setBlank(it2.el, on);
+      sync();
+    }
+  }
+});
+
+var editTimer = null;
+panel.addEventListener("input", function (e) {
+  var inp = e.target;
+  if (!inp.dataset || !inp.dataset.f) return;
+  var fld = inp.closest(".field");
+  if (!fld) return;
+  var it = ITEMS[+fld.dataset.i];
+  if (!it) return;
+  var f = inp.dataset.f, v = inp.value;
+  clearTimeout(editTimer);
+  editTimer = setTimeout(function () { applyField(it, f, v); }, f === "url" ? 260 : 120);
+});
+panel.addEventListener("change", function (e) {
+  var inp = e.target;
+  if (!inp.dataset || !inp.dataset.f) return;
+  if (inp.tagName === "TEXTAREA" || inp.tagName === "INPUT") {
+    var fld = inp.closest(".field");
+    if (!fld) return;
+    var it = ITEMS[+fld.dataset.i];
+    if (it) applyField(it, inp.dataset.f, inp.value);
+  }
+});
+panel.addEventListener("blur", function (e) {
+  var inp = e.target;
+  if (!inp.dataset || !inp.dataset.f) return;
+  var fld = inp.closest(".field");
+  if (!fld) return;
+  var it = ITEMS[+fld.dataset.i];
+  if (!it) return;
+  var ro = fld.querySelector(".ro");
+  if (ro) ro.firstChild.nodeValue = currentOf(it);
+  var ft = fld.querySelector(".ftxt");
+  if (ft) ft.textContent = currentOf(it).slice(0, 60);
+}, true);
+
+/* ---------------- css panel wiring ---------------- */
+panel.addEventListener("click", function (e) {
+  var t = e.target;
+  var h = t.closest ? t.closest(".rule-h") : null;
+  if (h) {
+    var i = +h.dataset.r;
+    ROPEN = (ROPEN === i) ? -1 : i;
+    if (ROPEN >= 0) {
+      var k = selectorKey(RULES[ROPEN].sel);
+      if (k && k.cls) {
+        var node = null;
+        try { node = DOC.querySelector("." + k.cls); } catch (err) { node = null; }
+        if (node) {
+          clearMarkers(DOC, "__pp-on"); clearMarkers(DOC, "__pp-mark");
+          node.classList.add("__pp-on"); node.classList.add("__pp-mark");
+        }
+      }
+    }
+    renderPanel();
+    return;
+  }
+  var b = t.closest ? t.closest(".bang[data-r]") : null;
+  if (b) {
+    var ri = +b.dataset.r, di = +b.dataset.d;
+    var d = RULES[ri] && RULES[ri].decls[di];
+    if (d) setRuleDecl(ri, di, d.core, !d.bang, true);
+  }
+}, true);
+
+var cssTimer = null;
+panel.addEventListener("input", function (e) {
+  var inp = e.target;
+  if (!inp.dataset || inp.dataset.r === undefined) return;
+  var ri = +inp.dataset.r, di = +inp.dataset.d, v = inp.value;
+  var live = inp.type === "color";
+  var row = inp.closest(".dl");
+  if (row) {
+    var ti = row.querySelector("input[type=text]");
+    if (ti && live) ti.value = v;
+  }
+  clearTimeout(cssTimer);
+  cssTimer = setTimeout(function () { setRuleDecl(ri, di, v, undefined, !live); }, live ? 40 : 190);
+}, true);
+panel.addEventListener("change", function (e) {
+  var inp = e.target;
+  if (!inp.dataset || inp.dataset.r === undefined) return;
+  var row = inp.closest(".dl");
+  var cur = RULES[+inp.dataset.r] && RULES[+inp.dataset.r].decls[+inp.dataset.d];
+  if (row && cur) {
+    var ti = row.querySelector("input[type=text]");
+    var ci = row.querySelector("input[type=color]");
+    if (ti) ti.value = cur.core;
+    if (ci) { var hx = hexOf(cur.core); if (hx) ci.value = hx; }
+  }
+  writeBack();
+  sync();
+}, true);
+
+function applyField(it, f, v) {
+  if (f === "text") setText(it.textEl || it.el, v, it.all);
+  else if (f === "url") setImage(it.el, v, it.bg);
+  else if (f === "alt") { if (!it.bg) it.el.setAttribute("alt", v); }
+  else if (f === "href") setLink(it.el, v);
+  sync();
+}
+
+/* ---------------- writers ---------------- */
+function setText(el, text, all) {
+  var doc = el.ownerDocument;
+  var walker = doc.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+  var nodes = [], n;
+  while ((n = walker.nextNode())) { if (n.nodeValue && n.nodeValue.trim()) nodes.push(n); }
+  if (!nodes.length) { el.insertBefore(doc.createTextNode(text), el.firstChild); return; }
+
+  if (all) { nodes.forEach(function (x) { x.nodeValue = text; }); return; }
+
+  /* every text node is a direct child: one hard-broken run, keep the breaks */
+  var allDirect = nodes.every(function (nd) { return nd.parentNode === el; });
+  if (allDirect) {
+    var done = false;
+    [].slice.call(el.childNodes).forEach(function (ch) {
+      if (ch.nodeType === 3) {
+        if (!ch.nodeValue.trim()) return;
+        if (!done) { ch.nodeValue = text; done = true; }
+        else el.removeChild(ch);
+      } else if (ch.nodeType === 1 && ch.tagName === "BR" && done) {
+        el.removeChild(ch);
+      }
+    });
+    return;
+  }
+
+  nodes[0].nodeValue = text;
+  if (nodes.length > 1 && stackedLines(el) >= 2) return;   /* stacked = separate fields */
+  for (var i = 1; i < nodes.length; i++) {
+    if (nodes[i].parentNode) nodes[i].parentNode.removeChild(nodes[i]);
+  }
+}
+
+function setImage(el, url, isBg) {
+  if (isBg) {
+    var cs = win(el).getComputedStyle(el);
+    var val = url ? 'url("' + url.replace(/"/g, '\\"') + '")' : "none";
+    if (/(background-image|background)\s*:/.test(el.getAttribute("style") || "")) {
+      var bi = el.style.backgroundImage;
+      if (bi && /url\(/i.test(bi)) el.style.backgroundImage = bi.replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/i, function () { return val; });
+      else el.style.backgroundImage = val;
+    } else {
+      el.style.backgroundImage = val;
+    }
+    if (url && cs.backgroundSize === "auto") { /* keep whatever CSS says */ }
+    return;
+  }
+  if (url) el.setAttribute("src", url);
+}
+
+/* ---------------- style panel ---------------- */
+function trackStyle(el, prop) {
+  for (var i = 0; i < STYLED.length; i++) {
+    if (STYLED[i].el === el && STYLED[i].prop === prop) return;
+  }
+  STYLED.push({ el: el, prop: prop });
+}
+/* Write one declaration into the style ATTRIBUTE as text, never through
+   CSSOM: `el.style.backgroundColor = x` on an element carrying the
+   `background: url(...) center/cover` shorthand makes Chrome rewrite the
+   whole shorthand and the image can be lost. Editing the string keeps
+   every existing layer, position and size exactly as authored. */
+function setDecl(el, prop, value) {
+  var parts = (el.getAttribute("style") || "").split(";");
+  var out = [];
+  for (var i = 0; i < parts.length; i++) {
+    var d = parts[i], c = d.indexOf(":");
+    if (c < 0) { if (d.trim()) out.push(d.trim()); continue; }
+    if (d.slice(0, c).trim().toLowerCase() === prop.toLowerCase()) continue;
+    out.push(d.trim());
+  }
+  if (value !== "" && value !== null) out.push(prop + ": " + value);
+  var next = out.join("; ");
+  if (!next.trim()) el.removeAttribute("style"); else el.setAttribute("style", next);
+}
+function put(el, prop, value) {
+  if (!el) return;
+  setDecl(el, prop, value);
+  if (value !== "" && value !== null) trackStyle(el, prop);
+}
+var NON_VISUAL = { STYLE: 1, SCRIPT: 1, LINK: 1, META: 1, NOSCRIPT: 1, TEMPLATE: 1, TITLE: 1, BASE: 1 };
+function sectionTarget() {
+  if (!DOC) return;
+  var root = DOC.getElementById("__ppw");
+  TARGET = root || null;
+  /* a <style> block is not a target: it is invisible, so landing on it made
+     the panel look empty even though the section had rendered fine */
+  if (root) {
+    for (var i = 0; i < root.children.length; i++) {
+      if (!NON_VISUAL[root.children[i].tagName]) { TARGET = root.children[i]; break; }
+    }
+  }
+  $("tgtName").textContent = tagLabel(TARGET);
+  readStyle();
+}
+$("btnTgtSection").onclick = function () { sectionTarget(); };
+$("btnTgtSel").onclick = function () {
+  if (SEL) { TARGET = SEL; $("tgtName").textContent = tagLabel(TARGET); readStyle(); }
+};
+
+function readStyle() {
+  if (!TARGET || !DOC) return;
+  var cs = win(TARGET).getComputedStyle(TARGET);
+  var bg = cs.backgroundColor;
+  var m = /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?/.exec(bg || "");
+  /* fully transparent means no colour was set, so leave the pickers alone -
+     otherwise a blank section reads as "black at 0% opacity" */
+  var transparent = m && m[4] !== undefined && parseFloat(m[4]) === 0;
+  if (m && !transparent) {
+    var hex = "#" + [m[1], m[2], m[3]].map(function (v) {
+      return ("0" + (+v).toString(16)).slice(-2);
+    }).join("");
+    $("bgCol").value = hex;
+    if (m[4] !== undefined) {
+      var a = Math.round(parseFloat(m[4]) * 100);
+      $("bgOp").value = a; $("bgOpVal").textContent = a + "%";
+    }
+  }
+  var blur = /blur\(([\d.]+)px\)/.exec(cs.backdropFilter || cs.webkitBackdropFilter || "") ;
+  var bv = blur ? Math.round(parseFloat(blur[1])) : 0;
+  $("blur").value = Math.min(24, bv); $("blurVal").textContent = bv + "px";
+  var rad = parseInt(cs.borderTopLeftRadius, 10) || 0;
+  $("rad").value = Math.min(40, rad); $("radVal").textContent = rad + "px";
+  var fs = parseInt(cs.fontSize, 10) || 16;
+  $("fs").value = Math.min(72, Math.max(8, fs)); $("fsVal").textContent = fs + "px";
+}
+
+/* ---------------- colour + transparency ---------------- */
+function hexToRgb(hex) {
+  var h = String(hex || "").replace("#", "").trim();
+  if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+  if (!/^[0-9a-fA-F]{6}$/.test(h)) return null;
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+}
+function withAlpha(hex, a) {
+  var raw = String(hex || "").trim();
+  var c = hexToRgb(raw);
+  if (!c) return raw;
+  /* fully opaque stays a hex, and stays exactly as the user wrote it */
+  if (a >= 0.999) return /^#[0-9a-fA-F]{3,8}$/.test(raw) ? raw : "#" + c.map(function (v) { return ("0" + v.toString(16)).slice(-2); }).join("");
+  return "rgba(" + c[0] + ", " + c[1] + ", " + c[2] + ", " + (Math.round(a * 100) / 100) + ")";
+}
+/* the colour always leaves through here so the opacity setting is never lost */
+function applyBg(hex) {
+  if (!TARGET) return;
+  var a = +$("bgOp").value / 100;
+  put(TARGET, "background-color", withAlpha(hex, a));
+}
+$("bgCol").addEventListener("input", function () { applyBg(this.value); afterStyle(); });
+$("bgOp").addEventListener("input", function () {
+  $("bgOpVal").textContent = this.value + "%";
+  applyBg($("bgCol").value);
+  afterStyle();
+});
+$("bgSw").addEventListener("click", function (e) {
+  var b = e.target.closest ? e.target.closest(".sw") : null;
+  if (!b) return;
+  if (b.dataset.c === "clear") { put(TARGET, "background-color", ""); }
+  else { $("bgCol").value = b.dataset.c; applyBg(b.dataset.c); }
+  afterStyle();
+});
+
+/* ---------------- frosted glass ---------------- */
+var GLASS = {
+  light: { bg: "rgba(255, 255, 255, 0.55)", blur: 14, sat: 160, border: "1px solid rgba(255, 255, 255, 0.65)" },
+  dark:  { bg: "rgba(18, 20, 26, 0.45)",    blur: 14, sat: 140, border: "1px solid rgba(255, 255, 255, 0.22)" },
+  smoke: { bg: "rgba(255, 255, 255, 0.18)", blur: 6,  sat: 120, border: "1px solid rgba(255, 255, 255, 0.35)" }
+};
+var GLASS_PROPS = ["background-color", "backdrop-filter", "-webkit-backdrop-filter", "border"];
+function setBlur(px, sat) {
+  if (!TARGET) return;
+  if (!px) { put(TARGET, "backdrop-filter", ""); put(TARGET, "-webkit-backdrop-filter", ""); return; }
+  var v = "blur(" + px + "px) saturate(" + (sat || 150) + "%)";
+  put(TARGET, "backdrop-filter", v);
+  put(TARGET, "-webkit-backdrop-filter", v);
+}
+document.addEventListener("click", function (e) {
+  var b = e.target.closest ? e.target.closest("[data-glass]") : null;
+  if (!b || !DOC) return;
+  var kind = b.dataset.glass;
+  if (!TARGET) { say("PICK A TARGET FIRST"); return; }
+  if (kind === "clear") {
+    GLASS_PROPS.forEach(function (p) { put(TARGET, p, ""); });
+    $("blur").value = 0; $("blurVal").textContent = "0px";
+    afterStyle(); say("GLASS CLEARED"); return;
+  }
+  var g = GLASS[kind];
+  if (!g) return;
+  put(TARGET, "background-color", g.bg);
+  setBlur(g.blur, g.sat);
+  put(TARGET, "border", g.border);
+  $("blur").value = g.blur; $("blurVal").textContent = g.blur + "px";
+  readStyle();
+  afterStyle();
+  say("GLASS " + kind.toUpperCase() + " · lower the opacity if it looks flat");
+});
+$("blur").addEventListener("input", function () {
+  var px = +this.value;
+  $("blurVal").textContent = px + "px";
+  setBlur(px, 150);
+  afterStyle();
+});
+$("rad").addEventListener("input", function () {
+  $("radVal").textContent = this.value + "px";
+  put(TARGET, "border-radius", this.value + "px");
+  afterStyle();
+});
+$("fs").addEventListener("input", function () {
+  $("fsVal").textContent = this.value + "px";
+  put(TARGET, "font-size", this.value + "px");
+  afterStyle();
+});
+$("btnCol").addEventListener("input", function () {
+  if (!TARGET) return;
+  var list = TARGET.querySelectorAll("a,button");
+  for (var i = 0; i < list.length; i++) put(list[i], "background-color", this.value);
+  afterStyle();
+});
+$("btnRad").addEventListener("input", function () {
+  if (!TARGET) return;
+  var list = TARGET.querySelectorAll("a,button");
+  for (var i = 0; i < list.length; i++) put(list[i], "border-radius", this.value + "px");
+  afterStyle();
+});
+function afterStyle() { sync(); }
+
+$("btnResetStyle").onclick = function () {
+  STYLED.slice().forEach(function (s) {
+    try { setDecl(s.el, s.prop, ""); } catch (e) {}
+    if (!s.el.getAttribute("style")) s.el.removeAttribute("style");
+  });
+  STYLED = [];
+  readStyle();
+  sync();
+  say("STYLES RESET");
+};
+
+/* ---------------- css tidying ---------------- */
+/* Makes the css leaner without changing what it does:
+   one space after the colon, no trailing semicolon, no repeated property,
+   0px becomes 0, #FFFFFF becomes #fff, comments dropped from <style>. */
+function tidyValue(v) {
+  v = String(v || "").replace(/\s+/g, " ").trim();
+  v = v.replace(/\b0px\b/g, "0");
+  v = v.replace(/#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f])\b/gi,
+    function (m, a, b, c, d, e, f) {
+      if (a.toLowerCase() === b.toLowerCase() && c.toLowerCase() === d.toLowerCase() && e.toLowerCase() === f.toLowerCase()) return "#" + a + c + e;
+      return m;
+    });
+  return v;
+}
+function tidyStyleAttr(v) {
+  var parts = String(v || "").split(";"), order = [], seen = {};
+  for (var i = 0; i < parts.length; i++) {
+    var d = parts[i], c = d.indexOf(":");
+    if (c < 0) continue;
+    var p = d.slice(0, c).trim().toLowerCase();
+    var val = tidyValue(d.slice(c + 1));
+    if (!p || !val || /^!?importan/i.test(val)) continue;
+    if (!seen[p]) { order.push(p); }
+    seen[p] = p + ": " + val;          /* the last value wins, the first slot stays */
+  }
+  var out = [];
+  for (var k = 0; k < order.length; k++) out.push(seen[order[k]]);
+  return out.join("; ");
+}
+function tidyCssText(t) {
+  var s = String(t || "").replace(/\/\*[\s\S]*?\*\//g, " ").replace(/\s+/g, " ");
+  s = s.replace(/\s*\{\s*/g, " { ").replace(/\s*\}\s*/g, " } ");
+  s = s.replace(/\s*,\s*/g, ", ").replace(/\s*;\s*/g, "; ").replace(/; \}/g, "}");
+  /* only a real declaration gets the space after its colon, so http://,
+     https:// and data:image/png inside url() stay exactly as they are */
+  s = s.replace(/(^|[;{])\s*([a-z-]+)\s*:\s*(?!\/\/)/gi, "$1$2: ");
+  s = s.replace(/\s*\(\s*/g, "(").replace(/\s*\)\s*/g, ")");
+  s = s.replace(/\s*>\s*/g, " > ").replace(/\s*~\s*/g, " ~ ").replace(/\s*\+\s*/g, " + ");
+  return s.replace(/\s+/g, " ").trim();
+}
+/* Re-indents a css sheet and tidies each value on the way through. Values keep
+   their url(), their rgb(0 0 0 / 0.05) and their !important. */
+function prettyCss(text) {
+  var s = String(text || ""), out = "", i = 0, n = s.length, depth = 0, buf = "";
+  var pad = function () { return new Array(depth + 1).join("  "); };
+  var nl = function () { if (out && out.charAt(out.length - 1) !== "\n") out += "\n"; };
+  var flush = function () { var d = buf.replace(/\s+/g, " ").trim(); buf = ""; return d; };
+  /* one place decides how a declaration is printed, so a rule whose last
+     declaration has no trailing semicolon is tidied exactly like the rest */
+  var decl = function (d) {
+    d = d.replace(/;\s*$/, "").trim();
+    if (!d) return "";
+    var cc = d.indexOf(":");
+    return cc > 0 ? d.slice(0, cc).trim() + ": " + tidyValue(d.slice(cc + 1)) : d;
+  };
+  while (i < n) {
+    var c = s.charAt(i);
+    if (c === "/" && s.charAt(i + 1) === "*") { var e = s.indexOf("*/", i + 2); i = e < 0 ? n : e + 2; continue; }
+    if (c === '"' || c === "'") { var j = skipStr(s, i); buf += s.slice(i, j); i = j; continue; }
+    if (c === "{") { nl(); out += pad() + flush() + " {\n"; depth++; i++; continue; }
+    if (c === "}") {
+      var t2 = decl(flush());
+      if (t2) out += pad() + t2 + ";\n";
+      depth = Math.max(0, depth - 1);
+      nl(); out += pad() + "}\n";
+      i++; continue;
+    }
+    if (c === ";") {
+      var d2 = decl(flush());
+      if (d2) out += pad() + d2 + ";\n";
+      i++; continue;
+    }
+    buf += c; i++;
+  }
+  var rest = decl(flush());
+  if (rest) out += rest + ";\n";
+  return out.replace(/\n{3,}/g, "\n\n").replace(/^\n+/, "").replace(/\s+$/, "") + "\n";
+}
+function tidyTree(root) {
+  var all = [].slice.call(root.querySelectorAll("[style]"));
+  for (var i = 0; i < all.length; i++) {
+    var el = all[i], t = tidyStyleAttr(el.getAttribute("style"));
+    if (!t) el.removeAttribute("style"); else el.setAttribute("style", t);
+  }
+  var blocks = [].slice.call(root.querySelectorAll("style"));
+  for (var j = 0; j < blocks.length; j++) {
+    try { blocks[j].textContent = tidyCssText(blocks[j].textContent); } catch (e) {}
+  }
+  return root;
+}
+
+/* ---------------- serialize + format ---------------- */
+function clean(root) {
+  var all = [].slice.call(root.querySelectorAll("*"));
+  all.forEach(function (el) {
+    if (el.id && el.id.indexOf("__pp") === 0) { el.remove(); return; }
+    if (el.tagName === "SCRIPT" && /cdn\.tailwindcss\.com|iconify/.test(el.getAttribute("src") || "")) { el.remove(); return; }
+    el.removeAttribute("data-ppx");
+    ["__pp-hover", "__pp-on", "__pp-mark"].forEach(function (c) {
+      if (el.classList && el.classList.contains(c)) {
+        el.classList.remove(c);
+        if (!el.getAttribute("class")) el.removeAttribute("class");
+      }
+    });
+  });
+  tidyTree(root);
+  return root.innerHTML;
+}
+
+/* Collapses the whitespace between tokens but never touches what is inside
+   quotes, and never touches url(), rgb(0 0 0 / 0.05) or a media query - those
+   break the moment a space goes missing. */
+function cssFlatten(t) {
+  var s = String(t || ""), out = "", i = 0, n = s.length, q = null;
+  while (i < n) {
+    var c = s.charAt(i);
+    if (q) { out += c; if (c === q) q = null; i++; continue; }
+    if (c === '"' || c === "'") { q = c; out += c; i++; continue; }
+    if (/\s/.test(c)) {
+      var j = i;
+      while (j < n && /\s/.test(s.charAt(j))) j++;
+      var prev = out.charAt(out.length - 1), next = s.charAt(j);
+      var drop = !prev || "{};,>".indexOf(prev) >= 0 || "{};,".indexOf(next) >= 0;
+      if (!drop) out += " ";
+      i = j; continue;
+    }
+    out += c; i++;
+  }
+  return out.replace(/;\s*\}/g, "}").trim();
+}
+
+function sync() {
+  if (RMODE === "css") {
+    LAST_OUT = COMPACT ? cssFlatten(CSS_TEXT) : CSS_TEXT.replace(/\s+$/, "");
+    window.__ppOut = LAST_OUT;
+    $("outNote").textContent = (COMPACT ? "one line" : "indented") + " · " +
+      editableRules().length + " rules · " + LAST_OUT.length + " chars · " +
+      new Date().toTimeString().slice(0, 8);
+    return;
+  }
+  if (!DOC) return;
+  var root = DOC.getElementById("__ppw");
+  if (!root) return;
+  LAST_OUT = formatHTML(clean(root.cloneNode(true)), COMPACT);
+  window.__ppOut = LAST_OUT;   /* same string the copy and export buttons use */
+  $("outNote").textContent = (COMPACT ? "one line" : "indented") + " · css tidied · " +
+    LAST_OUT.length + " chars · " + new Date().toTimeString().slice(0, 8);
+}
+
+function formatHTML(src, compact) {
+  var VOID = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/i;
+  var KEEP = /^(pre|textarea|script|style)$/i;
+  var INLINE = /^(a|abbr|b|span|em|i|strong|small|code|label|sub|sup|u|time|button|img|br|svg|path|iconify-icon)$/i;
+  var s = String(src || "").replace(/\r\n?/g, "\n");
+  var i = 0, out = [], depth = 0;
+  /* compact mode keeps every tag and every word, it only drops the
+     indentation and the line breaks the formatter would have added */
+  var nl = function () { if (!compact) out.push("\n" + new Array(depth + 1).join("  ")); };
+
+  while (i < s.length) {
+    var lt = s.indexOf("<", i);
+    if (lt < 0) { var tail = trimTxt(s.slice(i)); if (tail) out.push(tail); break; }
+    if (lt > i) {
+      var mid = s.slice(i, lt).replace(/\s+/g, " ");
+      if (mid.trim()) out.push(mid);
+    }
+    if (s.substr(lt, 4) === "<!--") {
+      var ce = s.indexOf("-->", lt);
+      var stop = ce < 0 ? s.length : ce + 3;
+      nl(); out.push(s.slice(lt, stop)); i = stop; continue;
+    }
+    var tm = /^<(\/?)([a-zA-Z][a-zA-Z0-9-]*)/.exec(s.slice(lt));
+    if (!tm) { out.push(s.charAt(lt)); i = lt + 1; continue; }
+    var closing = tm[1] === "/", name = tm[2];
+    var j = lt + 1, q = null;
+    while (j < s.length) {
+      var c = s.charAt(j);
+      if (q) { if (c === q) q = null; }
+      else if (c === '"' || c === "'") q = c;
+      else if (c === ">") break;
+      j++;
+    }
+    var raw = s.slice(lt, j + 1);
+    var selfClose = /\/\s*>$/.test(raw);
+
+    if (closing) {
+      if (!INLINE.test(name)) { depth = Math.max(0, depth - 1); nl(); }
+      out.push(raw);
+      i = j + 1;
+      continue;
+    }
+    if (!INLINE.test(name)) nl();
+    out.push(raw);
+    if (KEEP.test(name)) {
+      var ci = s.toLowerCase().indexOf("</" + name.toLowerCase(), j);
+      if (ci >= 0) {
+        var eg = s.indexOf(">", ci);
+        var st = eg < 0 ? s.length : eg + 1;
+        out.push(s.slice(j + 1, st));
+        i = st; continue;
+      }
+    }
+    if (!VOID.test(name) && !selfClose) depth++;
+    i = j + 1;
+  }
+  var text = out.join("");
+  if (compact) {
+    /* drop only the breaks that were line breaks in the source, never a
+       single space that sits between two words */
+    return text.replace(/>[ \t]*\n[ \t\n]*</g, "><").replace(/\s+$/, "");
+  }
+  return text.replace(/\n\s*\n+/g, "\n").replace(/^\n+/, "").replace(/\s+$/, "") + "\n";
+}
+
+/* ---------------- input wiring ---------------- */
+$("btnRender").onclick = render;
+
+$("modeChips").addEventListener("click", function (e) {
+  var b = e.target.closest ? e.target.closest("[data-mode]") : null;
+  if (!b) return;
+  MODE = b.dataset.mode;
+  [].slice.call($("modeChips").querySelectorAll("[data-mode]")).forEach(function (x) {
+    x.classList.toggle("on", x === b);
+  });
+  if ($("src").value.trim()) render();
+  else {
+    $("detNote").textContent = MODE === "auto" ? "HTML or CSS - detected on render" : "forced: " + MODE.toUpperCase();
+    say("INPUT SET TO " + MODE.toUpperCase());
+  }
+});
+
+/* FORMAT tidies whatever is actually in the box: html gets re-indented and
+   its declarations tidied, css gets re-indented and its values tightened. */
+$("btnFormat").onclick = function () {
+  var v = $("src").value;
+  if (!v.trim()) return;
+  var before = v.length;
+  var md = detectMode(v);
+  var next;
+  if (md === "css") {
+    var pretty = prettyCss(cssFromInput(v));
+    next = /<style[\s>]/i.test(v) ? "<style>\n" + pretty + "</style>\n" : pretty;
+  } else {
+    next = formatHTML(v);
+    /* tidy every css declaration in the pasted code as well */
+    next = next.replace(/style\s*=\s*"([^"]*)"/gi, function (m, d) {
+      var t = tidyStyleAttr(d.replace(/&quot;/g, '"'));
+      return t ? 'style="' + t.replace(/"/g, "&quot;") + '"' : m;
+    }).replace(/(<style[^>]*>)([\s\S]*?)(<\/style>)/gi, function (m, a, body, b) {
+      return a + prettyCss(body) + b;
+    });
+  }
+  $("src").value = next;
+  $("lenNote").textContent = next.length + " chars";
+  if (DOC && RMODE === md && md === "css") {
+    CSS_TEXT = cssFromInput(next);
+    RULES = parseCss(CSS_TEXT);
+    applyCss();
+    renderPanel();
+    sync();
+  }
+  say("FORMATTED · " + (md === "css" ? "CSS" : "HTML") + " TIDIED · " + before + " -> " + next.length + " chars");
+};
+
+$("btnMinify").onclick = function () {
+  COMPACT = !COMPACT;
+  this.textContent = COMPACT ? "OUTPUT: ONE LINE" : "OUTPUT: INDENTED";
+  sync();
+  say(COMPACT ? "ONE LINE OUTPUT · same code, no line breaks" : "INDENTED OUTPUT · easier to read");
+};
+$("src").addEventListener("paste", function () { setTimeout(render, 400); });
+$("src").addEventListener("input", function () {
+  $("lenNote").textContent = $("src").value.length + " chars";
+});
+function loadSample(text) {
+  $("src").value = text;
+  $("lenNote").textContent = text.length + " chars";
+  render();
+}
+$("btnSample").onclick = function () { loadSample(SAMPLE); };
+$("btnSampleCss").onclick = function () { loadSample(SAMPLE_CSS); };
+$("btnClearAll").onclick = function () {
+  $("src").value = ""; LAST_OUT = ""; window.__ppOut = "";
+  ITEMS = []; SEL = null; TARGET = null; STYLED = []; DOC = null; ACTIVE = -1;
+  RULES = []; ROPEN = -1; CSS_TEXT = ""; SCAF_DOC = ""; SCAF_COUNT = 0;
+  frame.hidden = true; ph.hidden = false; fitbox.hidden = true;
+  frame.srcdoc = "";
+  panel.innerHTML = '<div class="empty">Render something first.</div>';
+  $("panelTitle").textContent = "CONTENT";
+  $("quickBox").hidden = false;
+  $("scafNote").hidden = true;
+  $("tgtName").textContent = "no section";
+  $("lenNote").textContent = "0 chars";
+  $("outNote").textContent = "no changes yet";
+  $("detNote").textContent = "HTML or CSS - detected on render";
+  say("CLEARED");
+};
+
+/* viewport */
+[].slice.call(document.querySelectorAll("[data-vp]")).forEach(function (b) {
+  b.addEventListener("click", function () {
+    [].slice.call(document.querySelectorAll("[data-vp]")).forEach(function (x) { x.classList.remove("on"); });
+    b.classList.add("on");
+    VPW = parseInt(b.dataset.vp, 10) || 1200;
+    layoutFrame();
+  });
+});
+var rzT = 0;
+window.addEventListener("resize", function () {
+  clearTimeout(rzT);
+  rzT = setTimeout(layoutFrame, 120);
+});
+layoutFrame();
+$("btnCanvas").onclick = function () {
+  var dark = framewrap.classList.toggle("dark");
+  this.textContent = "CANVAS: " + (dark ? "DARK" : "LIGHT");
+  this.classList.toggle("on", dark);
+};
+
+/* output */
+$("btnCopy").onclick = function () {
+  var v = LAST_OUT;
+  if (!v.trim()) { say("NOTHING TO COPY"); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(v).then(
+      function () { say("COPIED " + v.length + " CHARS TO CLIPBOARD"); },
+      function () { legacyCopy(v); }
+    );
+  } else legacyCopy(v);
+};
+function legacyCopy(v) {
+  var ta = document.createElement("textarea");
+  ta.value = v;
+  ta.style.position = "fixed"; ta.style.left = "-9999px";
+  document.body.appendChild(ta); ta.select();
+  var ok = false;
+  try { ok = document.execCommand("copy"); } catch (e) {}
+  document.body.removeChild(ta);
+  say(ok ? "COPIED " + v.length + " CHARS TO CLIPBOARD" : "CLIPBOARD BLOCKED - USE EXPORT");
+}
+$("btnExport").onclick = function () {
+  var v = LAST_OUT;
+  if (!v.trim()) { say("NOTHING TO EXPORT"); return; }
+  var isCss = RMODE === "css";
+  var d = new Date();
+  var stamp = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+  /* a real file type on purpose: a .txt export makes editors and mail clients
+     treat the code as plain text and the markup gets flattened on the way */
+  var blob = new Blob([v], { type: (isCss ? "text/css" : "text/html") + ";charset=utf-8" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = (isCss ? "custom-css-" : "section-snippet-") + stamp + (isCss ? ".css" : ".html");
+  document.body.appendChild(a); a.click();
+  setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 400);
+  say(isCss ? "EXPORTED CSS" : "EXPORTED HTML");
+};
+
+/* ---------------- sample ---------------- */
+/* The css sample is deliberately the shape people actually paste into
+   Squarespace: a handful of class rules with no html alongside them. */
+var SAMPLE_CSS = [
+  '/* Custom CSS. The preview is built from these class names. */',
+  '',
+  '.card {',
+  '  background: #ffffff;',
+  '  border: 1px solid #e5e7eb;',
+  '  border-radius: 16px;',
+  '  padding: 24px;',
+  '  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);',
+  '}',
+  '',
+  '.card-title {',
+  '  font-size: 24px;',
+  '  font-weight: 600;',
+  '  color: #111827;',
+  '  margin: 0 0 20px;',
+  '}',
+  '',
+  '.card-list {',
+  '  list-style: none;',
+  '  padding: 0;',
+  '  margin: 0;',
+  '}',
+  '',
+  '.card-item {',
+  '  display: flex;',
+  '  gap: 12px;',
+  '  align-items: flex-start;',
+  '  margin-bottom: 16px;',
+  '}',
+  '',
+  '.card-icon {',
+  '  width: 16px;',
+  '  height: 16px;',
+  '  color: #0d9488;',
+  '  flex-shrink: 0;',
+  '}',
+  '',
+  '.card-text {',
+  '  font-size: 15px;',
+  '  line-height: 1.6;',
+  '  color: #4b5563;',
+  '}'
+].join("\n");
+
+var SAMPLE = [
+  '<section class="hero" style="padding:72px 32px;background:#F4F1EA;font-family:Georgia,serif;text-align:center">',
+  '  <p style="letter-spacing:.2em;font-size:11px;margin:0 0 14px;color:#8A7F6D">NEW FOR SPRING</p>',
+  '  <h2 style="font-size:36px;margin:0 0 12px;color:#16233A">A studio made for slow mornings</h2>',
+  '  <p style="max-width:46ch;margin:0 auto 22px;color:#5C5548;font-size:15px;line-height:1.7">',
+  '    Small batch ceramics, thrown and glazed by hand in our back room. Every piece leaves the',
+  '    studio with the maker mark on the base.',
+  '  </p>',
+  '  <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=1200" alt="Ceramic bowls on a wooden table"',
+  '       style="width:100%;max-width:720px;border-radius:4px;display:block;margin:0 auto 24px">',
+  '  <a href="#" style="display:inline-block;background:#16233A;color:#fff;padding:13px 26px;',
+  '     border-radius:2px;text-decoration:none;font-size:13px;letter-spacing:.08em">Shop the collection</a>',
+  '  <button style="margin-left:10px;background:#F4F1EA;color:#16233A;border:1px solid #16233A;',
+  '     padding:12px 22px;border-radius:2px;font-size:13px;letter-spacing:.08em;cursor:pointer">',
+  '    Book a studio visit</button>',
+  '</section>'
+].join("\n");
+
+/* ---------------- init ---------------- */
+$("lenNote").textContent = "0 chars";
+</script>
+</body>
+</html>

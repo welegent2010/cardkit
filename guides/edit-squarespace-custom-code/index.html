@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Edit Squarespace Custom Code Without Rebuilding the Section</title>
+<meta name="description" content="A practical workflow for editing text, images and links inside Squarespace custom-code sections while preserving the original structure and styling.">
+<link rel="canonical" href="https://cardcss.top/guides/edit-squarespace-custom-code/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/guides/edit-squarespace-custom-code/">
+<meta property="og:title" content="How to Edit Squarespace Custom Code Without Rebuilding the Section">
+<meta property="og:description" content="Edit text, images and links inside a custom-code block while keeping the original structure and styling.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Edit Squarespace Custom Code Without Rebuilding the Section">
+<meta name="twitter:description" content="Change content inside a custom-code block without rebuilding it.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Edit Squarespace Custom Code Without Rebuilding the Section",
+  "description": "A practical workflow for editing text, images and links inside Squarespace custom-code sections while preserving the original structure and styling.",
+  "datePublished": "2026-10-08",
+  "dateModified": "2026-10-08",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/guides/edit-squarespace-custom-code/" }
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/" aria-current="page">Guides</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <p class="eyebrow">GUIDE</p>
+    <h1>How to Edit Squarespace Custom Code Without Rebuilding the Section</h1>
+    <p>
+      Squarespace handles normal page content visually. Custom HTML sections are the exception, and they
+      get harder to maintain the moment you only need to change one small thing.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <div class="note">
+        <p>
+          <strong>CardKit is an independent tool and is not affiliated with Squarespace.</strong>
+          Nothing here is official guidance from Squarespace.
+        </p>
+      </div>
+
+      <h2>Introduction</h2>
+      <p>
+        A code block is a great way to get a layout that the standard blocks cannot produce. The problem
+        appears six months later, when you want to change one phone number inside it and the block is four
+        hundred lines long.
+      </p>
+      <p>
+        You have two options: rebuild the block from scratch, or make a controlled edit to the code you
+        already have. The second is almost always faster and much less risky, provided you follow a
+        workflow.
+      </p>
+
+      <h2>1. When custom code becomes difficult</h2>
+      <p>The same set of problems shows up repeatedly:</p>
+      <ul>
+        <li>Long HTML blocks with no indentation</li>
+        <li>Deeply nested elements</li>
+        <li>Image URLs buried several levels down</li>
+        <li>Buttons that are hard to locate among similar markup</li>
+        <li>Accidental CSS edits that change more than intended</li>
+      </ul>
+      <p>
+        None of these are reasons to avoid custom code. They are reasons to stop editing it by eye in the
+        code panel.
+      </p>
+
+      <h2>2. Copy the original section</h2>
+      <p>
+        Before you change anything, copy the entire contents of the code block into a text file. This is
+        your rollback, and Squarespace does not keep a convenient version history for the inside of a code
+        block.
+      </p>
+      <p>Name it after the block and the date, for example <code>hero-code-2026-10.txt</code>.</p>
+
+      <h2>3. Identify the section rather than the whole page</h2>
+      <p>
+        A code block usually contains one component, not an entire page. Work with that component alone.
+      </p>
+      <p>
+        This matters for a practical reason: a visual editor that renders a whole document has to load its
+        stylesheets, scripts and fonts, and half of those will not resolve outside the site. A single
+        section renders reliably and previews accurately.
+      </p>
+
+      <h2>4. Edit visible content</h2>
+      <p>With the section isolated, the edits you actually want are:</p>
+      <ul>
+        <li><strong>Text</strong> - headings, paragraphs, labels</li>
+        <li><strong>Images</strong> - the image URL and its alt text</li>
+        <li><strong>Buttons</strong> - the label and the destination</li>
+        <li><strong>Links</strong> - where they point, and whether they open in a new tab</li>
+      </ul>
+      <p>
+        The <a href="../../tools/css-code-editor/">CSS Code Editor</a> is built for exactly this list:
+        you paste the block, click the element, and change its value. Structure, classes and every other
+        attribute are left as they were.
+      </p>
+
+      <h2>5. Be careful with CSS classes</h2>
+      <p>
+        Class names are the contract between the markup and the styles. If a block uses
+        <code>class="card card--wide"</code> and you rename it to <code>class="my-card"</code>, every rule
+        written for the old name stops applying, and the block quietly loses its styling.
+      </p>
+      <div class="note">
+        <p>
+          <strong>Do not rename a class unless you also update the CSS that targets it.</strong>
+          If you do not know where that CSS lives, do not rename it.
+        </p>
+      </div>
+      <p>
+        The same applies to IDs. An ID may be an anchor target for navigation, or a hook for a script.
+        Removing it can break a menu link that has nothing to do with the block you were editing.
+      </p>
+
+      <h2>6. Check responsive behaviour</h2>
+      <p>
+        Squarespace applies its own responsive rules around your block, but the contents of the block are
+        yours. Check three widths before you publish:
+      </p>
+      <ul>
+        <li><strong>Desktop</strong> - the layout you designed</li>
+        <li><strong>Tablet</strong> - where two-column layouts usually start to tighten</li>
+        <li><strong>Mobile</strong> - where text length and image height cause the most trouble</li>
+      </ul>
+
+      <h2>7. Paste the final section back</h2>
+      <p>
+        Replace only the contents of the code block you were editing. Do not paste over neighbouring blocks,
+        and do not paste a full HTML document into a block that expects a fragment. A stray
+        <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> or <code>&lt;body&gt;</code> tag inside a code
+        block is a common cause of a page that renders strangely.
+      </p>
+
+      <h2>8. When not to use this workflow</h2>
+      <p>Some things should not be edited with a small visual tool:</p>
+      <ul>
+        <li>Complex JavaScript applications</li>
+        <li>Member systems and gated content</li>
+        <li>Checkout or payment code</li>
+        <li>Authentication</li>
+        <li>Server-side systems</li>
+        <li>Unknown third-party integrations</li>
+      </ul>
+      <div class="warn">
+        <p>
+          <strong>Limitation:</strong> a focused editor is for focused content changes. If the block runs
+          logic you do not understand, changing it visually is not safer than changing it by hand.
+        </p>
+      </div>
+
+      <h2>Conclusion</h2>
+      <p>
+        Use a focused editor for focused content changes. Isolate the block, keep the original, change only
+        the values you need, check three widths, then paste the block back.
+      </p>
+      <p>
+        <a class="btn" href="../../tools/css-code-editor/">Try the CSS Code Editor</a>
+      </p>
+
+      <h2>Related tools</h2>
+      <p>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a> for the edit, and
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a> to re-indent a block that arrived as one long line.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/" aria-current="page">Guides</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

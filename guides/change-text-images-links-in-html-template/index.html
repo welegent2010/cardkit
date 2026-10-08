@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Change Text, Images and Links in an HTML Template</title>
+<meta name="description" content="A practical guide to replacing text, image URLs and button links inside HTML website templates without changing the underlying layout.">
+<link rel="canonical" href="https://cardcss.top/guides/change-text-images-links-in-html-template/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/guides/change-text-images-links-in-html-template/">
+<meta property="og:title" content="How to Change Text, Images and Links in an HTML Template">
+<meta property="og:description" content="Replace text, image URLs and button links without changing the underlying layout.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Change Text, Images and Links in an HTML Template">
+<meta name="twitter:description" content="The three edits template buyers make most often, done safely.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Change Text, Images and Links in an HTML Template",
+  "description": "A practical guide to replacing text, image URLs and button links inside HTML website templates without changing the underlying layout.",
+  "datePublished": "2026-10-08",
+  "dateModified": "2026-10-08",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/guides/change-text-images-links-in-html-template/" }
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/" aria-current="page">Guides</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <p class="eyebrow">GUIDE</p>
+    <h1>How to Change Text, Images and Links in an HTML Template</h1>
+    <p>
+      Most template customisation is three jobs: change the words, swap the picture, point the button
+      somewhere else. None of them require touching the layout.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>Introduction</h2>
+      <p>
+        If you strip away everything a template can technically do, what buyers actually change comes down
+        to three things:
+      </p>
+      <ol>
+        <li>Text</li>
+        <li>Images</li>
+        <li>Links</li>
+      </ol>
+      <p>
+        Each one lives in a predictable place in the markup, and each one has a failure mode that is easy
+        to avoid once you know what to look for. This guide covers all three, in the order you will
+        usually do them.
+      </p>
+
+      <h2>1. Changing text</h2>
+      <p>Visible text in a template typically sits in these elements:</p>
+      <ul>
+        <li><code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> - headings</li>
+        <li><code>&lt;p&gt;</code> - paragraphs</li>
+        <li><code>&lt;span&gt;</code> - small inline text, labels, eyebrows</li>
+        <li><code>&lt;a&gt;</code> - link text</li>
+        <li><code>&lt;button&gt;</code> - button labels</li>
+      </ul>
+      <p>
+        The rule is simple: <strong>replace the visible text, do not change the tag around it.</strong>
+        If a heading is an <code>&lt;h2&gt;</code>, keep it an <code>&lt;h2&gt;</code>. The tag carries the
+        size and the styling, and it also tells search engines and screen readers what the text is for.
+        Swapping an <code>&lt;h2&gt;</code> for a <code>&lt;div&gt;</code> because you wanted it smaller
+        will cost you both.
+      </p>
+      <p>
+        One thing to watch: text is often split across child elements. A button that reads
+        <code>&lt;a class="btn"&gt;&lt;span&gt;Buy&lt;/span&gt;&lt;/a&gt;</code> has its label inside the
+        span, not the link. Editing tools that only look at the top element will miss it.
+      </p>
+
+      <h2>2. Changing images</h2>
+      <p>There are three places an image can come from:</p>
+      <ul>
+        <li><code>src</code> - the file an <code>&lt;img&gt;</code> loads</li>
+        <li><code>alt</code> - the text description of that image</li>
+        <li><code>background-image</code> - a CSS background, usually on a section or a card</li>
+      </ul>
+      <p>
+        The important distinction is between an <code>&lt;img&gt;</code> and a CSS background. An
+        <code>&lt;img&gt;</code> is content: it has dimensions in the document flow, it can have alt text,
+        and it affects how the page reflows. A CSS background is decoration: it sits behind the content,
+        has no alt text, and is usually set to cover or contain its container.
+      </p>
+      <p>
+        Swapping them is a common source of "the image looks wrong now". If the original was a background
+        image that fills a hero area, replacing it with an <code>&lt;img&gt;</code> will not fill the same
+        way, and vice versa.
+      </p>
+      <p>
+        Both are changed by URL. Nothing is uploaded, so the image has to be hosted somewhere already: your
+        CMS, your shop, a CDN, or wherever the rest of your assets live.
+      </p>
+
+      <h2>3. Always update alt text where appropriate</h2>
+      <p>
+        Alt text is what a screen reader announces instead of the picture, and what shows if the image
+        fails to load. If you swap a photo of a ceramic bowl for a photo of a mug and leave the old alt
+        text, the page is now describing the wrong object to anyone who cannot see it.
+      </p>
+      <p>
+        Keep it short and concrete. "Ceramic bowls on a wooden table" is useful. "Image", "photo" or a
+        filename is not. If an image is purely decorative and the template left the alt attribute empty on
+        purpose, leave it empty rather than filling it in.
+      </p>
+
+      <h2>4. Changing button destinations</h2>
+      <p>
+        A link destination is an <code>href</code>. The value you put there depends on where you are
+        sending people:
+      </p>
+      <ul>
+        <li><strong>Internal URL</strong> - <code>/pricing</code> or <code>pricing.html</code></li>
+        <li><strong>External URL</strong> - <code>https://example.com</code></li>
+        <li><strong>Email link</strong> - <code>mailto:hello@example.com</code></li>
+        <li><strong>Booking link</strong> - whatever your scheduling tool gives you</li>
+      </ul>
+      <p>
+        A <code>&lt;button&gt;</code> has no <code>href</code> at all, which is why giving one a
+        destination means adding a click handler. That is a structural change, so it is worth doing with a
+        tool that writes it correctly rather than by hand. The
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a> handles both an <code>&lt;a&gt;</code>
+        and a <code>&lt;button&gt;</code> from the same row and leaves the existing styling untouched.
+      </p>
+
+      <h2>5. Opening external links in a new tab</h2>
+      <p>
+        External destinations usually make sense in a new tab, so visitors do not lose your site. Internal
+        navigation normally does not need it, and forcing it there is mildly annoying.
+      </p>
+      <p>
+        When a link does open in a new tab it should also carry <code>rel="noopener"</code>. Modern browsers
+        apply this automatically for <code>target="_blank"</code>, but adding it explicitly is still
+        correct and costs nothing.
+      </p>
+
+      <h2>6. Preview before publishing</h2>
+      <p>Five things to check after any of the three edits:</p>
+      <ul>
+        <li><strong>Broken image</strong> - the URL 404s or points at a local path that does not exist on the server</li>
+        <li><strong>Wrong URL</strong> - the button goes to the old destination, or to a draft page</li>
+        <li><strong>Text overflow</strong> - longer replacement text pushes outside its container</li>
+        <li><strong>Mobile wrapping</strong> - the text fits on desktop and wraps badly on a phone</li>
+        <li><strong>Missing button label</strong> - the label was inside a child element and did not get replaced</li>
+      </ul>
+
+      <h2>7. A visual workflow</h2>
+      <p>
+        Doing all of this by reading raw markup means hunting for the right line in a few hundred lines of
+        code. A visual editor removes the hunting: paste the section, click the thing you want, type the new
+        value, copy the result back.
+      </p>
+      <p>
+        <a class="btn" href="../../tools/css-code-editor/">Open the CSS Code Editor</a>
+      </p>
+      <p>
+        If the snippet you were given is hard to read in the first place, run it through the
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a> first so you can see its structure before you
+        change anything.
+      </p>
+
+      <h2>Conclusion</h2>
+      <p>
+        If you only need to replace content, you usually do not need to redesign the component around it.
+        Change the words, swap the image, point the link, then preview at three widths.
+      </p>
+
+      <h2>Related tools</h2>
+      <p>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a> for the three edits, and
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a> for reading a messy snippet before you start.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/" aria-current="page">Guides</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

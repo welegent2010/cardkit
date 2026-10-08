@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Practical Image Workflow for Etsy Digital-Product Listings</title>
+<meta name="description" content="Build a consistent Etsy listing-image workflow using reusable aspect ratios, canvas spacing, image resizing and repeatable product presentation.">
+<link rel="canonical" href="https://cardcss.top/guides/etsy-listing-image-workflow/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/guides/etsy-listing-image-workflow/">
+<meta property="og:title" content="A Practical Image Workflow for Etsy Digital-Product Listings">
+<meta property="og:description" content="Stop rebuilding listing graphics from scratch. Build one system and reuse it for the next twenty products.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A Practical Image Workflow for Etsy Digital-Product Listings">
+<meta name="twitter:description" content="One reusable system instead of twenty one-off listing graphics.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "A Practical Image Workflow for Etsy Digital-Product Listings",
+  "description": "Build a consistent Etsy listing-image workflow using reusable aspect ratios, canvas spacing, image resizing and repeatable product presentation.",
+  "datePublished": "2026-10-08",
+  "dateModified": "2026-10-08",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/guides/etsy-listing-image-workflow/" }
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/" aria-current="page">Guides</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <p class="eyebrow">GUIDE</p>
+    <h1>A Practical Image Workflow for Etsy Digital-Product Listings</h1>
+    <p>
+      The goal is not making one listing image. It is making the next twenty listings easier than the
+      first one.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>Introduction</h2>
+      <p>
+        Digital-product sellers often spend an evening rebuilding listing graphics for every new product:
+        new canvas, new margin, new font size, new screenshot crop. Every listing becomes a small design
+        project, and every small design project costs an evening.
+      </p>
+      <p>
+        A reusable system removes that cost. You decide the rules once, and from then on a new listing is
+        assembly rather than design. This guide is that system. It is about the workflow, not about
+        chasing a single magic number.
+      </p>
+
+      <h2>1. Start with a visual system</h2>
+      <p>Before you make any image, decide these six things and write them down:</p>
+      <ul>
+        <li><strong>Background</strong> - one colour or one gradient, used everywhere</li>
+        <li><strong>Margins</strong> - the same breathing room on every card</li>
+        <li><strong>Typography</strong> - one family, two or three sizes, fixed weights</li>
+        <li><strong>Product screenshot style</strong> - full page, cropped region, or device frame</li>
+        <li><strong>Device mockup style</strong> - used consistently, or not at all</li>
+        <li><strong>Callout style</strong> - how you point at a feature</li>
+      </ul>
+      <p>
+        Writing them down is the part people skip. It is also the part that makes listing eleven look like
+        listing one.
+      </p>
+
+      <h2>2. Choose a master canvas</h2>
+      <p>
+        Pick one aspect ratio for the bulk of your listing images and use it everywhere. Consistency does
+        two useful things: your gallery looks deliberate instead of assembled, and you stop recomputing
+        dimensions for every card.
+      </p>
+      <p>
+        Common choices are square for marketplace thumbnails, and a tall portrait ratio for vertical
+        product presentations. Which one you pick matters far less than picking one and sticking to it.
+      </p>
+      <p>
+        Use the <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a> to settle the
+        relationship once. A ratio describes proportion, not size: 4:5 can be 800 x 1000, 1200 x 1500 or
+        anything else with the same shape.
+      </p>
+
+      <h2>3. Prepare screenshots first</h2>
+      <p>Screenshots are raw material. Three habits make them usable:</p>
+      <ul>
+        <li><strong>Crop irrelevant browser UI.</strong> Tab bars and address bars are noise.</li>
+        <li><strong>Keep product scale consistent.</strong> If one screenshot is zoomed and the next is
+          not, the gallery looks like two different products.</li>
+        <li><strong>Avoid tiny interface text.</strong> If a label is unreadable at listing size, capture
+          that region separately at a larger scale.</li>
+      </ul>
+
+      <h2>4. Use padding instead of destructive cropping</h2>
+      <p>
+        This is the step that saves the most time. When an image is the wrong shape, the instinct is to
+        crop it, which throws away composition you already paid for.
+      </p>
+      <p>
+        Padding does the opposite: you keep the whole image at its real size and add canvas around it until
+        it matches your master ratio. Nothing is stretched, nothing is cut.
+      </p>
+      <p>
+        The <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a> does exactly this. You choose the
+        output size, the image sits centred at its real pixel size, and the surrounding area is filled with
+        a colour or your own backdrop. Batch mode applies the same setting to every screenshot in one go.
+      </p>
+      <p>
+        <a class="btn" href="../../tools/image-canvas-padder/">Open the Image Canvas Padder</a>
+      </p>
+
+      <h2>5. Build repeatable image categories</h2>
+      <p>
+        Do not invent a new set of images per product. Define the sequence once and fill it in each time.
+        A sequence that works well for a digital product:
+      </p>
+      <ol>
+        <li>Hero image - the product at its best</li>
+        <li>Main benefit - the single thing it solves</li>
+        <li>Full-page preview - the whole template in one view</li>
+        <li>Feature detail - one section, close up</li>
+        <li>Responsive view - desktop, tablet and phone side by side</li>
+        <li>Included files - what arrives in the download</li>
+        <li>Editing workflow - how easy it is to change</li>
+        <li>Use cases - who it is for</li>
+        <li>Support and instructions - how to get help</li>
+        <li>Final product summary - one last look</li>
+      </ol>
+      <p>
+        Ten slots is a target, not a rule. The point is that slot four is always "feature detail", so you
+        are never deciding what image four should be.
+      </p>
+
+      <h2>6. Resize final exports consistently</h2>
+      <p>
+        Screenshots arrive at whatever size your browser window happened to be. Export them at one
+        consistent width so the gallery does not alternate between sharp and soft images.
+      </p>
+      <p>
+        The <a href="../../tools/image-resizer/">Image Resizer</a> takes each finished card to the same pixel
+        dimensions with the proportions locked, which is the last step before upload.
+      </p>
+
+      <h2>7. Keep source files separate from exports</h2>
+      <p>
+        Mixing raw screenshots with finished uploads is how people end up re-exporting from a compressed
+        JPEG. Keep them apart:
+      </p>
+      <pre><code>/product-name/
+    source/
+    screenshots/
+    listing-master/
+    export/</code></pre>
+      <ul>
+        <li><code>source/</code> - the product files themselves</li>
+        <li><code>screenshots/</code> - raw captures, never edited in place</li>
+        <li><code>listing-master/</code> - your editable cards</li>
+        <li><code>export/</code> - only the files that get uploaded</li>
+      </ul>
+
+      <h2>8. Reuse the system</h2>
+      <p>
+        After the first listing, every later one is: capture screenshots, pad them to the master ratio,
+        drop them into the ten slots, resize, export. The design decisions are already made, so the work
+        is mechanical.
+      </p>
+      <p>
+        That is the actual payoff. Not a nicer first listing, but a nineteenth listing that takes forty
+        minutes instead of an evening.
+      </p>
+
+      <div class="warn">
+        <p>
+          <strong>CardKit is not affiliated with Etsy.</strong>
+          Marketplace requirements may change, so sellers should confirm current listing requirements
+          directly with Etsy before publishing.
+        </p>
+      </div>
+
+      <h2>Related tools</h2>
+      <p>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a> for the ratio fix,
+        <a href="../../tools/image-resizer/">Image Resizer</a> for consistent exports, and
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a> to settle your master ratio.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/" aria-current="page">Guides</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

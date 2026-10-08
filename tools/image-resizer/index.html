@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Image Resizer - Resize Images in Your Browser | CardKit</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<meta name="description" content="Resize images to exact pixel dimensions directly in your browser while preserving proportions when needed. No upload, no signup.">
+<link rel="canonical" href="https://cardcss.top/tools/image-resizer/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cardcss.top/tools/image-resizer/">
+<meta property="og:title" content="Free Image Resizer - Resize Images in Your Browser | CardKit">
+<meta property="og:description" content="Resize images to exact pixel dimensions directly in your browser while preserving proportions when needed.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Image Resizer - Resize Images in Your Browser | CardKit">
+<meta name="twitter:description" content="Resize images to exact pixel dimensions in your browser.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image Resizer",
+  "url": "https://cardcss.top/tools/image-resizer/",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires a modern web browser",
+  "description": "Resize images to exact pixel dimensions directly in your browser while preserving proportions when needed.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isPartOf": { "@id": "https://cardcss.top/#website" }
+}
+</script>
+<style>
+:root{
+  --bg:#121110; --panel:#181614; --panel2:#141312; --line:#2C2926; --line2:#3A3633;
+  --gold:#F5BD63; --gold-dim:#6A5A32; --muted:#9A9186; --text:#F3EEE6;
+  --field:#111110; --chip:#2A2724; --bad:#C4553F;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:12px/1.6 Verdana,Geneva,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;margin:0}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+.top{border-bottom:1px solid var(--line);background:var(--panel2);position:relative;z-index:50}
+.top-in{display:flex;align-items:center;gap:16px;padding:14px 24px;max-width:1160px;margin:0 auto}
+.mark{font:600 15px/1 Verdana,sans-serif;letter-spacing:.16em;color:var(--gold);white-space:nowrap}
+.spacer{flex:1}
+.ver{font-size:10px;letter-spacing:.18em;color:var(--gold);border:1px solid var(--gold-dim);padding:3px 7px}
+.status{font-size:10px;letter-spacing:.16em;color:var(--muted)}
+.status.is-warn{color:var(--gold)}
+.nav{display:flex;align-items:center;gap:18px}
+.nav-link{color:var(--muted);font-size:11px;letter-spacing:.08em;white-space:nowrap}
+.nav-link:hover{color:var(--gold);text-decoration:none}
+.nav-link.on{color:var(--gold)}
+.drop{position:relative}
+.drop-menu{display:none;position:absolute;top:100%;left:-14px;margin-top:12px;min-width:250px;
+  background:var(--panel);border:1px solid var(--line2);padding:6px;z-index:60}
+.drop-menu::before{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.drop:hover .drop-menu,.drop:focus-within .drop-menu{display:block}
+.drop-menu a{display:block;padding:9px 11px;color:var(--text);font-size:11.5px;border-bottom:1px solid var(--line)}
+.drop-menu a:last-child{border-bottom:0}
+.drop-menu a:hover{background:#221E19;color:var(--gold);text-decoration:none}
+.drop-menu a small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+
+.head{padding:34px 0 4px}
+.head h1{font-size:27px;line-height:1.2}
+.head p{color:var(--muted);max-width:70ch;margin:12px 0 0;font-size:12.5px}
+.safe{border:1px solid var(--gold-dim);background:#1B1712;color:var(--gold);padding:9px 13px;font-size:11px;margin:18px 0 0}
+
+.panel{border:1px solid var(--line);background:var(--panel);padding:18px;margin-top:18px}
+.panel h2{font-size:11px;letter-spacing:.2em;font-family:Verdana,sans-serif;color:var(--muted);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+label{display:block;font-size:10px;letter-spacing:.14em;color:var(--muted);margin:0 0 6px}
+input[type=number],input[type=text],select{
+  width:100%;background:var(--field);border:1px solid var(--line2);color:var(--text);
+  padding:9px 10px;font:12px Verdana,sans-serif}
+input:focus,select:focus{outline:1px solid var(--gold-dim);outline-offset:0}
+.row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+.row>div{flex:1;min-width:120px}
+.hint{color:var(--muted);font-size:11px;margin:9px 0 0}
+.readout{font:11px/1.7 "Courier New",monospace;color:var(--muted)}
+.readout b{color:var(--text);font-weight:400}
+.badge{display:inline-block;border:1px solid var(--bad);color:var(--bad);padding:3px 7px;font-size:10px;letter-spacing:.12em;margin-left:8px}
+
+.btn{display:inline-block;border:1px solid var(--gold-dim);background:#1E1913;color:var(--gold);
+  padding:11px 15px;font:11px/1 Verdana,sans-serif;letter-spacing:.14em;cursor:pointer}
+.btn:hover{background:#2A2216;text-decoration:none}
+.btn.is-primary{background:var(--gold);border-color:var(--gold);color:#1A1611;font-weight:600}
+.btn.is-quiet{border-color:var(--line2);background:transparent;color:var(--muted)}
+.btn.is-quiet:hover{color:var(--gold)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.preset{border:1px solid var(--line2);background:transparent;color:var(--muted);
+  padding:7px 10px;font:10.5px/1 Verdana,sans-serif;letter-spacing:.06em;cursor:pointer}
+.preset:hover{color:var(--gold);border-color:var(--gold-dim)}
+.preset.on{color:var(--gold);border-color:var(--gold-dim);background:#1E1913}
+.check{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11.5px;cursor:pointer}
+.check input{width:auto;margin:0}
+input[type=range]{width:100%;margin:0}
+
+.stage{margin-top:18px;border:1px solid var(--line);background:
+  repeating-conic-gradient(#1B1917 0% 25%, #151413 0% 50%) 50%/18px 18px;
+  min-height:260px;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.stage img{max-width:100%;height:auto;display:block;border:1px solid var(--line2)}
+.empty{color:var(--muted);font-size:11.5px;text-align:center}
+
+.ad{margin:34px 0 0;border:1px dashed var(--line2);background:#151312;color:#6E665C;
+  min-height:90px;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.2em}
+
+.faq{margin:44px 0 0;border-top:1px solid var(--line);padding-top:26px}
+.faq h3{font-family:Verdana,sans-serif;font-size:10px;letter-spacing:.2em;color:var(--muted);font-weight:400}
+.faq-list{margin:12px 0 0}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item:first-child{border-top:1px solid var(--line)}
+.faq-item summary.q{list-style:none;cursor:pointer;position:relative;
+  font-family:Georgia,serif;font-size:16px;line-height:1.35;color:var(--text);
+  margin:0;padding:15px 36px 15px 0}
+.faq-item summary.q::-webkit-details-marker{display:none}
+.faq-item summary.q::marker{content:""}
+.faq-item summary.q:hover{color:var(--gold)}
+.faq-item[open] summary.q{color:var(--gold)}
+.faq-item summary.q::after{content:"";position:absolute;right:4px;top:50%;width:13px;height:13px;
+  transform:translateY(-50%);
+  background:linear-gradient(var(--gold),var(--gold)) center/100% 1.5px no-repeat,
+             linear-gradient(var(--gold),var(--gold)) center/1.5px 100% no-repeat}
+.faq-item[open] summary.q::after{
+  background:linear-gradient(var(--gold),var(--gold)) center/100% 1.5px no-repeat}
+.faq-item .a{color:var(--muted);margin:0;padding:0 36px 18px 0;max-width:74ch}
+
+footer{border-top:1px solid var(--line);margin-top:44px;padding:28px 0 44px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:26px}
+.foot-col h4{font:10px/1 Verdana,sans-serif;letter-spacing:.2em;color:var(--muted);font-weight:400;margin:0 0 12px}
+.foot-col a,.foot-col span{display:block;color:var(--muted);font-size:11.5px;padding:3px 0}
+.foot-col a:hover{color:var(--gold)}
+.foot-brand{font:600 14px/1 Verdana,sans-serif;letter-spacing:.16em;color:var(--gold)}
+.foot-brand-p{color:var(--muted);font-size:11.5px;margin:10px 0 0;max-width:30ch}
+.foot-bottom{border-top:1px solid var(--line);margin-top:26px;padding-top:18px;
+  color:var(--muted);font-size:11px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.foot-legal{color:#7C7469;font-size:10.5px;line-height:1.6;margin:14px 0 0;max-width:88ch}
+
+@media (max-width:820px){
+  .grid2{grid-template-columns:1fr}
+  .top-in{flex-wrap:wrap;gap:10px 14px}
+  .nav{gap:14px;flex-wrap:wrap}
+  .drop-menu{display:none !important}
+}
+@media (max-width:1000px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.foot-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link on" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+    <span class="status" id="status">READY</span>
+    <span class="ver">v1.0</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="head">
+    <h1>Resize an image to the dimensions you actually need</h1>
+    <p>
+      Enter a width or height, preserve the original aspect ratio if you want to, preview the result and
+      export the resized image.
+    </p>
+  </section>
+
+  <div class="safe">
+    <b>All processing happens locally in your browser. Your image is not uploaded to any server. Refresh will lose your work.</b>
+  </div>
+
+  <section class="panel">
+    <h2>SOURCE</h2>
+    <input type="file" id="file" accept="image/*">
+    <div class="presets" id="presets" hidden>
+      <button class="preset" data-w="1200" data-h="1200">1200 x 1200</button>
+      <button class="preset" data-w="1600" data-h="1200">1600 x 1200</button>
+      <button class="preset" data-w="1200" data-h="1500">1200 x 1500</button>
+      <button class="preset" data-w="1920" data-h="1080">1920 x 1080</button>
+      <button class="preset" data-w="1080" data-h="1350">1080 x 1350</button>
+      <button class="preset" data-w="0" data-h="0">CUSTOM</button>
+    </div>
+    <p class="hint" id="srcNote" hidden>Original: <span class="readout" id="orig"></span></p>
+  </section>
+
+  <div class="grid2" id="controls" hidden>
+
+    <section class="panel">
+      <h2>OUTPUT SIZE</h2>
+      <div class="row">
+        <div>
+          <label for="w">TARGET WIDTH (PX)</label>
+          <input type="number" id="w" min="1" step="1">
+        </div>
+        <div>
+          <label for="h">TARGET HEIGHT (PX)</label>
+          <input type="number" id="h" min="1" step="1">
+        </div>
+      </div>
+      <p style="margin:14px 0 0">
+        <label class="check"><input type="checkbox" id="lock" checked> Lock aspect ratio</label>
+      </p>
+      <p class="hint" id="scaleNote"></p>
+    </section>
+
+    <section class="panel">
+      <h2>OUTPUT</h2>
+      <div class="row">
+        <div>
+          <label for="fmt">FORMAT</label>
+          <select id="fmt">
+            <option value="image/png">PNG</option>
+            <option value="image/jpeg" selected>JPEG</option>
+            <option value="image/webp">WebP</option>
+          </select>
+        </div>
+        <div>
+          <label for="q">QUALITY <span id="qv">0.92</span></label>
+          <input type="range" id="q" min="0.5" max="1" step="0.01" value="0.92">
+        </div>
+      </div>
+      <p class="hint">Quality applies to JPEG and WebP. PNG is always lossless.</p>
+      <p style="margin:16px 0 0;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn is-primary" id="export">EXPORT IMAGE</button>
+        <button class="btn is-quiet" id="reset">RESET</button>
+      </p>
+    </section>
+
+  </div>
+
+  <div class="stage" id="stage">
+    <p class="empty">Choose an image to see the preview here.</p>
+  </div>
+
+  <section class="faq">
+    <h3>FAQ</h3>
+    <div class="faq-list">
+      <details class="faq-item" name="faq" open>
+        <summary class="q">Does resizing reduce image quality?</summary>
+        <p class="a">
+          Reducing dimensions normally removes image data. Export quality also depends on the selected
+          output format and compression level. Keep the original file if you may need a larger version later.
+        </p>
+      </details>
+      <details class="faq-item" name="faq">
+        <summary class="q">Will CardKit stretch the image?</summary>
+        <p class="a">
+          Not when aspect-ratio lock is enabled. Turn the lock off only when you want the two sides to
+          move independently, which will change the proportions on purpose.
+        </p>
+      </details>
+      <details class="faq-item" name="faq">
+        <summary class="q">Is the uploaded image stored?</summary>
+        <p class="a">
+          The tool processes images locally and does not store uploaded image files on CardKit servers.
+          Refreshing the page clears everything.
+        </p>
+      </details>
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+var $ = function (id) { return document.getElementById(id); };
+var IMG = null, RATIO = 1;
+
+function setStatus(t, warn) {
+  var s = $("status");
+  s.textContent = t;
+  s.className = "status" + (warn ? " is-warn" : "");
+}
+
+function note() {
+  if (!IMG) return;
+  var w = parseInt($("w").value, 10), h = parseInt($("h").value, 10);
+  if (!w || !h) { $("scaleNote").textContent = ""; return; }
+  var pct = Math.round(w / IMG.naturalWidth * 100);
+  var up = w > IMG.naturalWidth || h > IMG.naturalHeight;
+  $("scaleNote").innerHTML = "Scale <b>" + pct + "%</b>" +
+    (up ? ' <span class="badge">UPSCALED</span>' : "");
+}
+
+function preview() {
+  var w = parseInt($("w").value, 10), h = parseInt($("h").value, 10);
+  var st = $("stage");
+  if (!IMG || !w || !h) return;
+  var c = document.createElement("canvas");
+  c.width = w; c.height = h;
+  c.getContext("2d").drawImage(IMG, 0, 0, w, h);
+  st.innerHTML = "";
+  var im = document.createElement("img");
+  im.src = c.toDataURL($("fmt").value, parseFloat($("q").value));
+  im.alt = "Resized preview";
+  st.appendChild(im);
+  note();
+}
+
+function applyLock(src) {
+  if (!$("lock").checked || !IMG) return;
+  var w = parseInt($("w").value, 10), h = parseInt($("h").value, 10);
+  if (src === "w" && w) { $("h").value = Math.max(1, Math.round(w / RATIO)); }
+  else if (src === "h" && h) { $("w").value = Math.max(1, Math.round(h * RATIO)); }
+}
+
+$("file").addEventListener("change", function (e) {
+  var f = e.target.files && e.target.files[0];
+  if (!f) return;
+  setStatus("LOADING…");
+  var r = new FileReader();
+  r.onload = function () {
+    var im = new Image();
+    im.onload = function () {
+      IMG = im;
+      RATIO = im.naturalWidth / im.naturalHeight;
+      $("orig").textContent = im.naturalWidth + " x " + im.naturalHeight + " px";
+      $("srcNote").hidden = false;
+      $("presets").hidden = false;
+      $("controls").hidden = false;
+      $("w").value = im.naturalWidth;
+      $("h").value = im.naturalHeight;
+      preview();
+      setStatus("READY");
+    };
+    im.onerror = function () { setStatus("LOAD FAILED", true); };
+    im.src = r.result;
+  };
+  r.readAsDataURL(f);
+});
+
+$("w").addEventListener("input", function () { applyLock("w"); preview(); });
+$("h").addEventListener("input", function () { applyLock("h"); preview(); });
+$("lock").addEventListener("change", function () { if ($("lock").checked && IMG) { $("h").value = Math.max(1, Math.round($("w").value / RATIO)); preview(); } });
+$("fmt").addEventListener("change", preview);
+$("q").addEventListener("input", function () { $("qv").textContent = $("q").value; preview(); });
+
+$("presets").addEventListener("click", function (e) {
+  var b = e.target.closest(".preset");
+  if (!b) return;
+  var w = parseInt(b.dataset.w, 10), h = parseInt(b.dataset.h, 10);
+  Array.prototype.forEach.call($("presets").children, function (x) { x.className = "preset"; });
+  b.className = "preset on";
+  if (!w || !h) return;
+  $("w").value = w; $("h").value = h;
+  preview();
+});
+
+$("reset").addEventListener("click", function () {
+  if (!IMG) return;
+  $("w").value = IMG.naturalWidth;
+  $("h").value = IMG.naturalHeight;
+  Array.prototype.forEach.call($("presets").children, function (x) { x.className = "preset"; });
+  preview();
+  setStatus("RESET");
+});
+
+$("export").addEventListener("click", function () {
+  if (!IMG) { setStatus("NO IMAGE", true); return; }
+  var w = parseInt($("w").value, 10), h = parseInt($("h").value, 10);
+  if (!w || !h) { setStatus("SIZE MISSING", true); return; }
+  setStatus("SAVING…");
+  var c = document.createElement("canvas");
+  c.width = w; c.height = h;
+  c.getContext("2d").drawImage(IMG, 0, 0, w, h);
+  var fmt = $("fmt").value;
+  var ext = fmt === "image/png" ? "png" : (fmt === "image/webp" ? "webp" : "jpg");
+  c.toBlob(function (blob) {
+    if (!blob) { setStatus("SAVE FAILED", true); return; }
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "cardkit-" + w + "x" + h + "." + ext;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    setStatus("SAVED " + new Date().toTimeString().slice(0, 8));
+  }, fmt, fmt === "image/png" ? undefined : parseFloat($("q").value));
+});
+</script>
+
+</body>
+</html>

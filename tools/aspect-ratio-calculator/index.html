@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aspect Ratio Calculator - Width, Height &amp; Ratio Tool | CardKit</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<meta name="description" content="Calculate matching image and layout dimensions while preserving an aspect ratio. Free browser tool for designers and website creators.">
+<link rel="canonical" href="https://cardcss.top/tools/aspect-ratio-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cardcss.top/tools/aspect-ratio-calculator/">
+<meta property="og:title" content="Aspect Ratio Calculator - Width, Height &amp; Ratio Tool | CardKit">
+<meta property="og:description" content="Calculate matching image and layout dimensions while preserving an aspect ratio.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aspect Ratio Calculator - Width, Height &amp; Ratio Tool | CardKit">
+<meta name="twitter:description" content="Keep the ratio. Change the size.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Aspect Ratio Calculator",
+  "url": "https://cardcss.top/tools/aspect-ratio-calculator/",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires a modern web browser",
+  "description": "Calculate matching image and layout dimensions while preserving an aspect ratio.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "isPartOf": { "@id": "https://cardcss.top/#website" }
+}
+</script>
+<style>
+:root{
+  --bg:#121110; --panel:#181614; --panel2:#141312; --line:#2C2926; --line2:#3A3633;
+  --gold:#F5BD63; --gold-dim:#6A5A32; --muted:#9A9186; --text:#F3EEE6;
+  --field:#111110; --chip:#2A2724;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:12px/1.6 Verdana,Geneva,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;margin:0}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+.top{border-bottom:1px solid var(--line);background:var(--panel2);position:relative;z-index:50}
+.top-in{display:flex;align-items:center;gap:16px;padding:14px 24px;max-width:1160px;margin:0 auto}
+.mark{font:600 15px/1 Verdana,sans-serif;letter-spacing:.16em;color:var(--gold);white-space:nowrap}
+.spacer{flex:1}
+.ver{font-size:10px;letter-spacing:.18em;color:var(--gold);border:1px solid var(--gold-dim);padding:3px 7px}
+.nav{display:flex;align-items:center;gap:18px}
+.nav-link{color:var(--muted);font-size:11px;letter-spacing:.08em;white-space:nowrap}
+.nav-link:hover{color:var(--gold);text-decoration:none}
+.nav-link.on{color:var(--gold)}
+.drop{position:relative}
+.drop-menu{display:none;position:absolute;top:100%;left:-14px;margin-top:12px;min-width:250px;
+  background:var(--panel);border:1px solid var(--line2);padding:6px;z-index:60}
+.drop-menu::before{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.drop:hover .drop-menu,.drop:focus-within .drop-menu{display:block}
+.drop-menu a{display:block;padding:9px 11px;color:var(--text);font-size:11.5px;border-bottom:1px solid var(--line)}
+.drop-menu a:last-child{border-bottom:0}
+.drop-menu a:hover{background:#221E19;color:var(--gold);text-decoration:none}
+.drop-menu a small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+
+.head{padding:34px 0 4px}
+.head h1{font-size:27px;line-height:1.2}
+.head p{color:var(--muted);max-width:70ch;margin:12px 0 0;font-size:12.5px}
+.safe{border:1px solid var(--gold-dim);background:#1B1712;color:var(--gold);padding:9px 13px;font-size:11px;margin:18px 0 0}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+.panel{border:1px solid var(--line);background:var(--panel);padding:18px}
+.panel .tag{font:10px/1 Verdana,sans-serif;letter-spacing:.2em;color:var(--gold);margin:0 0 6px}
+.panel h2{font-size:15px;margin:0 0 12px}
+label{display:block;font-size:10px;letter-spacing:.14em;color:var(--muted);margin:0 0 6px}
+input[type=number]{
+  width:100%;background:var(--field);border:1px solid var(--line2);color:var(--text);
+  padding:9px 10px;font:12px Verdana,sans-serif}
+input:focus{outline:1px solid var(--gold-dim);outline-offset:0}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row>div{flex:1;min-width:90px}
+.hint{color:var(--muted);font-size:11px;margin:10px 0 0}
+.out{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
+.out .big{font-family:Georgia,serif;font-size:26px;color:var(--gold);line-height:1.1}
+.out .sub{color:var(--muted);font-size:11px;margin-top:6px}
+.err{color:#C4553F;font-size:11px;margin-top:8px}
+
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.preset{border:1px solid var(--line2);background:transparent;color:var(--muted);
+  padding:7px 10px;font:10.5px/1 Verdana,sans-serif;letter-spacing:.06em;cursor:pointer}
+.preset:hover{color:var(--gold);border-color:var(--gold-dim)}
+.preset.on{color:var(--gold);border-color:var(--gold-dim);background:#1E1913}
+
+.btn{display:inline-block;border:1px solid var(--gold-dim);background:#1E1913;color:var(--gold);
+  padding:11px 15px;font:11px/1 Verdana,sans-serif;letter-spacing:.14em;cursor:pointer}
+.btn.is-quiet{border-color:var(--line2);background:transparent;color:var(--muted)}
+.btn.is-quiet:hover{color:var(--gold)}
+
+.note-box{border-left:2px solid var(--gold-dim);background:#1B1712;padding:14px 16px;margin:18px 0 0}
+.note-box p{margin:0;color:var(--muted);font-size:11.5px}
+
+.ad{margin:34px 0 0;border:1px dashed var(--line2);background:#151312;color:#6E665C;
+  min-height:90px;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.2em}
+
+footer{border-top:1px solid var(--line);margin-top:44px;padding:28px 0 44px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:26px}
+.foot-col h4{font:10px/1 Verdana,sans-serif;letter-spacing:.2em;color:var(--muted);font-weight:400;margin:0 0 12px}
+.foot-col a,.foot-col span{display:block;color:var(--muted);font-size:11.5px;padding:3px 0}
+.foot-col a:hover{color:var(--gold)}
+.foot-brand{font:600 14px/1 Verdana,sans-serif;letter-spacing:.16em;color:var(--gold)}
+.foot-brand-p{color:var(--muted);font-size:11.5px;margin:10px 0 0;max-width:30ch}
+.foot-bottom{border-top:1px solid var(--line);margin-top:26px;padding-top:18px;
+  color:var(--muted);font-size:11px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.foot-legal{color:#7C7469;font-size:10.5px;line-height:1.6;margin:14px 0 0;max-width:88ch}
+
+@media (max-width:1000px){.grid3{grid-template-columns:1fr}}
+@media (max-width:820px){
+  .top-in{flex-wrap:wrap;gap:10px 14px}
+  .nav{gap:14px;flex-wrap:wrap}
+  .drop-menu{display:none !important}
+}
+@media (max-width:560px){.foot-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link on" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+    <span class="ver">v1.0</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="head">
+    <h1>Keep the ratio. Change the size.</h1>
+    <p>
+      Enter an original width and height, then calculate a matching new dimension without distorting
+      the proportions.
+    </p>
+  </section>
+
+  <div class="safe">
+    <b>Everything is calculated in your browser. Nothing is uploaded.</b>
+  </div>
+
+  <div class="grid3">
+
+    <!-- MODE 1 -->
+    <section class="panel">
+      <p class="tag">MODE 1</p>
+      <h2>Find the ratio</h2>
+      <div class="row">
+        <div>
+          <label for="ow">ORIGINAL WIDTH</label>
+          <input type="number" id="ow" min="1" step="1" value="1600">
+        </div>
+        <div>
+          <label for="oh">ORIGINAL HEIGHT</label>
+          <input type="number" id="oh" min="1" step="1" value="1200">
+        </div>
+      </div>
+      <div class="out">
+        <div class="big" id="m1out">4:3</div>
+        <div class="sub" id="m1sub">1600 x 1200 simplifies to 4:3</div>
+      </div>
+      <p class="err" id="m1err" hidden>Enter a width and a height greater than zero.</p>
+    </section>
+
+    <!-- MODE 2 -->
+    <section class="panel">
+      <p class="tag">MODE 2</p>
+      <h2>Ratio plus width</h2>
+      <div class="row">
+        <div>
+          <label for="r2w">RATIO W</label>
+          <input type="number" id="r2w" min="1" step="1" value="4">
+        </div>
+        <div>
+          <label for="r2h">RATIO H</label>
+          <input type="number" id="r2h" min="1" step="1" value="5">
+        </div>
+        <div>
+          <label for="k2w">KNOWN WIDTH</label>
+          <input type="number" id="k2w" min="1" step="1" value="1200">
+        </div>
+      </div>
+      <div class="out">
+        <div class="big" id="m2out">1500 px</div>
+        <div class="sub" id="m2sub">Height for 1200 px at 4:5</div>
+      </div>
+      <p class="err" id="m2err" hidden>Ratio values must be greater than zero.</p>
+    </section>
+
+    <!-- MODE 3 -->
+    <section class="panel">
+      <p class="tag">MODE 3</p>
+      <h2>Ratio plus height</h2>
+      <div class="row">
+        <div>
+          <label for="r3w">RATIO W</label>
+          <input type="number" id="r3w" min="1" step="1" value="16">
+        </div>
+        <div>
+          <label for="r3h">RATIO H</label>
+          <input type="number" id="r3h" min="1" step="1" value="9">
+        </div>
+        <div>
+          <label for="k3h">KNOWN HEIGHT</label>
+          <input type="number" id="k3h" min="1" step="1" value="1080">
+        </div>
+      </div>
+      <div class="out">
+        <div class="big" id="m3out">1920 px</div>
+        <div class="sub" id="m3sub">Width for 1080 px at 16:9</div>
+      </div>
+      <p class="err" id="m3err" hidden>Ratio values must be greater than zero.</p>
+    </section>
+
+  </div>
+
+  <section class="panel" style="margin-top:16px">
+    <p class="tag">QUICK RATIOS</p>
+    <h2>Apply a common ratio</h2>
+    <div class="presets" id="quick">
+      <button class="preset" data-w="1" data-h="1">1:1</button>
+      <button class="preset" data-w="4" data-h="5">4:5</button>
+      <button class="preset" data-w="3" data-h="4">3:4</button>
+      <button class="preset" data-w="4" data-h="3">4:3</button>
+      <button class="preset" data-w="3" data-h="2">3:2</button>
+      <button class="preset" data-w="16" data-h="9">16:9</button>
+      <button class="preset" data-w="21" data-h="9">21:9</button>
+    </div>
+    <p class="hint">Clicking a ratio fills both Mode 2 and Mode 3.</p>
+  </section>
+
+  <div class="note-box">
+    <p>
+      <strong style="color:var(--gold)">Aspect ratios describe proportional relationships rather than fixed
+      pixel sizes.</strong> A 4:5 image can be 800 x 1000, 1200 x 1500 or any other dimensions using the same
+      proportion.
+    </p>
+  </div>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+var $ = function (id) { return document.getElementById(id); };
+
+function gcd(a, b) { while (b) { var t = b; b = a % b; a = t; } return a; }
+function num(id) { var v = parseInt($(id).value, 10); return isNaN(v) ? 0 : v; }
+
+function mode1() {
+  var w = num("ow"), h = num("oh");
+  if (w <= 0 || h <= 0) { $("m1err").hidden = false; $("m1out").textContent = "-"; $("m1sub").textContent = ""; return; }
+  $("m1err").hidden = true;
+  var g = gcd(w, h) || 1;
+  var rw = w / g, rh = h / g;
+  $("m1out").textContent = rw + ":" + rh;
+  $("m1sub").textContent = w + " x " + h + " simplifies to " + rw + ":" + rh +
+    "  (" + (w / h).toFixed(4).replace(/0+$/, "").replace(/\.$/, "") + " as a decimal)";
+}
+
+function mode2() {
+  var rw = num("r2w"), rh = num("r2h"), w = num("k2w");
+  if (rw <= 0 || rh <= 0 || w <= 0) { $("m2err").hidden = false; $("m2out").textContent = "-"; $("m2sub").textContent = ""; return; }
+  $("m2err").hidden = true;
+  var h = Math.round(w * rh / rw);
+  $("m2out").textContent = h + " px";
+  $("m2sub").textContent = "Height for " + w + " px at " + rw + ":" + rh;
+}
+
+function mode3() {
+  var rw = num("r3w"), rh = num("r3h"), h = num("k3h");
+  if (rw <= 0 || rh <= 0 || h <= 0) { $("m3err").hidden = false; $("m3out").textContent = "-"; $("m3sub").textContent = ""; return; }
+  $("m3err").hidden = true;
+  var w = Math.round(h * rw / rh);
+  $("m3out").textContent = w + " px";
+  $("m3sub").textContent = "Width for " + h + " px at " + rw + ":" + rh;
+}
+
+function all() { mode1(); mode2(); mode3(); }
+
+["ow", "oh"].forEach(function (i) { $(i).addEventListener("input", mode1); });
+["r2w", "r2h", "k2w"].forEach(function (i) { $(i).addEventListener("input", mode2); });
+["r3w", "r3h", "k3h"].forEach(function (i) { $(i).addEventListener("input", mode3); });
+
+$("quick").addEventListener("click", function (e) {
+  var b = e.target.closest(".preset");
+  if (!b) return;
+  Array.prototype.forEach.call($("quick").children, function (x) { x.className = "preset"; });
+  b.className = "preset on";
+  $("r2w").value = b.dataset.w; $("r2h").value = b.dataset.h;
+  $("r3w").value = b.dataset.w; $("r3h").value = b.dataset.h;
+  mode2(); mode3();
+});
+
+all();
+</script>
+
+</body>
+</html>
