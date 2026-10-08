@@ -9,7 +9,7 @@ Brand: **CardKit** · Subtitle: *Small tools for website editing and template wo
 Support email: **support@xdstudiolab.com** (used on every page, do not reintroduce `info@`)
 Production domain: `https://cardcss.top`
 Source: `https://github.com/welegent2010/cardkit`
-Hosting: Cloudflare Pages, project `cardkit` (`cardkit.pages.dev`)
+Hosting: Cloudflare Pages, project `cardkit` (`cardcss.top`)
 
 ---
 
