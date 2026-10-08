@@ -335,6 +335,16 @@ async function makeFixture(browser) {
       fit.scale < 1 && /shown at/.test(await page.locator("#vpNote").textContent()),
       fit.scale + " / " + await page.locator("#vpNote").textContent());
 
+    /* The preview asks for no referrer on purpose. A host with hotlink
+       protection answers 403 to an embedded image and 200 when the url is
+       opened on its own - which makes the tool look broken. */
+    const refMeta = await page.evaluate(() => {
+      const d = document.getElementById("frame").contentDocument;
+      const m = d.querySelector('meta[name="referrer"]');
+      return m ? m.getAttribute("content") : null;
+    });
+    ok("preview asks for no referrer", refMeta === "no-referrer", String(refMeta));
+
     /* one editor open at a time */
     await page.locator("#panel .chip").first().click();
     ok("exactly one editor open", await page.locator("#panel .field.on .edit").count() === 1);
@@ -369,6 +379,15 @@ async function makeFixture(browser) {
     await page.waitForTimeout(500);
     const out2 = await page.evaluate(() => window.__ppOut);
     ok("image URL written into the snippet", out2.indexOf("https://example.com/new-photo.jpg") >= 0);
+    ok("the no-referrer rule stays inside the preview", out2.indexOf("referrer") < 0);
+
+    /* an image the browser cannot fetch has to be explained. A grey box with
+       alt text reads as a broken tool, and the most common cause is a host
+       that refuses to serve its files to another domain. */
+    await page.fill('#panel .field.on input[data-f="url"]', "https://blocked-host.invalid/photo.jpg");
+    await page.waitForTimeout(4000);
+    ok("a dead image gets a note, not a blank box", await page.locator("#imgNote").isVisible(),
+      await page.locator("#imgNote").textContent());
 
     ok("no code display block on the page", await page.locator("#out").count() === 0);
 

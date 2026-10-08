@@ -29,6 +29,17 @@
   "isPartOf": { "@id": "https://cardcss.top/#website" }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://cardcss.top/tools/" },
+    { "@type": "ListItem", "position": 3, "name": "CSS Code Editor" }
+  ]
+}
+</script>
 <style>
 :root{
   --bg:#121110; --panel:#181614; --panel2:#141312; --line:#2C2926; --line2:#3A3633;
@@ -146,6 +157,8 @@ input[type=text]:focus{outline:none;border-color:var(--gold-dim)}
 .modechips .btn{padding:5px 8px;font-size:10px}
 .scafnote{margin:0 0 9px;border:1px dashed var(--line2);background:#151312;color:var(--muted);
   font-size:11px;line-height:1.6;padding:9px 11px}
+.scafnote.warn{border-color:#7A4A2A;background:#1D1611;color:#E0B183}
+.scafnote.warn b{color:#F5BD63}
 
 /* css mode: one row per rule, one row per declaration */
 .rule{border:1px solid var(--line);background:#161514;margin-bottom:7px}
@@ -214,6 +227,11 @@ footer .wrap.is-foot{display:block}
 @media (max-width:560px){.foot-grid{grid-template-columns:1fr}}
 .footnav{display:flex;gap:14px;flex-wrap:wrap}
 @media (max-width:1080px){ .grid{grid-template-columns:1fr} }
+
+.crumb{font-size:11px;color:var(--muted,#9A9186);margin:0 0 10px}
+.crumb a{color:var(--gold,#F5BD63);text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+.crumb .sep{color:var(--line2,#3A3633);padding:0 6px}
 </style>
 </head>
 <body class="wide">
@@ -243,6 +261,11 @@ footer .wrap.is-foot{display:block}
 </header>
 
 <main class="wrap">
+
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../tools/">Tools</a><span class="sep">/</span><span aria-current="page">CSS Code Editor</span>
+  </nav>
+
 
   <div class="safe">
     <b>All processing happens locally in your browser. Files will NOT be uploaded to any server. Refresh will lose your work.</b>
@@ -317,6 +340,7 @@ footer .wrap.is-foot{display:block}
         Preview built from the class names in your CSS. It is a stand-in so you can see the styles,
         it is never part of your copied code.
       </div>
+      <div class="scafnote warn" id="imgNote" hidden></div>
       <div class="framewrap" id="framewrap">
         <div class="ph" id="ph" style="width:100%">
           <b>Nothing rendered yet.</b><br>
@@ -678,7 +702,8 @@ function needsIconify(src) {
   return /<iconify-icon/.test(src) && !/iconify/.test(src.replace(/<iconify-icon/g, ""));
 }
 function buildDoc(src) {
-  var head = '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+  var head = '<meta charset="utf-8"><meta name="referrer" content="no-referrer">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">';
   head += '<style id="__pp">' + SEL_CSS + "</style>";
   if (needsTailwind(src)) head += '<script src="https://cdn.tailwindcss.com"><\/script>';
   if (needsIconify(src)) head += '<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"><\/script>';
@@ -915,7 +940,8 @@ var BASE_CSS =
   "svg{display:block}";
 
 function buildCssDoc(css) {
-  var head = '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+  var head = '<meta charset="utf-8"><meta name="referrer" content="no-referrer">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">';
   head += '<style id="__ppb">' + BASE_CSS + "</style>";
   head += '<style id="__ppu">' + String(css || "").replace(/<\/style/gi, "<\\/style") + "</style>";
   head += '<style id="__pp">' + SEL_CSS + "</style>";
@@ -963,6 +989,7 @@ function render() {
   }
 
   panel.innerHTML = '<div class="empty">Rendering...</div>';
+  $("imgNote").hidden = true;
   frame.hidden = false; ph.hidden = true; fitbox.hidden = false;
 
   var prevDoc = frame.contentDocument;
@@ -1022,6 +1049,17 @@ function boot(d) {
     } catch (err) {}
   }, true);
   try { d.defaultView.open = function () { return null; }; } catch (e) {}
+  /* an image can also die after the first paint - the url is swapped in the
+     panel, the host starts refusing, the network drops. Catch it where it
+     happens instead of waiting for the next timer. */
+  d.addEventListener("error", function (e) {
+    var t = e.target;
+    if (t && t.tagName === "IMG") setTimeout(function () { checkImages(d); }, 250);
+  }, true);
+  d.addEventListener("load", function (e) {
+    var t = e.target;
+    if (t && t.tagName === "IMG") setTimeout(function () { checkImages(d); }, 250);
+  }, true);
 
   if (RMODE === "css") {
     watchHeight(d);
@@ -1099,6 +1137,47 @@ function watchHeight(d) {
   } catch (e) {}
   /* images and webfonts land after the first paint and change the height */
   setTimeout(fitFrame, 300); setTimeout(fitFrame, 1000); setTimeout(fitFrame, 2400);
+  checkImages(d);
+  setTimeout(function () { checkImages(d); }, 1500);
+  setTimeout(function () { checkImages(d); }, 3500);
+}
+
+/* --------------------------------------------------------------
+   images that never arrive
+   A picture can fail here and still open fine when you paste the
+   url into the address bar: the source site is answering "not for
+   you" to anything embedded somewhere else (hotlink protection
+   reads the referrer). The preview already asks for no referrer
+   at all, which gets past most of it - but not all of it, and a
+   silent grey box reads like the tool is broken. So say what
+   happened, and say that the code itself is untouched.
+   -------------------------------------------------------------- */
+function checkImages(d) {
+  var note = $("imgNote");
+  if (!note) return;
+  var all = [], i;
+  try { all = [].slice.call(d.images || []); } catch (e) { return; }
+  var bad = [];
+  for (i = 0; i < all.length; i++) {
+    var img = all[i];
+    /* only a request that finished and produced no pixels counts. An image
+       that has not been asked for yet (lazy, still in flight) is not a
+       failure and must not raise a false alarm. */
+    if (!img.complete || img.naturalWidth > 0) continue;
+    var src = img.getAttribute("src") || "";
+    if (!src || /^data:/i.test(src)) continue;
+    bad.push(src);
+  }
+  if (!bad.length) { note.hidden = true; note.innerHTML = ""; return; }
+  var host = "";
+  try { host = new URL(bad[0], "https://x/").hostname; } catch (e) {}
+  note.hidden = false;
+  note.innerHTML = "<b>" + bad.length + " image" + (bad.length === 1 ? "" : "s") +
+    " could not be loaded" + (host ? " from " + esc(host) : "") + ".</b> " +
+    "Either that host refuses to serve its files to another site, or the request never got " +
+    "through. Press RENDER again first - a dropped connection usually clears on the second try. " +
+    "If it stays blank, save the picture and point the &lt;img&gt; at your own copy. Your code " +
+    "is unchanged and nothing is uploaded.";
 }
 
 /* ---------------- scan ---------------- */
