@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-8245018296750321">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8245018296750321"
+     crossorigin="anonymous"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Edit AI-Generated CSS Without Asking AI to Rewrite Everything</title>
+<meta name="description" content="Every revision request returns a whole new block of CSS, and you cannot tell what moved. A better loop: take one draft, then change the values yourself by looking at the result.">
+<link rel="canonical" href="https://cardcss.top/blog/how-to-edit-ai-generated-css/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/blog/how-to-edit-ai-generated-css/">
+<meta property="og:title" content="How to Edit AI-Generated CSS Without Asking AI to Rewrite Everything">
+<meta property="og:description" content="The shadow is too strong. Do not ask again - change the number and watch.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Edit AI-Generated CSS">
+<meta name="twitter:description" content="One draft, then finish it visually instead of re-prompting.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Edit AI-Generated CSS Without Asking AI to Rewrite Everything",
+  "description": "Every revision request returns a whole new block of CSS, and you cannot tell what moved. A better loop: take one draft, then change the values yourself by looking at the result.",
+  "datePublished": "2026-11-02",
+  "dateModified": "2026-11-02",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/blog/how-to-edit-ai-generated-css/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cardcss.top/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "How to Edit AI-Generated CSS" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../blog/" aria-current="page">Blog</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../blog/">Blog</a><span class="sep">/</span><span aria-current="page">Editing AI-Generated CSS</span>
+  </nav>
+
+    <p class="eyebrow">BLOG</p>
+    <h1>How to Edit AI-Generated CSS Without Asking AI to Rewrite Everything</h1>
+    <p>
+      The shadow is too strong, so you ask for a subtler one - and get forty new lines in which the
+      padding also changed and the transition you liked is gone. That loop is the problem, and there is a
+      shorter one.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>Why the re-prompt loop never converges</h2>
+      <p>
+        Ask for a small change and you receive a whole document. That is how text generation works: the
+        model does not edit your file, it produces a new one. Three consequences follow.
+      </p>
+      <ul>
+        <li>
+          <strong>You cannot see what changed.</strong> Diffing two blocks of CSS by eye is slow and
+          unreliable, especially when the model also reformats.
+        </li>
+        <li>
+          <strong>The things you liked can silently change.</strong> Values you never mentioned get
+          "improved" - spacing, hover states, letter-spacing, transitions.
+        </li>
+        <li>
+          <strong>The block grows.</strong> Each round tends to add rather than subtract. What started as
+          three properties becomes fifteen, and most of them are nobody's decision.
+        </li>
+      </ul>
+      <p>
+        Worst of all, you are describing a visual difference in words. "Make the corners slightly
+        smaller" is a request about an image, delivered to something that cannot see your page. It will
+        guess, and you will have to check anyway.
+      </p>
+      <div class="note">
+        <p>
+          <strong>AI generates the first draft. Finishing it is judgement, and judgement needs something
+          to look at.</strong> Generation and finishing are different jobs.
+        </p>
+      </div>
+
+      <h2>Translate the block into the controls you actually wanted</h2>
+      <p>
+        Here is a typical first draft for a product card:
+      </p>
+      <pre><code>.product-card {
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .15);
+  background: #ffffff;
+}</code></pre>
+      <p>
+        Read as code, this is a wall of numbers. Read as intent, it is four decisions - and each decision
+        is something you can see and adjust directly:
+      </p>
+      <ul>
+        <li><strong>Padding</strong> - how much air is inside the card</li>
+        <li><strong>Radius</strong> - how round the corners are</li>
+        <li><strong>Shadow</strong> - how far the card lifts off the page</li>
+        <li><strong>Background</strong> - the card's colour, including its opacity</li>
+      </ul>
+      <p>
+        Once you see it that way, "the shadow is too strong" stops being a prompt and becomes one number:
+        <code>rgba(0, 0, 0, .15)</code> becomes <code>.08</code>, or the 40px blur becomes 12px. You
+        make the change by looking at the card, not by describing it.
+      </p>
+      <p>
+        Here is the translation, property by property. This is the whole job of finishing a generated
+        block - everything on the left is something an assistant can write, and everything on the right is
+        something you can decide by looking:
+      </p>
+      <table class="ptable">
+        <thead>
+          <tr><th>PROPERTY IN THE DRAFT</th><th>WHAT IT ACTUALLY DECIDES</th><th>HOW YOU FINISH IT</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>padding</code></td>
+            <td>How much air is inside the box</td>
+            <td>Look at the text against the edge; raise it until it stops feeling tight</td>
+          </tr>
+          <tr>
+            <td><code>border-radius</code></td>
+            <td>How round the corners are</td>
+            <td>0-4 crisp, 6-12 soft, 16-24 friendly, 999 pill - pick by eye and keep it consistent</td>
+          </tr>
+          <tr>
+            <td><code>box-shadow</code></td>
+            <td>How far the element lifts off the page</td>
+            <td>Lower the opacity first, then the blur; on dark backgrounds use a border instead</td>
+          </tr>
+          <tr>
+            <td><code>background</code></td>
+            <td>The fill colour, including how opaque it is</td>
+            <td>Check it against the real section behind it, not against white</td>
+          </tr>
+          <tr>
+            <td><code>font-size</code> / <code>line-height</code></td>
+            <td>Whether text reads as a document or a poster</td>
+            <td>Headings 1.4-1.8x body size; body leading around 1.6</td>
+          </tr>
+          <tr>
+            <td><code>max-width</code></td>
+            <td>How many characters sit on one line</td>
+            <td>Around 60-75 characters - roughly <code>68ch</code></td>
+          </tr>
+          <tr>
+            <td><code>gap</code></td>
+            <td>The space between siblings in a grid or flex row</td>
+            <td>Set it once on the parent instead of margins on each child</td>
+          </tr>
+          <tr>
+            <td><code>transition</code></td>
+            <td>Whether changes feel instant or animated</td>
+            <td>Usually safe to delete - it is decoration you did not ask for</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Two entries there are worth dwelling on. <strong>Delete what you did not ask for</strong> - the
+        transition, the hover state, the letter-spacing - because every property you carry over is a
+        property you now own. And <strong>check colours and shadows against your real background</strong>,
+        which is the one thing a generated draft can never get right, since the model has not seen your
+        page.
+      </p>
+      <div class="demo">
+        <div class="demo-head">
+          <b>FIRST DRAFT</b><em>shadow .15 at 40px blur, radius 24</em>
+          <span style="flex:1"></span>
+          <b>FINISHED BY EYE</b><em>shadow .08 at 12px blur, radius 10</em>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-card" style="border-radius:24px;padding:32px;box-shadow:0 12px 40px rgba(0,0,0,.55)">
+            <h4>Ceramic pour-over</h4>
+            <p>Hand-thrown, 400ml, dishwasher safe.</p>
+            <span class="demo-btn" style="border-radius:24px;padding:12px 20px">Add to cart</span>
+          </div>
+          <div class="demo-card" style="border-radius:10px;padding:28px;box-shadow:0 4px 12px rgba(0,0,0,.3)">
+            <h4>Ceramic pour-over</h4>
+            <p>Hand-thrown, 400ml, dishwasher safe.</p>
+            <span class="demo-btn" style="border-radius:6px;padding:12px 20px">Add to cart</span>
+          </div>
+        </div>
+        <p class="demo-cap">Same draft, two values changed by looking. No second prompt required.</p>
+      </div>
+
+      <h2>The loop to use instead</h2>
+      <p>
+        <strong>Generate once &rarr; Visualize &rarr; Adjust &rarr; Copy &rarr; Verify.</strong>
+      </p>
+      <ol>
+        <li>
+          <strong>Generate once.</strong> Take the first reasonable draft and stop asking. A mediocre
+          draft plus two visual adjustments beats six rounds of prompting, and it is faster.
+        </li>
+        <li>
+          <strong>Visualize it on your own markup.</strong> Paste the section - not just the CSS - into
+          the <a href="../../tools/css-code-editor/">CSS Code Editor</a> and see it rendered. This is the
+          step the re-prompt loop skips, and it is the one that decides everything.
+        </li>
+        <li>
+          <strong>Adjust one value at a time.</strong> Change the shadow, look. Change the radius, look.
+          Doing them one at a time is what tells you which change produced which effect - the thing the
+          re-prompt loop makes impossible.
+        </li>
+        <li>
+          <strong>Copy only what you changed.</strong> Not the whole block. If the draft's padding was
+          already fine, do not carry it over. Fewer properties means fewer future surprises, and it keeps
+          the snippet yours rather than the model's.
+        </li>
+        <li>
+          <strong>Verify scope.</strong> Read the selector and check where it applies on your live site.
+          The model guessed it; see
+          <a href="../why-copy-pasting-css-breaks-your-squarespace-site/">Why Copy-Pasting CSS Into
+          Squarespace Sometimes Breaks Your Site</a>.
+        </li>
+      </ol>
+      <p>
+        Steps three and four are where the time is saved. A one-property snippet is also a snippet you
+        understand, which is the difference between having custom CSS and being owned by it.
+      </p>
+
+      <h2>Ask for output that is easy to finish</h2>
+      <p>
+        Prompting still matters - not to get it right, but to get something workable. Four requests that
+        consistently help:
+      </p>
+      <ul>
+        <li>
+          <strong>"Comment each property with what it does."</strong> An annotated block is a block you
+          can sanity-check line by line, and delete from confidently.
+        </li>
+        <li>
+          <strong>"Give me the smallest rule that does only this."</strong> Models default to generous
+          output - padding, transitions and hover states you never asked for. Asking for the minimum
+          gives you two properties instead of fifteen.
+        </li>
+        <li>
+          <strong>"No !important, and tell me if a rule will not apply without it."</strong> If the
+          answer is that it will not, that is diagnostic: the theme's rule is winning, and the fix is a
+          more specific selector, not an override.
+        </li>
+        <li>
+          <strong>"Here is my actual class name."</strong> Right-click, Inspect, copy the class, paste it
+          in. Selector errors are the largest single cause of "the CSS did nothing", and this removes the
+          guess entirely.
+        </li>
+      </ul>
+
+      <h2>When you genuinely should ask again</h2>
+      <p>
+        Finishing visually is not a rule against using the tool. Go back to the assistant when:
+      </p>
+      <ul>
+        <li>
+          <strong>The rule does nothing at all.</strong> That is a selector or cascade problem, not a
+          value problem, and no amount of looking will fix it.
+        </li>
+        <li>
+          <strong>You need something structural.</strong> A media query, a grid that reflows, a sticky
+          element - these are constructions, not values. Ask for them.
+        </li>
+        <li>
+          <strong>You do not know which property is responsible.</strong> Describe the symptom and ask
+          "which property causes this?" That question uses the model for what it is good at: naming the
+          mechanism.
+        </li>
+      </ul>
+      <p>
+        The distinction is: <strong>ask for mechanisms, adjust values yourself.</strong> Mechanisms are
+        knowledge; values are taste, and taste needs eyes.
+      </p>
+
+      <h2>Keep your custom CSS survivable</h2>
+      <p>
+        Editing generated code yourself has one more payoff: the CSS stays readable. Three habits that
+        cost almost nothing:
+      </p>
+      <ul>
+        <li>
+          <strong>Comment with date and purpose.</strong> "Rounded buttons, Nov 2026." Six months later,
+          that line is the difference between a two-minute edit and an afternoon.
+        </li>
+        <li>
+          <strong>Delete what you did not keep.</strong> Dead rules are the reason nobody dares touch
+          their Custom CSS panel.
+        </li>
+        <li>
+          <strong>Group by page or component.</strong> Generated snippets arrive in the order the model
+          thought of them, which is never the order you will need them in.
+        </li>
+      </ul>
+
+      <h2>Real scenarios</h2>
+      <p>
+        <strong>The maker and the pill buttons.</strong> She asked for rounded buttons and got
+        <code>border-radius: 999px</code>, which is what "rounded" literally means and not what she
+        pictured. Seeing it rendered, she dropped to 6px in one adjustment instead of describing
+        "not that round" in another paragraph.
+      </p>
+      <p>
+        <strong>The consultant with the dark theme.</strong> The generated shadow was tuned for a light
+        background and read as a smear on his near-black section. One look, one value - a task that three
+        re-prompts had failed at, because the model did not know the background was dark.
+      </p>
+      <p>
+        <strong>The shop owner who stopped re-prompting.</strong> Her fourth request for "slightly
+        smaller" returned yet another full block with different padding. She took the first draft,
+        rendered it, and changed two numbers. Her Custom CSS went from forty lines she did not
+        understand to four lines she did.
+      </p>
+
+      <h2>Questions people ask</h2>
+      <h3>Is editing generated CSS safe if I do not know CSS?</h3>
+      <p>
+        Changing a value is much safer than writing a rule, and seeing the result is what makes it safe.
+        What you still need is the five-second selector habit - knowing which elements the rule reaches -
+        because no preview can tell you that about your live site.
+      </p>
+      <h3>Why does the AI keep changing things I did not ask about?</h3>
+      <p>
+        Because it regenerates the whole block rather than editing one line. Asking for the smallest
+        possible rule reduces this, and deleting what you did not need finishes it.
+      </p>
+      <h3>What if the generated CSS does not apply at all?</h3>
+      <p>
+        That is scope or specificity, not a value problem. Paste your real class name into the prompt, or
+        narrow the selector yourself; read
+        <a href="../why-copy-pasting-css-breaks-your-squarespace-site/">Why Copy-Pasting CSS Sometimes
+        Breaks Your Site</a> for the diagnosis order.
+      </p>
+      <h3>Does this mean I should stop using AI for CSS?</h3>
+      <p>
+        No - it is very good at the first draft and at naming mechanisms. It is bad at the last mile,
+        because the last mile is visual and it cannot see your page.
+      </p>
+
+      <h2>The short version</h2>
+      <p>
+        <strong>AI generates the first draft. You finish it visually.</strong> Take one draft, render it
+        on your own markup, change the value that is wrong by looking at it, and copy only what you
+        changed.
+      </p>
+      <p>
+        Why this matters more in 2026 than it did two years ago is covered in
+        <a href="../ai-can-write-css-heres-why-you-still-need-to-see-it/">AI Can Write CSS for You.
+        Here's Why You Still Need to See What It Does</a>; for the values worth checking while you
+        finish, see <a href="../what-those-css-numbers-actually-do/">What Those CSS Numbers Actually
+        Do</a>.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../blog/" aria-current="page">Blog</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-8245018296750321">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8245018296750321"
+     crossorigin="anonymous"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Copy-Pasting CSS Into Squarespace Sometimes Breaks Your Site</title>
+<meta name="description" content="The CSS you pasted was probably fine. The problem is scope: which elements the rule actually reaches, which rules it fights, and why the fix usually makes things worse with !important.">
+<link rel="canonical" href="https://cardcss.top/blog/why-copy-pasting-css-breaks-your-squarespace-site/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/blog/why-copy-pasting-css-breaks-your-squarespace-site/">
+<meta property="og:title" content="Why Copy-Pasting CSS Into Squarespace Sometimes Breaks Your Site">
+<meta property="og:description" content="The syntax is fine. The selector is the problem - and !important is how a site becomes unmaintainable.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why Copy-Pasting CSS Breaks Squarespace">
+<meta name="twitter:description" content="It is not the code you pasted. It is where the rule reaches.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why Copy-Pasting CSS Into Squarespace Sometimes Breaks Your Site",
+  "description": "The CSS you pasted was probably fine. The problem is scope: which elements the rule actually reaches, which rules it fights, and why the fix usually makes things worse with !important.",
+  "datePublished": "2026-11-02",
+  "dateModified": "2026-11-02",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/blog/why-copy-pasting-css-breaks-your-squarespace-site/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cardcss.top/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Why Copy-Pasting CSS Breaks Squarespace" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../blog/" aria-current="page">Blog</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../blog/">Blog</a><span class="sep">/</span><span aria-current="page">Why Pasted CSS Breaks Things</span>
+  </nav>
+
+    <p class="eyebrow">BLOG</p>
+    <h1>Why Copy-Pasting CSS Into Squarespace Sometimes Breaks Your Site</h1>
+    <p>
+      You found a snippet on a forum, pasted it into Custom CSS, and three things changed that you did
+      not ask for. The snippet was almost certainly fine. The problem is not what the rule says - it is
+      <strong>which elements the rule reaches</strong>.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>The question to ask before you paste</h2>
+      <p>
+        A CSS rule has two halves. There is the declaration - <code>border-radius: 20px</code> - which
+        says what should change. And there is the selector - the part before the curly brace - which says
+        <strong>where it applies</strong>.
+      </p>
+      <p>
+        Almost every "the CSS broke my site" story is a selector problem wearing a declaration disguise.
+        The value was right, the target was wrong. So before pasting anything, read the selector and ask:
+        <em>what will this match on my site?</em>
+      </p>
+      <pre><code>.button {
+  border-radius: 20px;
+}</code></pre>
+      <p>
+        This says: every element carrying the class <code>button</code>. On a Squarespace site that is
+        plausibly every button on every page - navigation, newsletter signup, contact form, checkout -
+        not just the one you were looking at.
+      </p>
+      <pre><code>#collection-5f3a91c2 .button {
+  border-radius: 20px;
+}</code></pre>
+      <p>
+        This says: every element carrying the class <code>button</code>, but only inside the page whose
+        collection ID is <code>5f3a91c2</code>. Same declaration. Completely different blast radius.
+      </p>
+      <div class="note">
+        <p>
+          <strong>CSS is not "what does this code look like" - it is "where does this rule apply".</strong>
+          Learn to read the selector and most of these failures stop happening.
+        </p>
+      </div>
+
+      <h2>Squarespace-specific ways the scope surprises you</h2>
+
+      <h3>Themes share class names</h3>
+      <p>
+        Squarespace's own markup uses classes like <code>.sqs-block-button-element</code>,
+        <code>.summary-item</code> and <code>.image-block</code> across many block types and many pages.
+        A rule written for one instance of a block frequently matches others that look nothing alike -
+        including inside the mobile menu, the footer, and the cart.
+      </p>
+
+      <h3>Page IDs are the reliable narrow-down</h3>
+      <p>
+        Squarespace gives most pages a <code>#collection-...</code> ID on the body element, and each
+        block sometimes carries a block ID too. Prefixing your selector with the page ID is the single
+        most effective way to keep a change contained:
+      </p>
+      <pre><code>/* site wide - risky */
+.sqs-block-button-element { border-radius: 4px; }
+
+/* one page only - safe */
+#collection-5f3a91c2 .sqs-block-button-element { border-radius: 4px; }</code></pre>
+
+      <h3>Per-page code injection exists for this reason</h3>
+      <p>
+        Squarespace lets you add CSS on a single page (Page Settings &rarr; Advanced &rarr; Page Header
+        Code Injection, wrapped in a <code>style</code> element). If a change is meant for one page, put
+        it there rather than in the site-wide Custom CSS panel. It keeps the rule narrow without relying
+        on you remembering the collection ID.
+      </p>
+
+      <h3>The theme also has rules, and they are fighting you</h3>
+      <p>
+        Your pasted CSS does not land on a blank page. It lands on top of the theme's stylesheet, and
+        when two rules of equal specificity disagree, the later one wins. Sometimes yours wins, sometimes
+        the theme's does, and the visible result is the confusing part: <strong>the same snippet works on
+        one template and does nothing on another.</strong>
+      </p>
+
+      <h2>Why !important makes it worse, not better</h2>
+      <p>
+        When a rule does nothing, the natural next step is to force it:
+      </p>
+      <pre><code>.button {
+  border-radius: 20px !important;
+}</code></pre>
+      <p>
+        It works immediately, which is why it spreads. The cost arrives later:
+      </p>
+      <ul>
+        <li>
+          <strong>Every future rule needs it too.</strong> Once one declaration is marked important, the
+          only way to override it is another <code>!important</code> with equal or higher specificity.
+          Six months later your Custom CSS panel is a stack of forced declarations.
+        </li>
+        <li>
+          <strong>You lose the ability to make exceptions.</strong> "All buttons rounded except the
+          checkout button" becomes awkward, because the forced rule does not yield to a more specific
+          selector.
+        </li>
+        <li>
+          <strong>Nobody, including future you, can tell which rule is winning.</strong> Debugging becomes
+          guesswork.
+        </li>
+      </ul>
+      <p>
+        The better response to "my rule did nothing" is almost always <strong>a more specific
+        selector</strong>, not a louder declaration. That is more work once and less work forever.
+      </p>
+
+      <h2>The five failure modes, and what actually caused them</h2>
+
+      <h3>"Every button on the site changed"</h3>
+      <p>
+        Selector too broad. Narrow it with a page ID, or move the rule into that page's code injection.
+      </p>
+
+      <h3>"It looks right on desktop and wrong on a phone"</h3>
+      <p>
+        Either the value is too large for a small screen - 32px padding is generous on desktop and
+        enormous on mobile - or the theme applies different rules inside a media query and your rule is
+        not competing there. Test at three widths (Squarespace's own preview does this) before you call
+        it fixed.
+      </p>
+
+      <h3>"One page is fine and another page is affected too"</h3>
+      <p>
+        Same cause as the first, but harder to notice because you were not looking at the other page.
+        This is why step four of
+        <a href="../safer-workflow-for-editing-squarespace-css/">the safer workflow</a> is to check
+        another page after every paste, not just the one you were editing.
+      </p>
+
+      <h3>"It stopped working after a Squarespace update"</h3>
+      <p>
+        The platform changed its markup or class names, and your selector no longer matches anything.
+        Rules that lean on internal class names are inherently fragile. Two habits reduce the damage:
+        keep a note of what each block of CSS was for, and prefer targeting things the platform documents
+        over things you discovered in Inspect.
+      </p>
+
+      <h3>"I do not know which rule is doing this"</h3>
+      <p>
+        The accumulation problem: two years of pasted snippets, some with <code>!important</code>, some
+        commented, some forgotten. There is no clever fix. The practical approach is to comment each
+        block with a date and purpose when you add it, and when something is broken, disable blocks in
+        halves until the culprit is isolated.
+      </p>
+
+      <h2>A three-minute check before you paste anything</h2>
+      <ol>
+        <li>
+          <strong>Read the selector out loud.</strong> "Every element with this class, everywhere." If
+          that is more than you meant, narrow it.
+        </li>
+        <li>
+          <strong>Count what it matches.</strong> Right-click the element, choose Inspect, and paste
+          <code>document.querySelectorAll('your-selector-here').length</code> into the browser console.
+          The number is the blast radius. If it says 47, you are about to restyle 47 things.
+        </li>
+        <li>
+          <strong>Decide where it belongs.</strong> One page means page-level injection. Site-wide means
+          the Custom CSS panel, and a comment explaining why.
+        </li>
+        <li>
+          <strong>See it before you commit.</strong> Paste the section into the
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>, render it, and change the value
+          there rather than experimenting on the live site.
+        </li>
+        <li>
+          <strong>Check two other pages afterwards.</strong> Especially one with a different template.
+        </li>
+      </ol>
+      <p>
+        Step two is the one people skip, and it takes fifteen seconds. It is also the only step that
+        tells you the truth rather than a plausible story.
+      </p>
+
+      <h2>What CardKit is and is not doing here</h2>
+      <p>
+        Being precise about this matters. CardKit does not scan your Squarespace site, does not know
+        which elements a selector will match on your live pages, and does not claim to "fix" Squarespace
+        automatically. No browser tool can, without your site in front of it.
+      </p>
+      <p>
+        What it does is narrower: it lets you <strong>see what a block of CSS does to a section before
+        that block touches your site</strong>, and change one value and watch. That removes the most
+        common cause of damage - adjusting values blind, on a live page, with save as the only feedback
+        loop. It does not remove the need to read the selector, and nothing does.
+      </p>
+
+      <h2>Real scenarios</h2>
+      <p>
+        <strong>The shop owner and the newsletter button.</strong> She pasted a button rule from a forum
+        and got exactly what she wanted on her homepage - plus a pill-shaped newsletter button in the
+        footer of every page. One selector prefix later, the change was contained.
+      </p>
+      <p>
+        <strong>The consultant who escalated.</strong> His rule did not apply, so he added
+        <code>!important</code>. Six months later he wanted one page to differ and could not override his
+        own rule. Rewriting it as a page-scoped selector took the same time the original fix did.
+      </p>
+      <p>
+        <strong>The blogger after a platform update.</strong> Her carefully tuned summary-block CSS stopped
+        working overnight because a class name changed. Because she had commented each block with its
+        purpose, she knew which one to re-inspect instead of auditing all forty lines.
+      </p>
+
+      <h2>Questions people ask</h2>
+      <h3>Is CSS from forums or AI dangerous?</h3>
+      <p>
+        Usually it is syntactically fine. The risk is scope and context - the author wrote it for their
+        markup, not yours. Treat any snippet as a draft to be scoped and seen, not as a finished answer.
+        <a href="../ai-can-write-css-heres-why-you-still-need-to-see-it/">AI Can Write CSS</a> covers the
+        same point for generated code.
+      </p>
+      <h3>Why does the same snippet work on one site and not another?</h3>
+      <p>
+        Different templates ship different markup and different competing rules. A selector that matches
+        on one theme may match nothing on another, and a value that wins the cascade on one site may lose
+        it on the next.
+      </p>
+      <h3>How do I undo something if it goes wrong?</h3>
+      <p>
+        Remove the block you just added rather than adding a counter-rule. Counter-rules are how simple
+        CSS becomes unmaintainable CSS. Keep a copy of what you pasted, with the date, so undoing is
+        deletion rather than archaeology.
+      </p>
+      <h3>Should I avoid Custom CSS entirely?</h3>
+      <p>
+        No - it is the intended place for site-wide rules. Use it for changes you genuinely want
+        everywhere, and use page-level injection for everything else. The mistake is not the panel; it is
+        putting page-specific rules in it.
+      </p>
+
+      <h2>The short version</h2>
+      <p>
+        Pasted CSS breaks sites because of <strong>scope</strong>, not syntax. Read the selector, count
+        what it matches, prefer a narrower selector over <code>!important</code>, and see the change
+        before you save it.
+      </p>
+      <p>
+        The full routine is in
+        <a href="../safer-workflow-for-editing-squarespace-css/">A Safer Workflow for Editing Squarespace
+        CSS</a>, and if a snippet came from an assistant rather than a forum, the same rules apply - see
+        <a href="../how-to-edit-ai-generated-css/">How to Edit AI-Generated CSS Without Asking AI to
+        Rewrite Everything</a>.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../blog/" aria-current="page">Blog</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

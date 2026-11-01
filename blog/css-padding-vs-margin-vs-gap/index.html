@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-8245018296750321">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8245018296750321"
+     crossorigin="anonymous"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Padding vs. Margin vs. Gap: The Visual Explanation You Actually Need</title>
+<meta name="description" content="Padding, margin and gap all create space, and picking the wrong one is why so many small CSS edits do nothing or move everything. A visual explanation with the four failure patterns and a decision table.">
+<link rel="canonical" href="https://cardcss.top/blog/css-padding-vs-margin-vs-gap/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/blog/css-padding-vs-margin-vs-gap/">
+<meta property="og:title" content="CSS Padding vs. Margin vs. Gap: The Visual Explanation You Actually Need">
+<meta property="og:description" content="All three create space. Only one of them does what you meant, and the wrong one either does nothing or moves the whole page.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSS Padding vs. Margin vs. Gap">
+<meta name="twitter:description" content="Three ways to add space, three completely different results on screen.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "CSS Padding vs. Margin vs. Gap: The Visual Explanation You Actually Need",
+  "description": "Padding, margin and gap all create space, and picking the wrong one is why so many small CSS edits do nothing or move everything. A visual explanation with the four failure patterns and a decision table.",
+  "datePublished": "2026-11-02",
+  "dateModified": "2026-11-02",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/blog/css-padding-vs-margin-vs-gap/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cardcss.top/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "CSS Padding vs. Margin vs. Gap" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../blog/" aria-current="page">Blog</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../blog/">Blog</a><span class="sep">/</span><span aria-current="page">Padding vs. Margin vs. Gap</span>
+  </nav>
+
+    <p class="eyebrow">BLOG</p>
+    <h1>CSS Padding vs. Margin vs. Gap: The Visual Explanation You Actually Need</h1>
+    <p>
+      All three properties add space. That is exactly the problem: from the outside they look
+      interchangeable, and choosing the wrong one produces either nothing at all or a page where
+      everything shifted by 24 pixels.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>Start from the complaint, not the definition</h2>
+      <p>
+        Nobody wakes up wanting to understand the box model. People arrive at this topic because something
+        on their site looks wrong:
+      </p>
+      <ul>
+        <li>"My card feels cramped - the text is touching the edges."</li>
+        <li>"There is too much air between my sections, but not enough between my headings."</li>
+        <li>"I changed the spacing and every page moved, not just this one."</li>
+        <li>"I set the gap on my grid and nothing happened."</li>
+      </ul>
+      <p>
+        All four are spacing problems, and each one has a different culprit. The definitions matter only
+        because they tell you which value to change. So here they are, defined by what you see rather than
+        by what they are.
+      </p>
+
+      <h2>The picture to keep in your head</h2>
+      <p>
+        Every element on a page is a box. Three kinds of space can be added to it, and they sit in
+        different places:
+      </p>
+      <pre><code>        MARGIN       space OUTSIDE the box, pushing neighbours away
+   +-----------------------------------+
+   |          BORDER                   |
+   |   +---------------------------+   |
+   |   |        PADDING            |   |  space INSIDE the box,
+   |   |   +-------------------+   |   |  around the content
+   |   |   |     CONTENT       |   |   |
+   |   |   +-------------------+   |   |
+   |   +---------------------------+   |
+   +-----------------------------------+
+
+   GAP        space BETWEEN sibling boxes in a grid or flex row
+              (it belongs to the parent, not to the children)</code></pre>
+      <p>
+        The single most useful sentence on this page: <strong>padding grows the box, margin moves the
+        box, gap spaces the children.</strong>
+      </p>
+
+      <h2>Padding: what you see</h2>
+      <p>
+        <strong>More room inside the card.</strong> Text moves away from the edges, and the card gets
+        bigger in both directions. If the card has a background colour or border, that colour extends
+        into the new space - this is the tell that tells padding apart from margin at a glance.
+      </p>
+      <div class="demo">
+        <div class="demo-head">
+          <b>PADDING 8PX</b><em>tight, text nearly touches the edge</em>
+          <span style="flex:1"></span>
+          <b>PADDING 28PX</b><em>the card grows, colour extends with it</em>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-card" style="border-radius:12px;padding:8px">
+            <h4>Studio visit</h4>
+            <p>Two hours, materials included. Small groups of six.</p>
+            <span class="demo-btn" style="border-radius:8px;padding:10px 14px">Book</span>
+          </div>
+          <div class="demo-card" style="border-radius:12px;padding:28px">
+            <h4>Studio visit</h4>
+            <p>Two hours, materials included. Small groups of six.</p>
+            <span class="demo-btn" style="border-radius:8px;padding:10px 14px">Book</span>
+          </div>
+        </div>
+        <p class="demo-cap">Notice the coloured area grew, not just the whitespace. That is padding.</p>
+      </div>
+      <p>
+        Padding is also what you want when a clickable target feels too small. A button with
+        <code>padding: 6px 10px</code> is legally a button and practically a missed tap on a phone;
+        the same button at <code>padding: 14px 28px</code> is comfortable, and it is still one line of
+        CSS.
+      </p>
+
+      <h2>Margin: what you see</h2>
+      <p>
+        <strong>More room outside the card.</strong> The card itself does not change size - it is pushed
+        away from whatever sits next to it. The background colour stops exactly where it did before.
+      </p>
+      <div class="demo">
+        <div class="demo-head">
+          <b>MARGIN 4PX</b><em>cards crowd each other</em>
+          <span style="flex:1"></span>
+          <b>MARGIN 24PX</b><em>cards unchanged, distance grew</em>
+        </div>
+        <div class="demo-plain" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div class="demo-card" style="border-radius:12px;padding:14px;margin:0 0 4px">Card one</div>
+            <div class="demo-card" style="border-radius:12px;padding:14px;margin:0 0 4px">Card two</div>
+            <div class="demo-card" style="border-radius:12px;padding:14px;margin:0">Card three</div>
+          </div>
+          <div>
+            <div class="demo-card" style="border-radius:12px;padding:14px;margin:0 0 24px">Card one</div>
+            <div class="demo-card" style="border-radius:12px;padding:14px;margin:0 0 24px">Card two</div>
+            <div class="demo-card" style="border-radius:12px;padding:14px;margin:0">Card three</div>
+          </div>
+        </div>
+        <p class="demo-cap">Same cards, same size. Only the distance changed. That is margin.</p>
+      </div>
+      <p>
+        Two margin behaviours catch people out, and both are worth knowing before you reach for it:
+      </p>
+      <ul>
+        <li>
+          <strong>Vertical margins collapse.</strong> Put 30px under one element and 30px above the next,
+          and you get 30px between them, not 60px. The browser keeps the larger of the two. This is why
+          "I set the margin and the gap doubled" sometimes never happens - and why it suddenly does when
+          you switch to padding.
+        </li>
+        <li>
+          <strong>Margin can be negative.</strong> <code>margin-top: -20px</code> pulls an element
+          upward. It is the standard way to tuck a heading over an image, and the fastest way to make a
+          layout that breaks on a different screen size.
+        </li>
+      </ul>
+
+      <h2>Gap: what you see</h2>
+      <p>
+        <strong>Even space between the children of a grid or flex container - and nowhere else.</strong>
+        Gap never adds space at the outer edges, which is precisely why it is the right tool for grids:
+        you get consistent rows and columns without the classic "first card has a stray margin" problem.
+      </p>
+      <p>
+        The catch is that <code>gap</code> only works on a parent that is actually a grid or a flex
+        container. Set it on a plain <code>div</code> and nothing happens. So:
+      </p>
+      <pre><code>.my-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;          /* the space between the cells */
+  padding: 24px;      /* the space inside the container's own edges */
+}</code></pre>
+      <p>
+        That pairing - <code>gap</code> for between, <code>padding</code> for around - is the pattern
+        behind almost every tidy card grid you have ever admired on someone else's site.
+      </p>
+
+      <h2>The four failure patterns, and which value is wrong</h2>
+
+      <h3>1. "My card still feels cramped" - padding is too small</h3>
+      <p>
+        The text is too close to the border. This is padding, nearly always. If the coloured or bordered
+        area also looks too tight against its neighbours, that second problem is margin or gap, and it is
+        a separate fix. People often bump the padding until the outer spacing looks right, which leaves
+        the card enormous and the layout worse.
+      </p>
+
+      <h3>2. "Everything moved, not just this" - margin on a shared class</h3>
+      <p>
+        You added <code>margin-top: 40px</code> to a class that appears on every page, and every page
+        gained 40px. Padding would have had the same reach, so the real lesson is not padding versus
+        margin - it is that <strong>the selector determines the blast radius, not the property.</strong>
+        This is the same scope problem covered in
+        <a href="../why-copy-pasting-css-breaks-your-squarespace-site/">Why Copy-Pasting CSS Into
+        Squarespace Sometimes Breaks Your Site</a>.
+      </p>
+
+      <h3>3. "I set the gap and nothing happened" - the parent is not a grid</h3>
+      <p>
+        <code>gap</code> is silently ignored on a block container. Add <code>display: grid</code> (or
+        <code>display: flex</code>) to the parent first. If the parent is not yours to edit - common in
+        a Squarespace theme - fall back to margin on the children, and accept that the last child will
+        have a stray margin you may want to remove.
+      </p>
+
+      <h3>4. "The spacing is wrong on mobile only" - one value, two screen sizes</h3>
+      <p>
+        32px of section padding is generous on a desktop and enormous on a phone. The honest fix is a
+        smaller value inside a media query, or a relative unit like <code>clamp()</code>. CardKit does
+        not write responsive rules for you; what it does is let you see the section at desktop width
+        before you decide whether a smaller mobile value is even needed.
+      </p>
+
+      <h2>The decision table</h2>
+      <p>When you are staring at a spacing problem, work down this list:</p>
+      <ul>
+        <li>
+          <strong>Text touching the edge of a box?</strong> Padding on that box.
+        </li>
+        <li>
+          <strong>Box too close to the box next to it?</strong> Gap if they are grid or flex children;
+          margin if they are not.
+        </li>
+        <li>
+          <strong>Uneven space between stacked items?</strong> Margin is fighting collapsing. Gap on a
+          flex column is cleaner and never collapses.
+        </li>
+        <li>
+          <strong>Whole section too close to the section above?</strong> Padding on the section
+          (top/bottom) rather than margin on the heading - sections are containers, and container padding
+          survives theme changes better.
+        </li>
+        <li>
+          <strong>Something is too far from everything and you cannot find why?</strong> Look for margin
+          on a shared class, and for a negative margin you forgot about.
+        </li>
+      </ul>
+
+      <h2>Real scenarios</h2>
+      <p>
+        <strong>The Etsy seller with the crowded product grid.</strong> Her three-column grid had
+        <code>margin: 10px</code> on every card, which meant 20px between cards but only 10px at the
+        outer edges, and the row of cards was visibly off-centre. Replacing the card margins with
+        <code>gap: 20px</code> on the grid and <code>padding: 20px</code> on the container made every
+        gap identical in one change.
+      </p>
+      <p>
+        <strong>The consultant whose pricing cards looked cheap.</strong> He had generous margin between
+        cards and almost no padding inside them, so the text sat against the border while the cards
+        floated in a sea of whitespace. Swapping the ratio - less margin, more padding - cost four
+        minutes and changed the impression completely.
+      </p>
+      <p>
+        <strong>The blogger who could not fix her heading spacing.</strong> She kept adding
+        <code>margin-top</code> to her headings and the spacing refused to grow, because the paragraph
+        above had a larger bottom margin and the two were collapsing. Moving to gap on the text column
+        gave her exactly the number she typed.
+      </p>
+
+      <h2>Questions people ask</h2>
+      <h3>Why did my 30px margin produce less than 30px of visible space?</h3>
+      <p>
+        Adjacent vertical margins collapse to the larger of the two. Add margin to only one side of the
+        pair, or use gap inside a flex column, and the number you type is the number you get.
+      </p>
+      <h3>Can I use padding instead of margin to be safe?</h3>
+      <p>
+        Often yes, and it is more predictable, because padding never collapses and never goes negative.
+        The difference is visual: padding grows the coloured area of the box. If the box has no
+        background and no border, the two look identical and padding is the safer habit.
+      </p>
+      <h3>Is gap supported everywhere now?</h3>
+      <p>
+        Yes, in every current browser, for both grid and flex. The only reason to avoid it is if you must
+        support very old browsers, which for a small business site in 2026 is rarely a real constraint.
+      </p>
+      <h3>Do I need to learn the box model properly?</h3>
+      <p>
+        Not to make these changes. You need the one picture at the top of this page and the sentence
+        underneath it. Everything else can be discovered by changing a value and looking.
+      </p>
+
+      <h2>The short version</h2>
+      <p>
+        <strong>Padding grows the box. Margin moves the box. Gap spaces the children.</strong> Most
+        spacing complaints are a mismatch between the space you wanted to change and the property you
+        changed - and once you can see which is which, the fix is one number.
+      </p>
+      <p>
+        If you want to see it happen rather than read about it, paste the section into the
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>, change the value and watch the box.
+        For the rest of the values that matter visually - radius, shadow, line-height, width - see
+        <a href="../what-those-css-numbers-actually-do/">What Those CSS Numbers Actually Do</a>, and for
+        the order to make changes in, see
+        <a href="../safer-workflow-for-editing-squarespace-css/">A Safer Workflow for Editing Squarespace
+        CSS</a>.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../blog/" aria-current="page">Blog</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
