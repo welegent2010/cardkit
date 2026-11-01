@@ -168,8 +168,10 @@ type and neither should be stripped back out:
 ## AdSense
 
 Do not apply until the site has been live and indexed for a while. Pre-requisites: five
-working tools, four substantial guides, eleven blog articles, and the core pages. Replace the
-placeholder in `ads.txt` only with the real publisher ID from Google.
+working tools, four substantial guides, eleven blog articles, and the core pages.
+
+`ads.txt` already carries the real publisher ID `pub-8245018296750321` and matches the
+`ca-pub-` value in every page head. Do not change either without changing both.
 
 2026-11-01 rejection was "low value content". The blog section was added in response. Its
 positioning line: **edit websites without fighting the code** - CSS is not something most site
