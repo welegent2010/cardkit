@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-8245018296750321">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8245018296750321"
+     crossorigin="anonymous"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Squarespace Custom Code: What You Can Safely Paste (and What Breaks)</title>
+<meta name="description" content="A code block is not a blank canvas. Which kinds of HTML survive inside a Squarespace code block, which ones cause layout damage, and how to test before you save.">
+<link rel="canonical" href="https://cardcss.top/blog/squarespace-custom-code-safe-to-paste/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/blog/squarespace-custom-code-safe-to-paste/">
+<meta property="og:title" content="Squarespace Custom Code: What You Can Safely Paste (and What Breaks)">
+<meta property="og:description" content="Which kinds of HTML survive inside a Squarespace code block, which ones cause layout damage, and how to test before you save.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Squarespace Custom Code: What You Can Safely Paste (and What Breaks)">
+<meta name="twitter:description" content="Which kinds of HTML survive inside a Squarespace code block, and how to test before you save.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Squarespace Custom Code: What You Can Safely Paste (and What Breaks)",
+  "description": "A code block is not a blank canvas. Which kinds of HTML survive inside a Squarespace code block, which ones cause layout damage, and how to test before you save.",
+  "datePublished": "2026-11-01",
+  "dateModified": "2026-11-01",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/blog/squarespace-custom-code-safe-to-paste/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cardcss.top/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Squarespace Custom Code: What You Can Safely Paste (and What Breaks)" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../blog/" aria-current="page">Blog</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../blog/">Blog</a><span class="sep">/</span><span aria-current="page">Squarespace Custom Code: What You Can Safely Paste (and What Breaks)</span>
+  </nav>
+
+    <p class="eyebrow">BLOG</p>
+    <h1>Squarespace Custom Code: What You Can Safely Paste (and What Breaks)</h1>
+    <p>
+      A code block looks like a blank canvas. It is not. It sits inside someone else's page structure,
+      inherits someone else's CSS, and punishes full-document markup in ways that only show up after you
+      hit save.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>The pain: paste, save, and half the page changes</h2>
+      <p>
+        Someone sends you a block of HTML - a pricing table, a signup form, an embed from a marketing
+        tool. You add a code block in Squarespace, paste it in, hit save, and one of two things happens.
+        Either the block looks fine but the sections around it have quietly changed: wider text, different
+        spacing, a font that no longer matches. Or the block itself renders as a wall of raw text, because
+        something in it got escaped along the way.
+      </p>
+      <p>
+        Both outcomes have the same root cause: the code block is a window into the middle of an existing
+        page, not a standalone page. What you paste is being inserted into a structure Squarespace built,
+        and the theme's CSS keeps applying to everything inside your block. Understanding what survives
+        that environment - and what does not - removes most of the risk.
+      </p>
+
+      <h2>What is safe to paste</h2>
+      <p>
+        Think of a code block as accepting a <em>fragment</em>: content that could sit anywhere inside a
+        page without claiming to be a page itself. In practice:
+      </p>
+      <ul>
+        <li>
+          <strong>Content elements.</strong> Headings, paragraphs, lists, images, links, tables, buttons.
+          The everyday building blocks. These are what code blocks are for.
+        </li>
+        <li>
+          <strong>Embedded widgets.</strong> Most third-party services hand you a snippet - a
+          <code>&lt;iframe&gt;</code> or a <code>div</code> plus a <code>&lt;script&gt;</code> tag. These
+          are designed to be dropped into foreign pages and generally behave.
+        </li>
+        <li>
+          <strong>Scoped styles.</strong> A <code>&lt;style&gt;</code> block is allowed, and it works -
+          but its rules apply to the whole page, not just your snippet. Writing selectors that only match
+          inside your own container class is what keeps it safe. More on this below.
+        </li>
+        <li>
+          <strong>Small scripts.</strong> Plain JavaScript inside a <code>&lt;script&gt;</code> tag runs.
+          Scripts that create their own elements and manipulate only those elements are fine.
+        </li>
+      </ul>
+
+      <h2>What breaks things</h2>
+      <h3>A full HTML document</h3>
+      <p>
+        If your snippet starts with <code>&lt;!DOCTYPE html&gt;</code> or contains
+        <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> or <code>&lt;body&gt;</code> tags, it is a
+        whole page, not a fragment. Browsers are forgiving and will try to render it anyway, but the
+        result is unpredictable: tags get reordered, meta content leaks into the visible page, and the
+        theme's layout can shift. If someone sends you a full document, extract only the section you
+        need - the block between the body tags that contains your actual content.
+      </p>
+      <h3>Global selectors</h3>
+      <p>
+        A style rule like <code>h2 { color: navy; }</code> inside your snippet's style block does not
+        recolor the headings in your block. It recolors <em>every</em> heading on the page. This is the
+        single most common cause of "I added one section and the whole site changed." Scope every rule to
+        a container class that only your snippet uses:
+      </p>
+      <pre><code>/* unscoped: hits the whole page */
+h2 { color: navy; }
+
+/* scoped: only inside your block */
+.my-pricing h2 { color: navy; }</code></pre>
+      <h3>Class names that collide with the theme</h3>
+      <p>
+        Generic class names like <code>container</code>, <code>row</code>, <code>col-6</code> or
+        <code>button</code> may already exist in the theme's CSS with completely different rules attached.
+        Your block inherits them, and the layout goes sideways. Prefix your class names with something
+        unique to the project - <code>acme-pricing-row</code> instead of <code>row</code> - and collisions
+        become impossible.
+      </p>
+      <h3>Markup pasted from a rich-text editor</h3>
+      <p>
+        Copying code from Word, Google Docs, an email client or a chat window can substitute straight
+        quotes with curly ones, strip angle brackets, or insert invisible characters. The code block then
+        renders your HTML as literal text. Always copy code from a plain-text surface, and if a snippet
+        came through one of those channels, run it through a formatter first to see what actually arrived.
+      </p>
+      <div class="warn">
+        <p>
+          <strong>Limitation:</strong> code injection points and available blocks vary by Squarespace
+          plan and version. This article is about making the content of a code block safe, not about
+          which injection points your plan exposes. CardKit is not affiliated with Squarespace.
+        </p>
+      </div>
+
+      <h2>A test loop that catches damage before visitors do</h2>
+      <p>
+        The reason paste-and-save feels dangerous is that the failure is only visible after saving - and
+        on a live page. A simple loop makes it safe:
+      </p>
+      <ol>
+        <li>
+          <strong>Render the snippet outside the site first.</strong> Paste it into a sandbox that shows
+          the rendered result - the <a href="../../tools/css-code-editor/">CSS Code Editor</a> renders a
+          pasted section live and lets you click elements to edit them, which is also how you adapt the
+          snippet's text and images before it ever reaches Squarespace.
+        </li>
+        <li>
+          <strong>Check the scope of every style rule.</strong> Each selector in the snippet's CSS should
+          start with your unique container class. If any rule would match elements outside the snippet,
+          scope it or delete it.
+        </li>
+        <li>
+          <strong>Paste into a draft page, not the live one.</strong> Squarespace drafts let you save and
+          preview without publishing. Look at your surrounding sections: if their fonts or spacing moved,
+          one of your selectors is leaking.
+        </li>
+        <li>
+          <strong>Check mobile width before promoting the block to the live page.</strong> Snippets with
+          fixed widths or multi-column grids are the ones that overflow on phones.
+        </li>
+      </ol>
+
+      <h2>Real scenarios</h2>
+      <p>
+        <strong>The newsletter embed that restyled the blog.</strong> A marketing tool's embed snippet
+        shipped with <code>input { border-radius: 0; }</code> in its style block. Suddenly every input
+        field on the site, including search and comments, lost its rounding. Scoping the rule to the
+        embed's own wrapper class fixed it in one line.
+      </p>
+      <p>
+        <strong>The pricing table from an agency.</strong> The table arrived as a full HTML document with
+        inline styles on every tag. Pasting the body content alone, then stripping the inline styles down
+        to a scoped style block, made the table both safer and half the size. The cleanup method - format,
+        inspect, remove junk without touching structure - is the subject of our article on
+        <a href="../clean-up-exported-html/">cleaning up exported HTML</a>.
+      </p>
+      <p>
+        <strong>The template buyer adapting a Squarespace site.</strong> She purchased an HTML template
+        section to recreate inside her code block. Instead of pasting the whole page, she pasted one
+        section at a time, checked each against the theme, and stopped when something conflicted. Working
+        one section at a time is the same isolation principle from our guide on
+        <a href="../../guides/edit-html-template-without-breaking-layout/">editing templates without
+        breaking the layout</a> - it applies to code blocks exactly as it applies to template files.
+      </p>
+
+      <h2>The mindset</h2>
+      <p>
+        Safe code-block work comes down to one principle: <strong>your snippet is a guest in someone
+        else's page.</strong> Guests scope their styles, prefix their class names, arrive as fragments
+        rather than documents, and get tested on a draft before they meet the public. Follow that, and the
+        code block stops being the thing that breaks your site and becomes what it was meant to be: a
+        controlled way to add anything the standard blocks do not offer.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../blog/" aria-current="page">Blog</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-8245018296750321">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8245018296750321"
+     crossorigin="anonymous"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Safer Workflow for Editing Squarespace CSS Without Breaking Your Live Site</title>
+<meta name="description" content="The Preview - Adjust - Copy - Test workflow: make CSS changes somewhere safe, understand what the rule affects, paste only what you need, then verify at three widths. Replaces edit-save-pray.">
+<link rel="canonical" href="https://cardcss.top/blog/safer-workflow-for-editing-squarespace-css/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/blog/safer-workflow-for-editing-squarespace-css/">
+<meta property="og:title" content="A Safer Workflow for Editing Squarespace CSS Without Breaking Your Live Site">
+<meta property="og:description" content="Preview, Adjust, Copy, Test: four steps that replace edit-save-pray.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A Safer Workflow for Editing Squarespace CSS Without Breaking Your Live Site">
+<meta name="twitter:description" content="Preview, Adjust, Copy, Test: four steps that replace edit-save-pray.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "A Safer Workflow for Editing Squarespace CSS Without Breaking Your Live Site",
+  "description": "The Preview - Adjust - Copy - Test workflow: make CSS changes somewhere safe, understand what the rule affects, paste only what you need, then verify at three widths.",
+  "datePublished": "2026-11-01",
+  "dateModified": "2026-11-01",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/blog/safer-workflow-for-editing-squarespace-css/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cardcss.top/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "A Safer Workflow for Editing Squarespace CSS" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../blog/" aria-current="page">Blog</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../blog/">Blog</a><span class="sep">/</span><span aria-current="page">A Safer Workflow for Editing Squarespace CSS</span>
+  </nav>
+
+    <p class="eyebrow">BLOG</p>
+    <h1>A Safer Workflow for Editing Squarespace CSS Without Breaking Your Live Site</h1>
+    <p>
+      Most CSS damage is not caused by bad code. It is caused by testing good code in the worst possible
+      place: the live page, with visitors on it, with no way to see which elements the rule touches.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>Edit, save, pray</h2>
+      <p>
+        The default workflow for custom CSS on a hosted site looks like this: open the Custom CSS panel,
+        paste a rule, save, open the page in a new tab, scroll around, squint, and try to work out whether
+        anything else changed. If something did change, undo and try a different number. There is no
+        staging environment, no diff, and no undo beyond your own memory of what the panel looked like
+        before.
+      </p>
+      <p>
+        People describe this as "I'm not technical enough". That is the wrong diagnosis. The workflow is
+        the problem: it puts the experiment on the production page and gives you one blurry feedback
+        channel.
+      </p>
+      <p>
+        The replacement is four steps, in a fixed order. None of them requires a code editor, a local
+        development setup, or a developer.
+      </p>
+
+      <h2>Step 1 - Preview: make the change somewhere that is not your live site</h2>
+      <p>
+        Before any CSS goes near your site, see it on a copy of the thing it is meant to change. Concretely:
+        take the section you want to restyle - one section, not the whole page - and render it somewhere
+        neutral.
+      </p>
+      <p>
+        The <a href="../../tools/css-code-editor/">CSS Code Editor</a> does this: paste one section, see
+        it rendered, click the element you want and adjust. It runs entirely in your browser, so nothing
+        is uploaded and your live site is untouched. Use a Squarespace draft page if you prefer to stay
+        inside the platform - that is also fine; the point is only that step 1 happens somewhere
+        reversible.
+      </p>
+      <p>
+        Why one section? Because a rule that behaves perfectly on your pricing table can still reach
+        elements elsewhere on the page, and you cannot see that from a single section. Preview tells you
+        whether the visual change is right. Step 2 tells you whether it is safe. They are different
+        questions.
+      </p>
+
+      <h2>Step 2 - Adjust: change one value, and know what the rule reaches</h2>
+      <p>
+        Two disciplines here, and the second one is the one people skip.
+      </p>
+      <h3>Change one value at a time</h3>
+      <p>
+        If you change radius, padding, colour and font size together and the result looks wrong, you have
+        four suspects. Change one, look, decide. It feels slower and is faster.
+      </p>
+      <h3>Read the selector before you trust the code</h3>
+      <p>
+        A CSS rule has two halves, and the first half is where the damage lives:
+      </p>
+      <pre><code>.button {                        /* every element with class "button" */
+  border-radius: 24px;
+}
+
+#collection-abc123 .button {     /* only inside one specific page */
+  border-radius: 24px;
+}</code></pre>
+      <p>
+        Forum answers and AI output usually give you the first version, because whoever wrote it did not
+        have your site. That is how "I changed the buttons" becomes "every button on every page changed".
+        Before you paste, ask: <strong>where does this rule apply?</strong> If the answer is "everywhere",
+        either narrow the selector or accept that you are making a site-wide change - sometimes that is
+        exactly what you want, but it should be a decision, not a surprise.
+      </p>
+      <p>
+        Also worth knowing: <code>!important</code> does not fix a scoping problem, it overrides it. Rules
+        carrying <code>!important</code> accumulate until nothing behaves predictably and the next change
+        needs another <code>!important</code> to win. If you find yourself adding it, the real problem is
+        usually that the selector is too broad or fighting the theme's own rule.
+      </p>
+      <div class="note">
+        <p>
+          <strong>The one question to ask before pasting:</strong> which elements will this rule match?
+          Not "does the CSS look correct" - that only tells you it is valid. Validity and safety are
+          different things.
+        </p>
+      </div>
+
+      <h2>Step 3 - Copy: take only the properties you changed</h2>
+      <p>
+        When the preview looks right, copy the smallest rule that produces it. If you only changed the
+        corner radius, the rule you paste should contain <code>border-radius</code> and nothing else.
+      </p>
+      <pre><code>/* copied from a forum, changes four unrelated things */
+.sqs-block-button-element {
+  padding: 14px 32px !important;
+  border-radius: 24px !important;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  box-shadow: 0 8px 30px rgba(0,0,0,.12);
+}
+
+/* what you actually wanted */
+#collection-abc123 .sqs-block-button-element {
+  border-radius: 24px;
+}</code></pre>
+      <p>
+        Smaller rules are easier to remove later, easier to understand in six months, and much less likely
+        to surprise you. Keep a note of what each block does - a comment costs nothing:
+      </p>
+      <pre><code>/* Rounded booking buttons - added Nov 2026 */</code></pre>
+      <p>
+        That comment is the difference between "I can safely delete this" and "I have no idea what will
+        break".
+      </p>
+
+      <h2>Step 4 - Test: three widths, signed out, on the real page</h2>
+      <p>
+        Now - and only now - does the CSS go into Custom CSS. Then check three things:
+      </p>
+      <ol>
+        <li>
+          <strong>Desktop, tablet, mobile.</strong> Most custom CSS is written by someone looking at a
+          desktop screen. Spacing that looks right at 1440px often crowds at 390px, and a rule with a
+          fixed width can force a horizontal scrollbar on phones.
+        </li>
+        <li>
+          <strong>Signed out.</strong> Logged-in view adds editor UI and can mask layout problems.
+          Open the page in a private window.
+        </li>
+        <li>
+          <strong>Other pages.</strong> Visit two or three pages you did not intend to change. This is
+          the check that catches a too-broad selector - and it is the one that saves you from a support
+          ticket next week.
+        </li>
+      </ol>
+
+      <h2>The workflow in one line</h2>
+      <div class="note">
+        <p>
+          <strong>Preview &rarr; Adjust &rarr; Copy &rarr; Test</strong> - instead of
+          <strong>Edit &rarr; Save &rarr; Pray</strong>. Four steps, and the third one is the one most
+          people skip: copying only what changed.
+        </p>
+      </div>
+
+      <h2>Why this also fixes the "I don't know which rule is doing this" problem</h2>
+      <p>
+        Sites accumulate CSS. Six months of small additions later, nobody remembers which block rounds the
+        buttons, and there are three rules that all seem to touch the same element. The only durable
+        defence is hygiene at step 3: one purpose per block, a comment saying what it is, and no
+        <code>!important</code> used as glue.
+      </p>
+      <p>
+        If you have inherited a site in that state and want to see what is actually in the markup before
+        changing anything, format it first - the method is in
+        <a href="../clean-up-exported-html/">How to Clean Up Exported HTML</a>. And if the CSS you are
+        about to paste came from an AI assistant, read
+        <a href="../ai-can-write-css-heres-why-you-still-need-to-see-it/">AI Can Write CSS for You</a>
+        before step 1.
+      </p>
+
+      <h2>Two habits that make step 4 reversible</h2>
+      <p>
+        Testing catches damage. These two habits make damage cheap to undo, which matters more than
+        catching it, because most CSS accidents are discovered days later.
+      </p>
+      <h3>Comment out instead of deleting</h3>
+      <p>
+        When a block of CSS stops being needed, wrap it in a comment rather than removing it:
+      </p>
+      <pre><code>/* Disabled Nov 2026 - season ended
+#collection-abc123 .sqs-block-button-element {
+  border-radius: 24px;
+}
+*/</code></pre>
+      <p>
+        The rule stops applying immediately, but you keep a dated record of what it was and when you turned
+        it off. Six months later this is the difference between "turn it back on" and "rebuild it from
+        memory".
+      </p>
+      <h3>Keep a plain-text copy of your Custom CSS</h3>
+      <p>
+        Paste the whole panel into a text file whenever you make a meaningful change, named by date:
+        <code>custom-css-2026-11-01.txt</code>. The panel itself is the only copy most people have, and it
+        has no history view. A folder of dated text files is a complete undo stack that costs nothing, and
+        it also survives the moment you accidentally save over something.
+      </p>
+      <p>
+        With those two in place, the worst outcome of a CSS mistake is "restore yesterday's file", which
+        turns an emergency into a two-minute job.
+      </p>
+
+      <h2>Real scenarios</h2>
+      <p>
+        <strong>The photographer with a booking page.</strong> She wants rounder buttons on one page only.
+        Previewing the section shows the radius she likes; reading the selector shows the forum snippet
+        targets every button site-wide; narrowing it to the collection ID confines the change to that
+        page. Test on mobile confirms nothing else moved.
+      </p>
+      <p>
+        <strong>The consultant with three conflicting rules.</strong> His cards look wrong and he has two
+        old CSS blocks he no longer understands. Instead of adding a third rule on top, he previews the
+        section, identifies which values actually matter, and replaces all three with one commented block.
+        Fewer rules, no <code>!important</code>.
+      </p>
+      <p>
+        <strong>The shop owner doing a seasonal change.</strong> Ahead of a sale she wants warmer buttons.
+        She previews, copies two properties, tests at three widths - and because her CSS block carries a
+        comment, she can remove it cleanly when the sale ends.
+      </p>
+
+      <h2>Where the boundary is</h2>
+      <p>
+        This workflow covers cosmetic, contained changes: corners, spacing, colours, type, shadows. It
+        does not cover structural work - a new responsive grid, a navigation rebuild, an accessibility
+        audit, or a template migration. Those are genuinely developer or designer jobs, and pretending
+        otherwise is how sites end up broken. The list of changes that safely fall inside the boundary is
+        spelled out in <a href="../12-css-changes-squarespace-owners-make/">The 12 CSS Changes Squarespace
+        Site Owners Make Most Often</a>.
+      </p>
+      <p>
+        CardKit is an independent product and is not affiliated with Squarespace. Its tools run in your
+        browser and are meant for contained sections and controlled edits - not for rebuilding a site.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../blog/" aria-current="page">Blog</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

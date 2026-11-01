@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-8245018296750321">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8245018296750321"
+     crossorigin="anonymous"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image Size vs. Aspect Ratio: The Confusion That Costs Sellers Sales</title>
+<meta name="description" content="Two numbers describe every image, and mixing them up is why resized product photos come out stretched, cropped or tiny. A plain-language explanation with worked examples.">
+<link rel="canonical" href="https://cardcss.top/blog/image-size-vs-aspect-ratio/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/blog/image-size-vs-aspect-ratio/">
+<meta property="og:title" content="Image Size vs. Aspect Ratio: The Confusion That Costs Sellers Sales">
+<meta property="og:description" content="Mixing up image size and aspect ratio is why resized product photos come out stretched, cropped or tiny. A plain-language explanation with worked examples.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Image Size vs. Aspect Ratio: The Confusion That Costs Sellers Sales">
+<meta name="twitter:description" content="Why resized product photos come out stretched, cropped or tiny - and how to fix it.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Image Size vs. Aspect Ratio: The Confusion That Costs Sellers Sales",
+  "description": "Two numbers describe every image, and mixing them up is why resized product photos come out stretched, cropped or tiny. A plain-language explanation with worked examples.",
+  "datePublished": "2026-11-01",
+  "dateModified": "2026-11-01",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/blog/image-size-vs-aspect-ratio/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cardcss.top/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "Image Size vs. Aspect Ratio: The Confusion That Costs Sellers Sales" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../blog/" aria-current="page">Blog</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../blog/">Blog</a><span class="sep">/</span><span aria-current="page">Image Size vs. Aspect Ratio</span>
+  </nav>
+
+    <p class="eyebrow">BLOG</p>
+    <h1>Image Size vs. Aspect Ratio: The Confusion That Costs Sellers Sales</h1>
+    <p>
+      "Make it 1000 by 1000." "Keep it 4:3." "Why is my product suddenly stretched?" Every one of these
+      sentences is about one of two different numbers, and almost every image accident is about confusing
+      them.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>The pain: the photo looked right until it went live</h2>
+      <p>
+        A seller prepares product photos that look perfect in the image editor. Then the listing goes
+        live, and the product is subtly wider than reality. Or a template image slot "eats" half the
+        photo. Or an image that filled the preview on the shop's desktop page sits as a tiny stamp on
+        mobile. The seller retries the export with different numbers until something looks acceptable,
+        and never learns what actually went wrong, so it keeps happening.
+      </p>
+      <p>
+        What went wrong, in every one of these cases, is a collision between two independent properties
+        of an image. Once you can name them, you can predict what any platform will do to any picture
+        before you upload it.
+      </p>
+
+      <h2>The two numbers</h2>
+      <p>
+        <strong>Size</strong> is expressed in pixels: 3000 by 2000, 1200 by 1200. It controls two things
+        - how much detail the image carries, and how much space it takes on disk and on the wire.
+      </p>
+      <p>
+        <strong>Aspect ratio</strong> is the <em>shape</em>: width divided by height, reduced to its
+        simplest form. 3000 by 2000 and 1200 by 800 and 300 by 200 are three different sizes but all the
+        same ratio, 3:2. 1000 by 1000 is 1:1. 1920 by 1080 is 16:9.
+      </p>
+      <p>
+        The distinction matters because platforms and templates rarely enforce one of these properties.
+        They enforce both: an image slot has a shape (ratio) and, usually, a preferred resolution (size).
+        When your image's shape does not match the slot's shape, something has to give, and what gives
+        depends on the platform:
+      </p>
+      <ul>
+        <li>
+          <strong>It stretches</strong> - your 3:2 photo forced into a 1:1 slot becomes visibly fatter or
+          thinner. This is the classic accidental-funhouse-mirror result.
+        </li>
+        <li>
+          <strong>It crops</strong> - the platform keeps the shape and cuts off the edges of your photo.
+          Your product survives; your headline, badge or the top of the product may not.
+        </li>
+        <li>
+          <strong>It letterboxes</strong> - empty space appears around the image. Harmless but
+          unprofessional in a product gallery.
+        </li>
+      </ul>
+
+      <h2>Worked examples</h2>
+      <p>
+        <strong>Example 1: the stretched product.</strong> Source photo is 4000 by 3000 (4:3). The shop
+        template wants 1000 by 1000 (1:1). Entering 1000 by 1000 with the aspect lock off squashes 4:3
+        into 1:1 - the image is compressed horizontally to 75% of its true proportions. Mugs look wide,
+        faces look narrow. No filter fixes this; only respecting the ratio does.
+      </p>
+      <p>
+        <strong>Example 2: the cropped headline.</strong> A 1920 by 1080 (16:9) banner goes into a
+        marketplace thumbnail that shows roughly 1:1. The platform crops the sides - or the middle - and
+        the text that was safely visible in preview disappears. Fix: design a 1:1 version where the text
+        occupies the central square of the canvas.
+      </p>
+      <p>
+        <strong>Example 3: the blurry upscale.</strong> Source is 600 by 600 (1:1). The slot wants 2000
+        by 2000 (also 1:1 - the ratio matches!). Upscaling stretches 600 pixels of information across
+        2000 pixels of canvas. The shape is right and the image still looks soft, because size and ratio
+        are independent: matching one says nothing about the other.
+      </p>
+      <div class="note">
+        <p>
+          <strong>The one-sentence version:</strong> ratio decides <em>whether the image will fit without
+          distortion</em>; size decides <em>how sharp it will be and how much it weighs</em>. Fix the
+          ratio first, then the size.
+        </p>
+      </div>
+
+      <h2>How to work with the two numbers in practice</h2>
+      <h3>1. Find the slot's ratio before you export anything</h3>
+      <p>
+        Wherever the image is going - marketplace gallery, template image slot, social card - its target
+        shape is published or measurable. Measure an existing example that looks right: note its pixel
+        dimensions and reduce the ratio. If you would rather not do the arithmetic, the
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a> converts between real
+        dimensions and ratios in both directions, and solves the reverse problem too: given a ratio and a
+        known width, what height matches.
+      </p>
+      <h3>2. Change the shape only by adding canvas, never by distorting</h3>
+      <p>
+        When the source's shape does not match the target, the honest fix is padding - adding background
+        space around the image until the canvas has the right shape. The product inside keeps its true
+        proportions. The
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a> does exactly this and handles
+        batches, which matters when a listing has ten images.
+      </p>
+      <h3>3. Resize with the ratio locked</h3>
+      <p>
+        Once the shape is right, bring the image to the exact pixel target with the aspect lock on. If
+        the lock is on and the numbers refuse to hit the target, the shape was wrong - go back to step 2.
+        The <a href="../../tools/image-resizer/">Image Resizer</a> keeps the lock and exports PNG, JPEG
+        or WebP at the size you name.
+      </p>
+      <h3>4. Downscale freely; upscale almost never</h3>
+      <p>
+        Shrinking an image keeps its sharpness - it only throws pixels away. Enlarging invents pixels,
+        and the result is softness no tool fully repairs. This asymmetry is the core of the quality
+        checklist in <a href="../resize-product-photos-without-losing-quality/">Resizing Product Photos
+        Without Losing Quality</a>.
+      </p>
+
+      <h2>Real scenarios</h2>
+      <p>
+        <strong>The shop with three image sources.</strong> Designer mockups arrive at 16:9, product
+        photos at 4:3, customer screenshots at whatever they were. Instead of letting each source fight
+        the gallery slot, the shop standardizes on 1:1 listing images and routes everything through pad-
+        then-resize. The gallery finally looks uniform, and no image was cropped to get there.
+      </p>
+      <p>
+        <strong>The template user with a broken hero image.</strong> The template's hero slot expects
+        16:9; the photo is portrait 3:4. Left as is, the theme crops away most of the photo. Padded onto
+        a 16:9 canvas - product centered, background extended - the same photo fills the slot with
+        nothing lost.
+      </p>
+      <p>
+        <strong>The printable-art seller.</strong> Artworks are inherently portrait. Padding onto square
+        canvases with a consistent background color turned the orientation mismatch into a recognizable
+        house style across the whole shop. The full listing-image process around this technique is in
+        <a href="../etsy-listing-image-sizes-explained/">Etsy Listing Images: Sizes, Ratios and the Workflow
+        That Saves Hours</a>.
+      </p>
+
+      <h2>The takeaway</h2>
+      <p>
+        Every image accident is one of three failures: wrong shape (ratio), wrong detail (size), or the
+        two being "fixed" in the wrong order. Ask the slot for its shape, match the shape with padding
+        rather than distortion, resize with the lock on, and never upscale what you can re-shoot or
+        re-export. That is the entire discipline - and it turns "why does this look off?" into a thirty-
+        second routine.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../blog/" aria-current="page">Blog</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

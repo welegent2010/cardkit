@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-8245018296750321">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8245018296750321"
+     crossorigin="anonymous"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Those CSS Numbers Actually Do: A Visual Guide for Non-Coders</title>
+<meta name="description" content="padding, margin, gap, border-radius, line-height, box-shadow and opacity explained by what they change on screen, with rendered before and after pairs instead of definitions.">
+<link rel="canonical" href="https://cardcss.top/blog/what-those-css-numbers-actually-do/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/blog/what-those-css-numbers-actually-do/">
+<meta property="og:title" content="What Those CSS Numbers Actually Do: A Visual Guide for Non-Coders">
+<meta property="og:description" content="Twelve CSS values explained by what they change on screen, with rendered before and after pairs.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What Those CSS Numbers Actually Do: A Visual Guide for Non-Coders">
+<meta name="twitter:description" content="Twelve CSS values explained by what they change on screen.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What Those CSS Numbers Actually Do: A Visual Guide for Non-Coders",
+  "description": "padding, margin, gap, border-radius, line-height, box-shadow and opacity explained by what they change on screen, with rendered before and after pairs instead of definitions.",
+  "datePublished": "2026-11-01",
+  "dateModified": "2026-11-01",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/blog/what-those-css-numbers-actually-do/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cardcss.top/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "What Those CSS Numbers Actually Do" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../blog/" aria-current="page">Blog</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../blog/">Blog</a><span class="sep">/</span><span aria-current="page">What Those CSS Numbers Actually Do</span>
+  </nav>
+
+    <p class="eyebrow">BLOG</p>
+    <h1>What Those CSS Numbers Actually Do: A Visual Guide for Non-Coders</h1>
+    <p>
+      You do not need definitions. You need to know which number to change when a card feels cramped,
+      when text feels crowded, or when a button looks cheaper than the rest of the page.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>Why definitions don't help</h2>
+      <p>
+        Look up <code>padding</code> and you will find: "the space between an element's content and its
+        border." Correct, and almost useless when you are staring at a Squarespace card that feels wrong.
+        The definition tells you what the property is; it does not tell you whether <em>your</em> problem
+        is padding, margin or gap.
+      </p>
+      <p>
+        So this article is organised the other way round. For each value: what you see when it changes,
+        and the specific complaint it usually fixes. Everything below is rendered on this page - the
+        before and after are real, not illustrations.
+      </p>
+
+      <h2>The three spacings, once and for all</h2>
+      <p>
+        Almost every "my layout feels off" question is one of these three, and mixing them up is the most
+        common reason people change a number and see nothing happen.
+      </p>
+      <pre><code>        margin          &lt;- space OUTSIDE the box
+   +---------------------------+
+   |        border             |
+   |   +-------------------+   |
+   |   |     padding       |   |   &lt;- space INSIDE the box
+   |   |    CONTENT        |   |
+   |   +-------------------+   |
+   +---------------------------+
+
+        gap             &lt;- space BETWEEN items in a row or grid</code></pre>
+
+      <div class="demo">
+        <div class="demo-head">
+          <b>PADDING 8px</b><em>content touches the edges</em>
+          <span style="flex:1"></span>
+          <b>PADDING 28px</b><em>content breathes</em>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-card" style="padding:8px;border-radius:8px">
+            <h4>Sunday market</h4>
+            <p>Fresh bread, cheese and flowers, every week from eight.</p>
+          </div>
+          <div class="demo-card" style="padding:28px;border-radius:8px">
+            <h4>Sunday market</h4>
+            <p>Fresh bread, cheese and flowers, every week from eight.</p>
+          </div>
+        </div>
+        <p class="demo-cap">Padding grows the box; the text stays where it is relative to the content area.</p>
+      </div>
+
+      <div class="demo">
+        <div class="demo-head">
+          <b>MARGIN 0</b><em>cards sit flush against each other</em>
+          <span style="flex:1"></span>
+          <b>MARGIN 18px</b><em>cards separate</em>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-plain">
+            <div class="demo-card" style="margin:0 0 6px;border-radius:8px;padding:12px;font-size:11px">Card one</div>
+            <div class="demo-card" style="margin:0;border-radius:8px;padding:12px;font-size:11px">Card two</div>
+          </div>
+          <div class="demo-plain">
+            <div class="demo-card" style="margin:0 0 18px;border-radius:8px;padding:12px;font-size:11px">Card one</div>
+            <div class="demo-card" style="margin:0;border-radius:8px;padding:12px;font-size:11px">Card two</div>
+          </div>
+        </div>
+        <p class="demo-cap">Margin pushes neighbours away. Inside the card nothing moved.</p>
+      </div>
+
+      <p>
+        <strong>The complaint-to-property shortcut:</strong>
+      </p>
+      <ul>
+        <li>"The text is touching the edge of the card" &rarr; <code>padding</code></li>
+        <li>"These two blocks are glued together" &rarr; <code>margin</code> (or <code>gap</code> if they are grid items)</li>
+        <li>"My three feature cards are too close but the text inside is fine" &rarr; <code>gap</code></li>
+      </ul>
+
+      <h2>border-radius: how round is round</h2>
+      <p>
+        One number, and it changes the entire personality of a component. The same button at four values:
+      </p>
+      <div class="demo">
+        <div class="demo-head"><b>CORNER RADIUS</b><em>the same button at four values</em></div>
+        <div class="demo-row">
+          <span class="demo-btn" style="border-radius:0;padding:12px 20px">0 &middot; square</span>
+          <span class="demo-btn" style="border-radius:6px;padding:12px 20px">6 &middot; slight</span>
+          <span class="demo-btn" style="border-radius:16px;padding:12px 20px">16 &middot; soft</span>
+          <span class="demo-btn" style="border-radius:999px;padding:12px 20px">999 &middot; pill</span>
+        </div>
+        <p class="demo-cap">0 reads corporate, 4-8 reads neutral, 16-24 reads friendly, 999px is a pill and pulls attention.</p>
+      </div>
+      <p>
+        The most common unforced error is inconsistency: buttons at 6px on one page and 24px on another.
+        Consistency matters more than the specific number - pick one radius for buttons and one for cards
+        and reuse them.
+      </p>
+
+      <h2>font-size and line-height: two numbers that must move together</h2>
+      <p>
+        <code>font-size</code> is obvious. <code>line-height</code> is the one people forget, and it is
+        the difference between text that reads comfortably and text that reads like a wall.
+      </p>
+      <div class="demo">
+        <div class="demo-head">
+          <b>LINE-HEIGHT 1.15</b><em>lines crowd</em>
+          <span style="flex:1"></span>
+          <b>LINE-HEIGHT 1.7</b><em>lines breathe</em>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-card" style="border-radius:8px">
+            <p style="line-height:1.15;font-size:12px;color:var(--muted);margin:0">Our studio runs small weekly workshops on ceramics, printing and bookbinding. Places are limited to twelve so everyone gets a bench and a bit of quiet.</p>
+          </div>
+          <div class="demo-card" style="border-radius:8px">
+            <p style="line-height:1.7;font-size:12px;color:var(--muted);margin:0">Our studio runs small weekly workshops on ceramics, printing and bookbinding. Places are limited to twelve so everyone gets a bench and a bit of quiet.</p>
+          </div>
+        </div>
+        <p class="demo-cap">Same text, same size. Body copy usually wants 1.5 to 1.7; headings want 1.1 to 1.25.</p>
+      </div>
+      <p>
+        A useful rule of thumb: when you increase <code>font-size</code>, decrease
+        <code>line-height</code> slightly - large text needs less relative leading. Big headings at
+        1.7 look disconnected.
+      </p>
+
+      <h2>letter-spacing: the one people overuse</h2>
+      <p>
+        Small positive letter-spacing (0.02em to 0.08em) on uppercase labels and buttons looks considered.
+        The same value applied to body paragraphs makes them harder to read. All-caps text benefits;
+        sentences do not.
+      </p>
+
+      <h2>width vs. max-width: the cause of "text spans the whole screen"</h2>
+      <p>
+        <code>width: 900px</code> forces a block to be 900px even on a 390px phone - content overflows and
+        a horizontal scrollbar appears. <code>max-width: 900px</code> means "never wider than 900, but
+        shrink if the screen is smaller". For text containers, <code>max-width</code> is almost always
+        what you wanted.
+      </p>
+      <p>
+        Related: comfortable reading width is roughly 60 to 75 characters per line. If your paragraphs run
+        the full width of a wide monitor, the fix is a <code>max-width</code> on the text container, not a
+        smaller font.
+      </p>
+
+      <h2>box-shadow: four numbers pretending to be one</h2>
+      <pre><code>box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
+            | |  |    |
+            | |  |    └── colour and its transparency
+            | |  └─────── blur: how soft the edge is
+            | └────────── y-offset: how far DOWN the shadow sits
+            └──────────── x-offset: how far RIGHT the shadow sits</code></pre>
+      <p>
+        Two practical notes. First, the alpha value (that <code>.08</code>) is the number that separates
+        professional from amateur - heavy shadows on light backgrounds look dated; <code>.06</code> to
+        <code>.12</code> is the subtle range. Second, a shadow with zero blur and no offset is not a
+        shadow, it is a hard border - which is sometimes exactly what you want, but rarely what you meant.
+      </p>
+      <div class="demo">
+        <div class="demo-head">
+          <b>SHADOW .35</b><em>heavy, looks heavy-handed</em>
+          <span style="flex:1"></span>
+          <b>SHADOW .10</b><em>subtle lift</em>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-card" style="border-radius:14px;padding:20px;box-shadow:0 10px 26px rgba(0,0,0,.55)">
+            <h4>Studio visit</h4>
+            <p style="margin:0">Open Saturdays, ten to four.</p>
+          </div>
+          <div class="demo-card" style="border-radius:14px;padding:20px;box-shadow:0 8px 26px rgba(0,0,0,.16)">
+            <h4>Studio visit</h4>
+            <p style="margin:0">Open Saturdays, ten to four.</p>
+          </div>
+        </div>
+        <p class="demo-cap">On a dark page the difference is exaggerated; the principle holds - small offsets, generous blur, low alpha.</p>
+      </div>
+
+      <h2>opacity: the value people reach for instead of a colour</h2>
+      <p>
+        <code>opacity: 0.6</code> makes an entire element translucent, including its text - which is why
+        "muted" text set with opacity often fails contrast checks on light backgrounds. If you want a
+        lighter text colour, set the colour. If you want a translucent panel, use a colour with an alpha
+        channel (<code>rgba(...)</code>) rather than fading the whole block.
+      </p>
+
+      <h2>border-width and why 1px is usually right</h2>
+      <p>
+        Borders above 2px start competing with the content for attention. The exception is a deliberate
+        heavy border as a design device. When a card looks cheap, the cause is usually the border colour
+        being too close to the background, not the width being too small.
+      </p>
+
+      <h2>The twelve values worth knowing</h2>
+      <ul>
+        <li><code>padding</code> - space inside the box</li>
+        <li><code>margin</code> - space outside the box</li>
+        <li><code>gap</code> - space between grid or flex items</li>
+        <li><code>border-radius</code> - how round the corners are</li>
+        <li><code>border-width</code> - thickness of the outline</li>
+        <li><code>font-size</code> - size of the text</li>
+        <li><code>line-height</code> - space between lines</li>
+        <li><code>letter-spacing</code> - space between characters</li>
+        <li><code>max-width</code> - the upper limit on how wide a block grows</li>
+        <li><code>box-shadow</code> - the lift, in four numbers</li>
+        <li><code>opacity</code> - translucency of the whole element</li>
+        <li><code>background</code> - fill colour, including transparency</li>
+      </ul>
+      <p>
+        That is genuinely most of what non-developers need for cosmetic work. Notice what is not on the
+        list: no positioning, no flexbox, no grid templates, no media queries. Those are structural, and
+        structural changes are where hiring someone starts to make sense.
+      </p>
+
+      <h2>The units, without the arithmetic</h2>
+      <p>
+        Numbers in CSS come with a suffix, and the suffix changes what the number means. Four of them
+        cover almost everything a site owner touches:
+      </p>
+      <ul>
+        <li>
+          <strong><code>px</code> - absolute.</strong> 16px is 16 pixels regardless of context. Predictable
+          and the right choice for borders, radii and small fixed spacing.
+        </li>
+        <li>
+          <strong><code>em</code> - relative to the element's own font size.</strong>
+          <code>letter-spacing: .05em</code> means "5% of this text's size", so it scales if you later
+          change the font size. Use it for spacing that should follow the text.
+        </li>
+        <li>
+          <strong><code>rem</code> - relative to the site's root font size.</strong> Similar idea, but
+          consistent across the whole page. Good for section spacing you want to feel uniform.
+        </li>
+        <li>
+          <strong><code>%</code> - relative to the parent.</strong> <code>width: 50%</code> is half of
+          whatever contains it, which is why percentages are the natural unit for columns and why
+          <code>width: 100%</code> on an image makes it fill its container.
+        </li>
+      </ul>
+      <p>
+        Two practical rules fall out of this. First, <code>line-height</code> is usually written with no
+        unit at all - <code>1.6</code> means 1.6 times the font size, which is what makes it scale
+        automatically when you change the type. Second, when a value does not seem to respond, check the
+        unit before assuming the property is wrong: <code>max-width: 900</code> does nothing at all,
+        because CSS needs to know 900 of what.
+      </p>
+
+      <h2>How to use this page</h2>
+      <p>
+        When something on your site looks wrong, name the complaint first - "cramped", "too sharp",
+        "text runs too wide", "cards too close" - then find it in the list above and change one number.
+        Change one thing, look at the result, then decide. That habit is the whole of
+        <a href="../safer-workflow-for-editing-squarespace-css/">A Safer Workflow for Editing Squarespace
+        CSS</a>, and the twelve requests that cover most real sites are listed in
+        <a href="../12-css-changes-squarespace-owners-make/">The 12 CSS Changes Squarespace Site Owners
+        Make Most Often</a>.
+      </p>
+      <p>
+        To see a value change on your own markup rather than on this page, paste one section into the
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a> and adjust there - it renders the
+        section live and gives you the result to copy back. It handles contained sections and controlled
+        edits; it is not a page builder and will not restructure your site.
+      </p>
+      <p>
+        If your complaint is about images rather than spacing or text, the relevant numbers are different
+        ones - see <a href="../image-size-vs-aspect-ratio/">Image Size vs. Aspect Ratio</a>.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../blog/" aria-current="page">Blog</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

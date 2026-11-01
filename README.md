@@ -23,7 +23,7 @@ cardkit/
 ├── index.html                     home - 9 sections (hero, tools, why, who, how,
 │                                  privacy, guides, FAQ accordion, final CTA)
 ├── 404.html                       page not found
-├── sitemap.xml                    16 indexable URLs
+├── sitemap.xml                    28 indexable URLs
 ├── robots.txt                     allows all, blocks /tests/ and /output/, points at sitemap
 ├── ads.txt                        placeholder publisher ID, replace when AdSense supplies the real one
 ├── README.md                      this file
@@ -47,6 +47,20 @@ cardkit/
 │   ├── change-text-images-links-in-html-template/
 │   ├── edit-squarespace-custom-code/
 │   └── etsy-listing-image-workflow/
+│
+├── blog/
+│   ├── index.html
+│   ├── you-dont-need-to-learn-css-to-customize-squarespace/   pillar article
+│   ├── what-those-css-numbers-actually-do/
+│   ├── safer-workflow-for-editing-squarespace-css/
+│   ├── 12-css-changes-squarespace-owners-make/
+│   ├── ai-can-write-css-heres-why-you-still-need-to-see-it/
+│   ├── why-html-templates-break-when-you-edit/
+│   ├── etsy-listing-image-sizes-explained/
+│   ├── squarespace-custom-code-safe-to-paste/
+│   ├── image-size-vs-aspect-ratio/
+│   ├── clean-up-exported-html/
+│   └── resize-product-photos-without-losing-quality/
 │
 ├── about/  contact/  privacy/  terms/
 │
@@ -154,8 +168,25 @@ type and neither should be stripped back out:
 ## AdSense
 
 Do not apply until the site has been live and indexed for a while. Pre-requisites: five
-working tools, four substantial guides, and the core pages. Replace the placeholder in
-`ads.txt` only with the real publisher ID from Google.
+working tools, four substantial guides, eleven blog articles, and the core pages. Replace the
+placeholder in `ads.txt` only with the real publisher ID from Google.
+
+2026-11-01 rejection was "low value content". The blog section was added in response. Its
+positioning line: **edit websites without fighting the code** - CSS is not something most site
+owners need to learn, it is something they need to see. The five pillar articles (Visual CSS,
+Squarespace workflow, the 12 common changes, AI-generated CSS) run 1400-1700 words each with
+rendered before/after pairs.
+
+**Content boundary, do not cross it.** CardKit does basic, contained edits. It is not trying to
+replace Pinegrow, Bootstrap Studio or VS Code, and articles must not promise capabilities the
+tools do not have. The CSS Code Editor renders a pasted section, edits the selected element and
+copies it back - with controls for corner radius, background, transparency, blur and text size.
+It has no padding, shadow or spacing sliders, and no article should imply it does.
+
+2026-11-01 rejection was "low value content". The blog section (six 1200-1500-word articles,
+pain point - solution - real scenarios, interlinked with tools and guides) was added in
+response. Before reapplying: deploy, let Google re-index, then request review from the
+AdSense "Sites" page.
 
 ---
 

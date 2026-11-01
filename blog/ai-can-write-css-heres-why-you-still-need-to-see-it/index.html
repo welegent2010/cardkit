@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-8245018296750321">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8245018296750321"
+     crossorigin="anonymous"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Can Write CSS for You. Here's Why You Still Need to See What It Does</title>
+<meta name="description" content="Writing CSS stopped being the hard part in 2026. Knowing whether the generated CSS is correct, and where it will apply, is the new problem - and it is a visual problem, not a syntax problem.">
+<link rel="canonical" href="https://cardcss.top/blog/ai-can-write-css-heres-why-you-still-need-to-see-it/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/blog/ai-can-write-css-heres-why-you-still-need-to-see-it/">
+<meta property="og:title" content="AI Can Write CSS for You. Here's Why You Still Need to See What It Does">
+<meta property="og:description" content="The question shifted from how do I write CSS to how do I know whether this CSS is right. That is a visual problem.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Can Write CSS for You. Here's Why You Still Need to See What It Does">
+<meta name="twitter:description" content="Writing CSS is solved. Knowing whether it is correct is not.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI Can Write CSS for You. Here's Why You Still Need to See What It Does",
+  "description": "Writing CSS stopped being the hard part in 2026. Knowing whether the generated CSS is correct, and where it will apply, is the new problem - and it is a visual problem, not a syntax problem.",
+  "datePublished": "2026-11-01",
+  "dateModified": "2026-11-01",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/blog/ai-can-write-css-heres-why-you-still-need-to-see-it/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cardcss.top/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "AI Can Write CSS for You. Here's Why You Still Need to See What It Does" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../blog/" aria-current="page">Blog</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../blog/">Blog</a><span class="sep">/</span><span aria-current="page">AI Can Write CSS for You</span>
+  </nav>
+
+    <p class="eyebrow">BLOG</p>
+    <h1>AI Can Write CSS for You. Here's Why You Still Need to See What It Does</h1>
+    <p>
+      The question changed. It used to be "how do I write this CSS?" Now it is "how do I know whether this
+      CSS is right?" - and that question has no answer in text.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>What actually happened to the problem</h2>
+      <p>
+        Ask an assistant in 2026 to round your Squarespace buttons and add a subtle shadow, and you will
+        get working CSS in about four seconds. Something like this:
+      </p>
+      <pre><code>.sqs-block-button-element {
+  border-radius: 20px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .15);
+  padding: 14px 32px !important;
+  transition: all .2s ease;
+}</code></pre>
+      <p>
+        The syntax is fine. The properties are the right ones. And there are still three things wrong with
+        it that no amount of language fluency reveals:
+      </p>
+      <ol>
+        <li>
+          <strong>You cannot tell what it looks like.</strong> <code>0 8px 30px rgba(0,0,0,.15)</code> is
+          a specification, not an image. Whether that shadow reads as "subtle" or "dated" depends on your
+          background colour, your card size and your taste.
+        </li>
+        <li>
+          <strong>You cannot tell where it applies.</strong> The selector
+          <code>.sqs-block-button-element</code> is a plausible guess at Squarespace's markup. It may match
+          every button on every page, or nothing at all on your particular version. The assistant does not
+          have your site.
+        </li>
+        <li>
+          <strong>You cannot tell what changed after you ask for a revision.</strong> Ask for "slightly
+          smaller corners" and you get a fresh block of CSS. Which of the five lines moved? You are being
+          asked to diff code you did not write, by eye.
+        </li>
+      </ol>
+      <div class="note">
+        <p>
+          <strong>AI can generate code. Visual tools help you validate it.</strong> Generation and
+          validation are different jobs, and only one of them has been automated.
+        </p>
+      </div>
+
+      <h2>Why "correct CSS" is not the same as "the CSS I wanted"</h2>
+      <p>
+        A block of CSS can be completely valid and still be wrong for your site in three specific ways.
+        All three are invisible in the code and obvious on screen.
+      </p>
+      <h3>Scope: the rule reaches further than you meant</h3>
+      <p>
+        Generated CSS tends to use the broadest plausible selector, because that is the safest guess for a
+        model that cannot see your page. On your site it may restyle the navigation buttons, the newsletter
+        signup and the checkout button along with the one you wanted. The fix is not a better prompt - it
+        is looking at which elements changed.
+      </p>
+      <h3>Values: the number is technically fine and visually wrong</h3>
+      <p>
+        <code>30px</code> of blur is reasonable on a large hero card and absurd on a small pricing tile.
+        <code>20px</code> of corner radius is friendly on a button and sloppy on a full-width banner. These
+        are judgements about your specific layout, and they can only be made by looking.
+      </p>
+      <h3>Context: it fights the theme instead of extending it</h3>
+      <p>
+        Squarespace themes ship with their own rules. Generated CSS that does not know about them either
+        loses the fight silently or wins it with <code>!important</code> - and <code>!important</code> is
+        how a site ends up with CSS nobody dares edit six months later.
+      </p>
+      <div class="demo">
+        <div class="demo-head">
+          <b>WHAT THE PROMPT ASKED FOR</b><em>"rounded buttons, subtle shadow"</em>
+          <span style="flex:1"></span>
+          <b>WHAT IT OFTEN LOOKS LIKE</b><em>shadow too strong, radius too round</em>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-card" style="border-radius:14px;padding:20px">
+            <h4>Expectation</h4>
+            <p>Soft corners, a whisper of shadow.</p>
+            <span class="demo-btn" style="border-radius:10px;padding:12px 24px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,.18)">Book a visit</span>
+          </div>
+          <div class="demo-card" style="border-radius:14px;padding:20px">
+            <h4>What arrived</h4>
+            <p>Pill shape, heavy drop shadow.</p>
+            <span class="demo-btn" style="border-radius:999px;padding:14px 30px;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.55)">Book a visit</span>
+          </div>
+        </div>
+        <p class="demo-cap">Both satisfy the prompt. Only one was meant. You cannot tell which from the code.</p>
+      </div>
+
+      <h2>The workflow that actually works now</h2>
+      <p>
+        The useful sequence is not "ask again until it looks right" - that loop never converges, because you
+        are describing visual differences in words and receiving whole new blocks of code. It is:
+      </p>
+      <p>
+        <strong>Describe &rarr; Generate &rarr; Visualize &rarr; Adjust &rarr; Copy</strong>
+      </p>
+      <ol>
+        <li>
+          <strong>Describe</strong> what you want in plain language, to whatever assistant you use. This
+          part genuinely is solved - take the draft.
+        </li>
+        <li>
+          <strong>Generate</strong> - accept the first draft and stop prompting. Asking for five revisions
+          costs more time than adjusting one value yourself.
+        </li>
+        <li>
+          <strong>Visualize</strong> - see it rendered on your own markup before it touches your site. This
+          is the step that was missing. The
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a> does it: paste a section, see it
+          rendered, adjust and copy back.
+        </li>
+        <li>
+          <strong>Adjust</strong> the value that is wrong - the shadow is too strong, the radius too round -
+          by looking at the result rather than by writing another prompt.
+        </li>
+        <li>
+          <strong>Copy</strong> only the properties you actually changed, and check where they apply before
+          they go live.
+        </li>
+      </ol>
+      <p>
+        The middle step is the point. AI produces the first draft efficiently; the finishing work is
+        judgement, and judgement needs something to look at.
+      </p>
+
+      <h2>What a visual check catches that reading does not</h2>
+      <ul>
+        <li>A shadow that looks heavy against your actual background colour</li>
+        <li>A radius that clashes with the image corners inside the same card</li>
+        <li>Padding that makes a button look tall rather than substantial</li>
+        <li>A rule that also restyled elements on a page you were not looking at</li>
+        <li>A font size that fits on desktop and wraps badly on a phone</li>
+        <li>Two rules fighting each other, where the visible result is neither</li>
+      </ul>
+      <p>
+        None of these are syntax errors. Every one of them survives a careful read of the code and shows up
+        in half a second on screen.
+      </p>
+
+      <h2>Being honest about the limits</h2>
+      <p>
+        Seeing the CSS does not make it safe by itself. Two cautions worth keeping:
+      </p>
+      <ul>
+        <li>
+          <strong>Rendering a section is not the same as testing your site.</strong> A preview shows what
+          the values do to that section. It does not prove which elements the rule reaches on your live
+          pages - you still need to check other pages afterwards.
+        </li>
+        <li>
+          <strong>Generated CSS still needs reading, briefly.</strong> Look at the selector and ask where
+          it applies. If it is broader than you intended, narrow it. This is the single highest-value
+          habit, and it is why the four-step routine in
+          <a href="../safer-workflow-for-editing-squarespace-css/">A Safer Workflow for Editing Squarespace
+          CSS</a> insists on reading the selector before pasting.
+        </li>
+      </ul>
+      <p>
+        CardKit does not generate CSS for you and does not claim to "fix" Squarespace automatically. What it
+        offers is narrower and, we think, more useful: a place to see what a block of CSS does before you
+        commit to it, and the ability to change one value and watch.
+      </p>
+
+      <h2>Real scenarios</h2>
+      <p>
+        <strong>The shop owner and the pill buttons.</strong> She asked for rounded buttons and got
+        <code>border-radius: 999px</code> - technically what "rounded" means, visually a pill. Seeing it on
+        her own card, she dropped it to 10px in one adjustment instead of describing the difference in
+        another prompt.
+      </p>
+      <p>
+        <strong>The consultant with the heavy shadow.</strong> The generated shadow was calibrated for a
+        light theme; his site is dark, so it read as a black smear. One look, one value changed.
+      </p>
+      <p>
+        <strong>The blogger whose newsletter button also changed.</strong> The generated selector matched
+        every button on the site. She only noticed because she checked another page after pasting - the
+        lesson behind step three of
+        <a href="../safer-workflow-for-editing-squarespace-css/">the safer workflow</a>.
+      </p>
+
+      <h2>How to prompt so the output is easier to verify</h2>
+      <p>
+        Bad prompting is not why generated CSS goes wrong - the model cannot see your page - but a better
+        prompt produces output that is easier to check. Four requests worth making every time:
+      </p>
+      <ul>
+        <li>
+          <strong>"Comment each property with what it does."</strong> You get annotations in the output,
+          which turns an opaque block into something you can sanity-check line by line.
+        </li>
+        <li>
+          <strong>"Tell me how broad the selector is and how to narrow it."</strong> Ask the model to state
+          which elements the rule probably matches. It will be a guess, but the question puts scope in front
+          of you instead of leaving it implicit.
+        </li>
+        <li>
+          <strong>"Do not use !important, and say if a rule will not apply without it."</strong> If the
+          answer is that it will not, that is useful information: it means the theme's own rule is winning,
+          and the honest fix is a more specific selector rather than an override.
+        </li>
+        <li>
+          <strong>"Give me the smallest rule that does only this."</strong> Models default to generous
+          output - padding, letter-spacing, transitions and hover states you never asked for. Asking for the
+          minimum keeps the block to one or two properties, which is exactly what you want to paste.
+        </li>
+      </ul>
+      <p>
+        One more, which saves the most time of all: <strong>paste your actual class name into the
+        prompt.</strong> Right-click the element, choose Inspect, copy the class, and include it. The
+        model still cannot see your page, but it no longer has to guess the markup - and selector errors are
+        the single largest source of "the CSS did nothing" or "the CSS changed everything".
+      </p>
+
+      <h2>Questions people ask</h2>
+      <h3>Should I just keep asking the AI until it gets it right?</h3>
+      <p>
+        You can, but the loop rarely converges. Each round trip returns a whole new block, so you are
+        inferring what changed instead of seeing it. Two prompts and one visual adjustment beats six
+        prompts - and you end up understanding your own CSS.
+      </p>
+      <h3>Is AI-generated CSS safe to paste?</h3>
+      <p>
+        The syntax is usually fine; the risk is scope and context, neither of which the model can know.
+        Treat it as a first draft that must be seen before it is trusted, never as a finished answer.
+      </p>
+      <h3>Will this replace hiring a developer?</h3>
+      <p>
+        No. It removes the queue for small cosmetic changes - which is most of what people wait for. A
+        new layout, a responsive rebuild or an accessibility audit remains professional work, and
+        pretending otherwise is how sites end up fragile.
+      </p>
+
+      <h2>The short version</h2>
+      <p>
+        Writing CSS got easy. Deciding whether the CSS is right did not, because deciding is visual and the
+        answer arrives as text. The practical response is not better prompting - it is a rendering step
+        between generation and paste:
+      </p>
+      <p>
+        <strong>AI generates the first draft. You finish it visually.</strong>
+      </p>
+      <p>
+        If you want the property-by-property version of what to look for while finishing,
+        <a href="../what-those-css-numbers-actually-do/">What Those CSS Numbers Actually Do</a> covers the
+        twelve values that matter, and
+        <a href="../12-css-changes-squarespace-owners-make/">The 12 CSS Changes Squarespace Site Owners
+        Make Most Often</a> lists the requests they usually belong to.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../blog/" aria-current="page">Blog</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

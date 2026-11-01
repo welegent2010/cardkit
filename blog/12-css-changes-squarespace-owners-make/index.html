@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-adsense-account" content="ca-pub-8245018296750321">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8245018296750321"
+     crossorigin="anonymous"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 12 CSS Changes Squarespace Site Owners Make Most Often</title>
+<meta name="description" content="Button radius, button padding, section spacing, card radius, image corners, heading size, line height, content width, card shadow, grid gap, mobile spacing and link styling - what people ask, which property controls it, and what the change looks like.">
+<link rel="canonical" href="https://cardcss.top/blog/12-css-changes-squarespace-owners-make/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cardcss.top/blog/12-css-changes-squarespace-owners-make/">
+<meta property="og:title" content="The 12 CSS Changes Squarespace Site Owners Make Most Often">
+<meta property="og:description" content="Twelve common requests: what people ask, which property controls it, and what the change looks like.">
+<meta property="og:image" content="https://cardcss.top/assets/og-cardkit.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The 12 CSS Changes Squarespace Site Owners Make Most Often">
+<meta name="twitter:description" content="Twelve common CSS requests, what controls them, and what each looks like.">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The 12 CSS Changes Squarespace Site Owners Make Most Often",
+  "description": "Button radius, button padding, section spacing, card radius, image corners, heading size, line height, content width, card shadow, grid gap, mobile spacing and link styling - what people ask, which property controls it, and what the change looks like.",
+  "datePublished": "2026-11-01",
+  "dateModified": "2026-11-01",
+  "author": { "@type": "Organization", "name": "CardKit" },
+  "publisher": { "@id": "https://cardcss.top/#organization" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://cardcss.top/blog/12-css-changes-squarespace-owners-make/" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cardcss.top/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cardcss.top/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "The 12 CSS Changes Squarespace Site Owners Make Most Often" }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../../">CardKit</a>
+    <div class="top-sub">Small tools for website editing and template work</div>
+    <div class="spacer"></div>
+    <nav class="nav">
+      <span class="drop">
+        <a class="nav-link drop-toggle" href="../../tools/">Tools</a>
+        <span class="drop-menu">
+          <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+          <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+          <a href="../../tools/image-resizer/">Image Resizer</a>
+          <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+          <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+        </span>
+      </span>
+      <a class="nav-link" href="../../guides/">Guides</a>
+      <a class="nav-link" href="../../blog/" aria-current="page">Blog</a>
+      <a class="nav-link" href="../../about/">About</a>
+      <a class="nav-link" href="../../contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="../../">Home</a><span class="sep">/</span><a href="../../blog/">Blog</a><span class="sep">/</span><span aria-current="page">The 12 CSS Changes Squarespace Owners Make Most Often</span>
+  </nav>
+
+    <p class="eyebrow">BLOG</p>
+    <h1>The 12 CSS Changes Squarespace Site Owners Make Most Often</h1>
+    <p>
+      Not a CSS reference - a list of the dozen requests that come up again and again, each with the
+      complaint, the property that controls it, and what the change actually looks like.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+
+      <h2>How to read each entry</h2>
+      <p>
+        Every item below follows the same three-part shape, because the order matters more than the code:
+      </p>
+      <ul>
+        <li><strong>What people ask</strong> - the request in the words it usually arrives in</li>
+        <li><strong>What controls it</strong> - the property, and the range that makes sense</li>
+        <li><strong>What happens visually</strong> - what you see at each end of that range</li>
+      </ul>
+      <p>
+        The selectors are written generically. On a real Squarespace site you will need the actual class or
+        collection ID for your theme, which you can find with your browser's inspector (right-click the
+        element, choose Inspect). That step - confirming where a rule applies before you paste it - is
+        covered in <a href="../safer-workflow-for-editing-squarespace-css/">A Safer Workflow for Editing
+        Squarespace CSS</a>.
+      </p>
+
+      <h2>1. Button corner radius</h2>
+      <p><strong>"How do I make this button less boxy?"</strong></p>
+      <p>Controlled by <code>border-radius</code>.</p>
+      <div class="demo">
+        <div class="demo-row">
+          <span class="demo-btn" style="border-radius:2px;padding:11px 18px">0px sharp</span>
+          <span class="demo-btn" style="border-radius:8px;padding:11px 18px">8px neutral</span>
+          <span class="demo-btn" style="border-radius:20px;padding:11px 18px">20px friendly</span>
+          <span class="demo-btn" style="border-radius:999px;padding:11px 18px">999px pill</span>
+        </div>
+        <p class="demo-cap">Pick one value and use it on every button; inconsistent radii read as accidental.</p>
+      </div>
+
+      <h2>2. Button padding</h2>
+      <p><strong>"The button feels small and mean."</strong></p>
+      <p>
+        Controlled by <code>padding</code> - vertical first, horizontal second. Bigger horizontal padding
+        is what makes a button feel confident: <code>10px 18px</code> is tight, <code>14px 32px</code> is
+        generous.
+      </p>
+      <div class="demo">
+        <div class="demo-row">
+          <span class="demo-btn" style="border-radius:8px;padding:8px 14px;font-size:14px">Small</span>
+          <span class="demo-btn" style="border-radius:8px;padding:14px 32px;font-size:15px">Comfortable</span>
+        </div>
+        <p class="demo-cap">Vertical padding sets the height; horizontal padding sets how substantial it feels.</p>
+      </div>
+
+      <h2>3. Section spacing</h2>
+      <p><strong>"There's too much empty space between sections" - or the opposite.</strong></p>
+      <p>
+        Controlled by <code>padding</code> (or <code>margin</code>) on the section. This is the single
+        biggest lever on how calm a page feels. A common starting point for desktop is
+        <code>80px 0</code> and around <code>48px 0</code> on mobile - but the right number depends on
+        your type size, so judge it visually.
+      </p>
+
+      <h2>4. Card corner radius</h2>
+      <p><strong>"The cards look harsh."</strong></p>
+      <p>
+        Controlled by <code>border-radius</code> on the card. Cards usually want <em>more</em> radius than
+        buttons but less than a pill: 12px to 20px is the common band. Match it to the images inside - a
+        16px card holding a 0px image looks unfinished.
+      </p>
+
+      <h2>5. Image corner radius</h2>
+      <p><strong>"My photos look like they were pasted on."</strong></p>
+      <p>
+        Controlled by <code>border-radius</code> on the image, usually paired with
+        <code>overflow: hidden</code> on the container. Square images inside rounded cards need both, or
+        the corners poke out.
+      </p>
+
+      <h2>6. Heading size</h2>
+      <p><strong>"The headings are enormous."</strong></p>
+      <p>
+        Controlled by <code>font-size</code>. The mistake is setting a fixed pixel size that works on
+        desktop and overwhelms a phone. Either set a smaller value inside a mobile media query, or use a
+        relative size. Whatever you choose, check the heading at 390px before you finish - long headings
+        that wrap to four lines are the most common mobile layout problem.
+      </p>
+
+      <h2>7. Paragraph line height</h2>
+      <p><strong>"My text reads like a block."</strong></p>
+      <p>
+        Controlled by <code>line-height</code>. Body copy wants roughly 1.5 to 1.7; headings want 1.1 to
+        1.25. This is the cheapest improvement available on most sites - one number, and long paragraphs
+        suddenly read comfortably.
+      </p>
+      <div class="demo">
+        <div class="demo-head">
+          <b>LINE-HEIGHT 1.2</b><em>dense</em>
+          <span style="flex:1"></span>
+          <b>LINE-HEIGHT 1.65</b><em>readable</em>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-card" style="border-radius:8px">
+            <p style="line-height:1.2;font-size:12px;color:var(--muted);margin:0">We print in small batches and ship on Fridays. Orders placed before Wednesday go out the same week.</p>
+          </div>
+          <div class="demo-card" style="border-radius:8px">
+            <p style="line-height:1.65;font-size:12px;color:var(--muted);margin:0">We print in small batches and ship on Fridays. Orders placed before Wednesday go out the same week.</p>
+          </div>
+        </div>
+        <p class="demo-cap">Same font size. One number apart.</p>
+      </div>
+
+      <h2>8. Content width</h2>
+      <p><strong>"The text runs right across the screen."</strong></p>
+      <p>
+        Controlled by <code>max-width</code> on the text container - not by <code>width</code>, which
+        forces a fixed size and causes horizontal scrolling on phones. Around 65 to 75 characters per line
+        is the comfortable range; on most themes that means a <code>max-width</code> somewhere between
+        640px and 760px for body text.
+      </p>
+
+      <h2>9. Card shadow</h2>
+      <p><strong>"How do I make the cards lift off the page?"</strong></p>
+      <p>
+        Controlled by <code>box-shadow</code>: offset, blur and alpha. Subtle wins - small offsets, generous
+        blur, low alpha. Heavy shadows are the fastest way to make a modern site look dated.
+      </p>
+      <div class="demo">
+        <div class="demo-head">
+          <b>HEAVY</b><em>0 10px 26px rgba(0,0,0,.55)</em>
+          <span style="flex:1"></span>
+          <b>SUBTLE</b><em>0 6px 22px rgba(0,0,0,.14)</em>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-card" style="border-radius:14px;padding:20px;box-shadow:0 10px 26px rgba(0,0,0,.55)">
+            <h4>Print studio</h4>
+            <p style="margin:0">Open Thursdays and Fridays.</p>
+          </div>
+          <div class="demo-card" style="border-radius:14px;padding:20px;box-shadow:0 6px 22px rgba(0,0,0,.14)">
+            <h4>Print studio</h4>
+            <p style="margin:0">Open Thursdays and Fridays.</p>
+          </div>
+        </div>
+        <p class="demo-cap">Both lift the card. Only one looks current.</p>
+      </div>
+
+      <h2>10. Grid gap</h2>
+      <p><strong>"My three feature cards are jammed together."</strong></p>
+      <p>
+        Controlled by <code>gap</code> on the grid container - the property peopleforget exists and try to
+        fix with margins on each card, which then needs a different value on the last card.
+        <code>gap</code> handles it in one line.
+      </p>
+
+      <h2>11. Mobile spacing</h2>
+      <p><strong>"The desktop looks fine but the phone is cramped."</strong></p>
+      <p>
+        Controlled by the same padding properties, set inside a media query for small screens. Desktop
+        spacing scales down badly: <code>80px</code> of breathing room becomes a quarter of a phone
+        screen. Reduce section padding and heading size at mobile widths, then check in a private window.
+      </p>
+
+      <h2>12. Link styling</h2>
+      <p><strong>"The links look like every other site."</strong></p>
+      <p>
+        Controlled by <code>color</code>, <code>text-decoration</code> and
+        <code>text-underline-offset</code>. A custom colour plus a slightly offset underline is a small
+        change that reads as considered. One caution: never remove the underline from links inside body
+        text without providing another clear signal - colour alone is not enough for every visitor.
+      </p>
+
+      <h2>Finding the right selector for your theme</h2>
+      <p>
+        Every entry above needs a selector - the part before the curly brace that decides which elements
+        the rule touches. Generic names like <code>.button</code> are illustrations, not something to paste.
+        Getting the real one takes about thirty seconds:
+      </p>
+      <ol>
+        <li>
+          <strong>Right-click the element</strong> you want to change and choose Inspect. The browser opens
+          with that element highlighted in the HTML.
+        </li>
+        <li>
+          <strong>Read the classes</strong> on the highlighted tag. Squarespace uses long, descriptive
+          names - something like <code>.sqs-block-button-element</code> or <code>.image-block</code>. One
+          of those is your selector.
+        </li>
+        <li>
+          <strong>Check how many elements it matches.</strong> In the CSS panel of the inspector, or by
+          searching the page for the class, confirm whether it appears once or forty times. Forty means a
+          site-wide change.
+        </li>
+        <li>
+          <strong>Narrow it if you need to.</strong> To confine a rule to one page, prefix it with that
+          page's collection ID - the <code>body</code> tag carries one, something like
+          <code>#collection-abc123</code>. <code>#collection-abc123 .button</code> now matches buttons on
+          that page only.
+        </li>
+        <li>
+          <strong>Test in the inspector before pasting.</strong> You can type a rule directly into the
+          browser's style panel and see the effect instantly, without saving anything. It is the fastest
+          preview there is and it costs nothing.
+        </li>
+      </ol>
+      <p>
+        That fifth step is worth internalising: the browser inspector is a free sandbox on your live page
+        that nobody else can see. Changes there vanish on refresh, which makes it the ideal place to try a
+        value before committing to it.
+      </p>
+
+      <h2>What these twelve have in common</h2>
+      <p>
+        Every one of them is cosmetic, reversible and confined to a value. None of them changes the
+        structure of the page, which is exactly why they are safe to do yourself - provided you look at
+        them while you change them and check the result afterwards.
+      </p>
+      <p>
+        The things that are <em>not</em> on this list - a new multi-column layout, a rebuilt navigation, a
+        full responsive rework, accessibility remediation - are structural, and structural work is where
+        a professional earns their fee. Doing twelve safe changes yourself and hiring someone for the
+        one structural job is a far better trade than paying for all thirteen.
+      </p>
+      <div class="note">
+        <p>
+          <strong>Reduce dependency, don't eliminate expertise.</strong> The goal of learning these twelve
+          is not to stop needing designers. It is to stop paying someone every time you want to change
+          16px to 20px.
+        </p>
+      </div>
+
+      <h2>Doing the change somewhere you can see it</h2>
+      <p>
+        If you want to watch these values change on your own markup instead of guessing, paste one section
+        into the <a href="../../tools/css-code-editor/">CSS Code Editor</a>: it renders the section, lets
+        you adjust and gives you the result to copy back. It is built for contained sections and
+        controlled edits - corner radius, background, transparency, blur and text size - and it runs in
+        your browser with nothing uploaded.
+      </p>
+      <p>
+        For the values themselves explained one by one, see
+        <a href="../what-those-css-numbers-actually-do/">What Those CSS Numbers Actually Do</a>. And if the
+        block of CSS you are holding came from an AI assistant,
+        <a href="../ai-can-write-css-heres-why-you-still-need-to-see-it/">read this first</a> before it
+        goes anywhere near your site.
+      </p>
+
+    </div>
+  </section>
+
+<!-- AD SLOT - enable once AdSense is live.
+  <aside class="ad">AD UNIT</aside>
+  -->
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">CardKit</div>
+        <p class="foot-brand-p">Small tools for website editing and template work.</p>
+      </div>
+      <div class="foot-col">
+        <h4>TOOLS</h4>
+        <a href="../../tools/css-code-editor/">CSS Code Editor</a>
+        <a href="../../tools/image-canvas-padder/">Image Canvas Padder</a>
+        <a href="../../tools/image-resizer/">Image Resizer</a>
+        <a href="../../tools/aspect-ratio-calculator/">Aspect Ratio Calculator</a>
+        <a href="../../tools/html-cleaner/">HTML Cleaner</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEARN</h4>
+        <a href="../../guides/">Guides</a>
+        <a href="../../blog/" aria-current="page">Blog</a>
+        <a href="../../about/">About</a>
+        <a href="../../contact/">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>LEGAL</h4>
+        <a href="../../privacy/">Privacy Policy</a>
+        <a href="../../terms/">Terms of Use</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 CardKit. All rights reserved.</span>
+      <span class="spacer"></span>
+      <span>Support: <a href="mailto:support@xdstudiolab.com">support@xdstudiolab.com</a></span>
+    </div>
+    <p class="foot-legal">
+      CardKit is an independent product and is not affiliated with, endorsed by, or sponsored by Etsy,
+      Squarespace, or other platforms mentioned on this website.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
