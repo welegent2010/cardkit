@@ -22,7 +22,7 @@
 <meta name="twitter:image" content="https://cardcss.top/assets/og-cardkit.png">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
-<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/site.css?v=20261102a">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -147,7 +147,9 @@
     </div>
     <a class="shot" href="tools/css-code-editor/">
       <picture>
-        <source type="image/webp" srcset="assets/img/hero-editor.webp">
+        <source type="image/webp"
+          srcset="assets/img/hero-editor-800.webp 800w, assets/img/hero-editor.webp 1440w"
+          sizes="(min-width: 820px) 44vw, 92vw">
         <img src="assets/img/hero-editor.jpg" width="1440" height="767" fetchpriority="high"
         alt="The CardKit CSS Code Editor: a code block in the paste box, the same card rendered underneath it">
       </picture>
